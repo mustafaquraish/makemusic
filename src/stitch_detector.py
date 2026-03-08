@@ -53,17 +53,17 @@ class StitchedNote:
 #  Colour mask helpers
 # ────────────────────────────────────────────────────────────────────
 
-def _build_color_mask(image_bgr: np.ndarray,
+def _build_color_mask(hsv: np.ndarray,
                       nc: NoteColor,
                       note_area_bottom: int,
                       v_low_override: int | None = None) -> np.ndarray:
     """Create a binary mask for pixels matching *nc* above *note_area_bottom*.
-    
+
+    *hsv* must be the pre-converted HSV image (cv2.COLOR_BGR2HSV).
     If *v_low_override* is given, use that as the lower V bound instead
     of nc.v_range[0].  This is used to build a more permissive mask for
     black-key columns where note brightness can be lower.
     """
-    hsv = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2HSV)
     h_lo, h_hi = nc.h_range
     v_lo = v_low_override if v_low_override is not None else nc.v_range[0]
     lower = np.array([h_lo, nc.s_range[0], v_lo])
@@ -116,39 +116,35 @@ def _find_vertical_runs(column_mask: np.ndarray,
 
     is_on = row_fill >= fill_threshold
 
-    # Bridge tiny gaps (≤ min_gap rows) inside a run
-    # This handles text/labels punching holes in the mask.
-    if min_gap > 0 and len(is_on) > min_gap:
-        bridged = is_on.copy()
-        off_start = None
-        for i in range(len(bridged)):
-            if not bridged[i]:
-                if off_start is None:
-                    off_start = i
-            else:
-                if off_start is not None:
-                    gap_len = i - off_start
-                    if gap_len <= min_gap:
-                        bridged[off_start:i] = True
-                    off_start = None
-        is_on = bridged
+    # Bridge small gaps using numpy edge detection
+    if min_gap > 0:
+        padded = np.empty(len(is_on) + 2, dtype=np.bool_)
+        padded[0] = False
+        padded[-1] = False
+        padded[1:-1] = is_on
+        edges = np.diff(padded.view(np.uint8).astype(np.int8))
+        starts = np.where(edges == 1)[0]
+        ends = np.where(edges == -1)[0]
 
-    # Extract runs
-    runs: list[Tuple[int, int]] = []
-    run_start: Optional[int] = None
-    for i in range(len(is_on)):
-        if is_on[i]:
-            if run_start is None:
-                run_start = i
-        else:
-            if run_start is not None:
-                if i - run_start >= min_height:
-                    runs.append((run_start, i))
-                run_start = None
-    if run_start is not None and len(is_on) - run_start >= min_height:
-        runs.append((run_start, len(is_on)))
+        if len(starts) > 1:
+            gaps = starts[1:] - ends[:-1]
+            for i in np.where(gaps <= min_gap)[0]:
+                is_on[ends[i]:starts[i + 1]] = True
 
-    return runs
+    # Extract runs using vectorized edge detection
+    padded = np.empty(len(is_on) + 2, dtype=np.bool_)
+    padded[0] = False
+    padded[-1] = False
+    padded[1:-1] = is_on
+    edges = np.diff(padded.view(np.uint8).astype(np.int8))
+    starts = np.where(edges == 1)[0]
+    ends = np.where(edges == -1)[0]
+
+    # Filter by minimum height
+    lengths = ends - starts
+    valid = lengths >= min_height
+
+    return [(int(s), int(e)) for s, e in zip(starts[valid], ends[valid])]
 
 
 # ────────────────────────────────────────────────────────────────────
@@ -268,17 +264,21 @@ def detect_notes_on_stitched_image(
     col_owner = _build_column_ownership(keyboard_map, img_w)
 
     # 2.  Per-colour masks (one per NoteColor)
+    #     Convert BGR→HSV once (saves ~3 redundant conversions on
+    #     a ~360 MB image).
     #     Standard masks use the calibrated V range.
     #     Extended masks lower V_LOW by ~30% for black-key columns
     #     where note brightness is inherently lower.
+    hsv = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2HSV)
     colour_masks: List[np.ndarray] = []
     colour_masks_bk: List[np.ndarray] = []   # extended V for black keys
     for nc in calibration.note_colors:
-        colour_masks.append(_build_color_mask(image_bgr, nc, note_area_bottom))
+        colour_masks.append(_build_color_mask(hsv, nc, note_area_bottom))
         v_lo_ext = max(50, int(nc.v_range[0] * 0.65))
         colour_masks_bk.append(
-            _build_color_mask(image_bgr, nc, note_area_bottom,
+            _build_color_mask(hsv, nc, note_area_bottom,
                               v_low_override=v_lo_ext))
+    del hsv  # free ~360 MB
 
     # Light morphology to remove single-pixel noise
     # Standard masks (white keys): 3×3 opening
