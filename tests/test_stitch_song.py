@@ -155,7 +155,7 @@ def test_deterministic_output():
 
     assert r1.image.shape == r2.image.shape
     assert np.array_equal(r1.image, r2.image), "Stitched images differ between runs"
-    assert len(r1.notes) == len(r2.notes)
+    assert len(r1.notes) == len(r2.notes), f"Note count changed: {len(r1.notes)} vs {len(r2.notes)}"
 
 
 # ── Pixel content checks ──────────────────────────────────────────

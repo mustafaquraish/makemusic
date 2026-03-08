@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
 """
-Process a falling-notes piano video into a stitched image and interactive HTML viewer.
+Process a falling-notes piano video into an interactive HTML viewer.
 
 Usage:
-    python process_video.py INPUT_VIDEO OUTPUT_FOLDER [--fps 30]
+    python process_video.py music/perfect/video.webm
 
-Example:
-    python process_video.py music/perfect/video.webm output/perfect
+    # With optional outputs:
+    python process_video.py music/perfect/video.webm --stitched --boxes --json
 
-This produces:
-    output/perfect/stitched.png   — Full stitched piano-roll image
-    output/perfect/output.html    — Standalone interactive HTML viewer
+Output goes to a folder next to the video (e.g. music/perfect/output/).
+Override with -o OUTPUT_FOLDER.
 """
 
 import os
 import sys
 import json
+import time
 import argparse
 from pathlib import Path
 
@@ -25,7 +25,7 @@ import numpy as np
 # Allow running from project root
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from stitch_song import stitch_song, y_to_time
+from stitch_song import stitch_song, StitchResult, y_to_time
 
 
 # ── Note name → 88-key index (A0=0, C8=87) ───────────────────────
@@ -381,8 +381,12 @@ def _verify_boxes(boxes, combined_mask, source_gray, note_area_bottom):
     }
 
 
-def draw_boxes_on_stitched(result) -> np.ndarray:
-    """Draw tight bounding boxes around every visible note shape.
+def _analyze_boxes(result, verbose=False):
+    """Run CC analysis and labelling on the stitched image.
+
+    Sets result._labelled_boxes and result._note_area_bottom
+    as side-effects (used by build_notes_data).
+    Does NOT create a drawn image — much faster.
 
     Algorithm
     ---------
@@ -394,8 +398,7 @@ def draw_boxes_on_stitched(result) -> np.ndarray:
     4. Trim each box to the tightest fit on the original mask.
     5. Label each box by matching to the nearest detector note, with
        keyboard-map fallback for unmatched blobs.
-    6. Verify coverage and quality; print report.
-    7. Draw boxes and labels.
+    6. Optionally verify coverage and quality.
     """
     cal = result.calibration
     source = result.image
@@ -683,12 +686,25 @@ def draw_boxes_on_stitched(result) -> np.ndarray:
         labelled.append((x1, y1, x2, y2, label, hand))
 
     # ── 6. Verify ─────────────────────────────────────────────────
-    _verify_boxes(labelled, combined, gray, note_area_bottom)
+    if verbose:
+        _verify_boxes(labelled, combined, gray, note_area_bottom)
 
-    # ── 7. Draw ───────────────────────────────────────────────────
-    # Store the labelled boxes on the result for notes-data generation
+    # ── 7. Store labelled boxes ─────────────────────────────────
     result._labelled_boxes = labelled
     result._note_area_bottom = note_area_bottom
+
+
+def draw_boxes_on_stitched(result, verbose=False) -> np.ndarray:
+    """Run analysis and render labelled bounding boxes on a copy.
+
+    Calls _analyze_boxes() if not already done, then draws.
+    """
+    if not hasattr(result, '_labelled_boxes'):
+        _analyze_boxes(result, verbose=verbose)
+
+    source = result.image
+    img_h, img_w = source.shape[:2]
+    labelled = result._labelled_boxes
 
     img = source.copy()
     BOX_RH  = (0, 220, 120)      # green
@@ -718,6 +734,17 @@ def draw_boxes_on_stitched(result) -> np.ndarray:
                     font, font_scale, colour, thickness, cv2.LINE_AA)
 
     return img
+
+
+def label_notes(result, verbose=False):
+    """Run CC analysis and labelling WITHOUT drawing.
+
+    Sets result._labelled_boxes and result._note_area_bottom,
+    needed by build_notes_data().  Much faster than
+    draw_boxes_on_stitched() since it skips the image copy and
+    rendering.
+    """
+    _analyze_boxes(result, verbose=verbose)
 
 
 def build_standalone_html(notes_data: dict, title: str = 'MakeMusic') -> str:
@@ -765,46 +792,72 @@ def build_standalone_html(notes_data: dict, title: str = 'MakeMusic') -> str:
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Process a falling-notes piano video into a stitched '
-                    'image and interactive HTML viewer.',
+        description='Process a falling-notes piano video into an '
+                    'interactive HTML viewer.',
     )
     parser.add_argument('video', help='Path to the input video file')
-    parser.add_argument('output', help='Output folder for stitched.png and output.html')
-    parser.add_argument('--fps', type=float, default=30.0,
-                        help='Sampling FPS for stitching (default: 30)')
+    parser.add_argument('-o', '--output', default=None,
+                        help='Output folder (default: <video_dir>/output)')
+    parser.add_argument('--fps', type=float, default=10.0,
+                        help='Sampling FPS for stitching (default: 10). '
+                             'Higher = better quality but slower.')
     parser.add_argument('--title', default=None,
-                        help='Title for the HTML page (default: derived from folder name)')
+                        help='Title for the HTML page '
+                             '(default: derived from folder name)')
     parser.add_argument('-q', '--quiet', action='store_true',
                         help='Suppress progress output')
+
+    # Optional output flags (HTML is always produced)
+    parser.add_argument('--stitched', action='store_true',
+                        help='Also save stitched.png')
+    parser.add_argument('--boxes', action='store_true',
+                        help='Also save stitched_boxes.png (implies --stitched)')
+    parser.add_argument('--json', action='store_true',
+                        help='Also save notes.json')
+    parser.add_argument('--all', action='store_true',
+                        help='Enable all optional outputs')
     args = parser.parse_args()
+
+    if args.all:
+        args.stitched = args.boxes = args.json = True
+    if args.boxes:
+        args.stitched = True
+
+    t_start = time.perf_counter()
+
+    # Derive output folder
+    if args.output is None:
+        args.output = os.path.join(
+            os.path.dirname(os.path.abspath(args.video)), 'output')
 
     # Derive title from video path if not given
     if args.title is None:
-        song_name = os.path.basename(os.path.dirname(os.path.abspath(args.video)))
+        song_name = os.path.basename(
+            os.path.dirname(os.path.abspath(args.video)))
         args.title = song_name.replace('_', ' ').title()
 
-    # Create output directory
     os.makedirs(args.output, exist_ok=True)
 
-    stitched_path = os.path.join(args.output, 'stitched.png')
-    boxes_path = os.path.join(args.output, 'stitched_boxes.png')
-    html_path = os.path.join(args.output, 'output.html')
-
-    # ── 1. Run the stitch + detect pipeline ───────────────────────
+    # ── 1. Run stitch + detect pipeline ───────────────────────────
     if not args.quiet:
         print(f'Processing: {args.video}')
         print(f'Output:     {args.output}/')
+        print()
 
     result = stitch_song(
         video_path=args.video,
-        output_path=stitched_path,
         stitch_fps=args.fps,
         verbose=not args.quiet,
     )
 
-    # ── 2. Draw boxes overlay ─────────────────────────────────────
-    boxes_img = draw_boxes_on_stitched(result)
-    cv2.imwrite(boxes_path, boxes_img)
+    # ── 2. Analyse notes (CC labelling) ─────────────────────────
+    if args.boxes:
+        # Full draw — also produces labelled_boxes as side-effect
+        boxes_img = draw_boxes_on_stitched(result, verbose=not args.quiet)
+    else:
+        # Label-only — skips the expensive image copy + rendering
+        label_notes(result, verbose=not args.quiet)
+        boxes_img = None
 
     # ── 3. Generate notes data from boxes ─────────────────────────
     notes_data = build_notes_data(
@@ -817,21 +870,46 @@ def main():
         s = notes_data['summary']
         print(f'\nNotes: {s["total_notes"]} total '
               f'({s["right_hand_notes"]} RH, {s["left_hand_notes"]} LH)')
-        print(f'Duration: {s["duration_range"][0]:.1f}s – {s["duration_range"][1]:.1f}s')
+        print(f'Duration: {s["duration_range"][0]:.1f}s – '
+              f'{s["duration_range"][1]:.1f}s')
 
-    # ── 4. Build standalone HTML ──────────────────────────────────
+    # ── 4. Build and save HTML (always) ───────────────────────────
     html = build_standalone_html(notes_data, title=args.title)
-
+    html_path = os.path.join(args.output, 'output.html')
     with open(html_path, 'w') as f:
         f.write(html)
 
+    # ── 5. Optional outputs ───────────────────────────────────────
+    saved = [html_path]
+
+    if args.stitched:
+        stitched_path = os.path.join(args.output, 'stitched.png')
+        cv2.imwrite(stitched_path, result.image)
+        saved.append(stitched_path)
+
+    if args.boxes:
+        boxes_path = os.path.join(args.output, 'stitched_boxes.png')
+        cv2.imwrite(boxes_path, boxes_img)
+        saved.append(boxes_path)
+        del boxes_img
+
+    if args.json:
+        json_path = os.path.join(args.output, 'notes.json')
+        with open(json_path, 'w') as f:
+            json.dump(notes_data, f, indent=2)
+        saved.append(json_path)
+
+    elapsed = time.perf_counter() - t_start
+
     if not args.quiet:
-        html_kb = os.path.getsize(html_path) / 1024
-        boxes_kb = os.path.getsize(boxes_path) / 1024
         print(f'\nSaved:')
-        print(f'  {stitched_path}')
-        print(f'  {boxes_path} ({boxes_kb:.0f} KB)')
-        print(f'  {html_path} ({html_kb:.0f} KB)')
+        for p in saved:
+            sz = os.path.getsize(p)
+            if sz > 1024 * 1024:
+                print(f'  {p} ({sz / 1024 / 1024:.1f} MB)')
+            else:
+                print(f'  {p} ({sz / 1024:.0f} KB)')
+        print(f'\nDone in {elapsed:.1f}s')
 
 
 if __name__ == '__main__':

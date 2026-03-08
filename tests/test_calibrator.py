@@ -8,7 +8,7 @@ from tests.conftest import (
     SAMPLE_WIDTH, SAMPLE_HEIGHT
 )
 from src.calibrator import (
-    detect_keyboard_region, detect_play_line, detect_note_colors,
+    detect_keyboard_region, detect_note_colors,
     detect_intro_end, estimate_scroll_speed, create_color_mask,
     detect_static_elements, calibrate, NoteColor, CalibrationResult
 )

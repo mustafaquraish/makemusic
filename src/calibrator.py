@@ -88,36 +88,6 @@ def detect_keyboard_region(frame_bgr: np.ndarray) -> Tuple[int, int]:
     return keyboard_top, keyboard_bottom - keyboard_top + 1
 
 
-def detect_play_line(frame_bgr: np.ndarray, keyboard_y: int) -> int:
-    """
-    Detect the play line — where notes are "played".
-    This is usually a thin horizontal line just above the keyboard.
-    
-    Returns the y-coordinate of the play line.
-    """
-    h, w = frame_bgr.shape[:2]
-    hsv = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2HSV)
-    
-    # Look for a horizontal bright/colored line near the keyboard
-    search_start = max(0, keyboard_y - 30)
-    search_end = keyboard_y + 10
-    
-    max_brightness = 0
-    play_line_y = keyboard_y
-    
-    for y in range(search_start, min(search_end, h)):
-        row = hsv[y]
-        # Check if this row has significantly higher brightness or saturation
-        mean_v = np.mean(row[:, 2])
-        mean_s = np.mean(row[:, 1])
-        score = mean_v * 0.5 + mean_s * 0.5
-        if score > max_brightness:
-            max_brightness = score
-            play_line_y = y
-    
-    return play_line_y
-
-
 def detect_note_colors(frames_bgr: List[np.ndarray], keyboard_y: int,
                        note_area_top: int = 0) -> List[NoteColor]:
     """
@@ -157,9 +127,10 @@ def detect_note_colors(frames_bgr: List[np.ndarray], keyboard_y: int,
         pixels_hsv = note_hsv[mask]
         pixels_bgr = note_region[mask]
         
-        # Subsample if too many pixels
+        # Subsample if too many pixels (deterministic)
         if len(pixels_hsv) > 5000:
-            indices = np.random.choice(len(pixels_hsv), 5000, replace=False)
+            rng = np.random.RandomState(42)
+            indices = rng.choice(len(pixels_hsv), 5000, replace=False)
             pixels_hsv = pixels_hsv[indices]
             pixels_bgr = pixels_bgr[indices]
             xs = xs[indices]
