@@ -803,27 +803,27 @@
         <span class="note-count-badge" id="note-count-badge"></span>
         <div class="spacer"></div>
 
-        <button class="toolbar-btn hand-toggle-btn" id="rh-toggle" onclick="toggleHand('right')">
+        <button class="toolbar-btn hand-toggle-btn" id="rh-toggle" onclick="toggleHand('right')" title="Toggle Right Hand (1)">
             <span class="hand-swatch" id="rh-swatch"></span>
             <span class="btn-label">RH</span>
         </button>
-        <button class="toolbar-btn hand-toggle-btn" id="lh-toggle" onclick="toggleHand('left')">
+        <button class="toolbar-btn hand-toggle-btn" id="lh-toggle" onclick="toggleHand('left')" title="Toggle Left Hand (2)">
             <span class="hand-swatch" id="lh-swatch"></span>
             <span class="btn-label">LH</span>
         </button>
 
         <div class="toolbar-sep"></div>
 
-        <button class="toolbar-btn" id="play-btn" onclick="togglePlayback()" title="Space">
+        <button class="toolbar-btn" id="play-btn" onclick="togglePlayback()" title="Play / Pause (Space)">
             <span class="icon">▶</span> <span class="btn-label">Play</span>
         </button>
-        <button class="toolbar-btn" id="loop-btn" onclick="toggleLoop()" title="L">
+        <button class="toolbar-btn" id="loop-btn" onclick="toggleLoop()" title="Toggle Loop (L)">
             <span class="icon">🔁</span>
         </button>
 
         <div class="toolbar-sep"></div>
 
-        <label class="toolbar-label">
+        <label class="toolbar-label" title="Volume">
             <span class="icon">🔊</span>
             <input type="range" class="toolbar-range" id="volume-slider" min="0" max="100" value="80" title="Volume">
         </label>
@@ -839,15 +839,15 @@
 
         <div class="toolbar-sep"></div>
 
-        <label class="toolbar-label">
+        <label class="toolbar-label" title="Zoom (Ctrl+Scroll)">
             Zoom
-            <input type="range" class="toolbar-range" id="zoom-slider" min="20" max="300" value="80">
+            <input type="range" class="toolbar-range" id="zoom-slider" min="20" max="300" value="80" title="Zoom (Ctrl+Scroll)">
         </label>
 
-        <button class="toolbar-btn" id="theme-btn" onclick="toggleTheme()" title="T">
+        <button class="toolbar-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle Light/Dark Theme (T)">
             <span class="icon" id="theme-icon">☀️</span>
         </button>
-        <button class="toolbar-btn" onclick="showHelp()" title="?">
+        <button class="toolbar-btn" onclick="showHelp()" title="Keyboard Shortcuts (?)">
             <span class="icon">?</span>
         </button>
     </div>
@@ -1450,60 +1450,64 @@
         samplesLoading = true;
 
         var indicator = document.getElementById('sample-loading-indicator');
+
+        // ── Step 1: Instant playback via a lightweight PolySynth ────────
+        // Set up a triangle-wave synth immediately so the user can play
+        // right away without waiting for any network downloads.
+        pianoLimiter = new Tone.Limiter(-3).toDestination();
+        pianoSynth = new Tone.PolySynth(Tone.Synth, { maxPolyphony: 16 });
+        pianoSynth.set({
+            oscillator: { type: 'triangle' },
+            envelope: { attack: 0.005, decay: 1.0, sustain: 0.1, release: 1.5 },
+            volume: -12,
+        });
+        pianoSynth.connect(pianoLimiter);
+        var vol = parseInt(document.getElementById('volume-slider').value);
+        pianoSynth.volume.value = volumeToDb(vol);
+        samplesLoaded = true;
+        samplesLoading = false;
+
+        // ── Step 2: Background-load Salamander and hot-swap ─────────────
+        // Show a small, non-blocking badge while the real piano loads.
+        indicator.innerHTML = '<span class="sample-spinner"></span> Upgrading to piano samples\u2026';
         indicator.style.display = 'block';
 
-        // Tone.start() requires user gesture in many browsers.
-        // We call it but don't block on failure — it'll get started
-        // on the first user click/keypress that triggers playback.
-        var startPromise;
-        try {
-            startPromise = Tone.start();
-        } catch (e) {
-            startPromise = Promise.resolve();
-        }
-
-        return startPromise.then(function() {
-            return new Promise(function(resolve) {
-                pianoSynth = new Tone.Sampler({
-                    urls: {
-                        'A0': 'A0.mp3', 'C1': 'C1.mp3', 'D#1': 'Ds1.mp3', 'F#1': 'Fs1.mp3',
-                        'A1': 'A1.mp3', 'C2': 'C2.mp3', 'D#2': 'Ds2.mp3', 'F#2': 'Fs2.mp3',
-                        'A2': 'A2.mp3', 'C3': 'C3.mp3', 'D#3': 'Ds3.mp3', 'F#3': 'Fs3.mp3',
-                        'A3': 'A3.mp3', 'C4': 'C4.mp3', 'D#4': 'Ds4.mp3', 'F#4': 'Fs4.mp3',
-                        'A4': 'A4.mp3', 'C5': 'C5.mp3', 'D#5': 'Ds5.mp3', 'F#5': 'Fs5.mp3',
-                        'A5': 'A5.mp3', 'C6': 'C6.mp3', 'D#6': 'Ds6.mp3', 'F#6': 'Fs6.mp3',
-                        'A6': 'A6.mp3', 'C7': 'C7.mp3', 'D#7': 'Ds7.mp3',
-                        'A7': 'A7.mp3', 'C8': 'C8.mp3',
-                    },
-                    baseUrl: 'https://tonejs.github.io/audio/salamander/',
-                    release: 1,
-                    onload: function() {
-                        pianoLimiter = new Tone.Limiter(-3).toDestination();
-                        pianoSynth.connect(pianoLimiter);
-                        var vol = parseInt(document.getElementById('volume-slider').value);
-                        pianoSynth.volume.value = volumeToDb(vol);
-                        samplesLoaded = true;
-                        samplesLoading = false;
-                        indicator.style.display = 'none';
-                        console.log('Salamander Piano samples loaded');
-                        resolve();
-                    },
-                    onerror: function() {
-                        pianoSynth = new Tone.PolySynth(Tone.Synth, { maxPolyphony: 16 }).toDestination();
-                        pianoSynth.set({
-                            oscillator: { type: 'triangle' },
-                            envelope: { attack: 0.005, decay: 1.0, sustain: 0.1, release: 1.5 },
-                            volume: -12,
-                        });
-                        samplesLoaded = true;
-                        samplesLoading = false;
-                        indicator.style.display = 'none';
-                        console.log('Fallback to PolySynth');
-                        resolve();
-                    },
-                }).toDestination();
-            });
+        var tempSampler = new Tone.Sampler({
+            urls: {
+                'A0': 'A0.mp3', 'C1': 'C1.mp3', 'D#1': 'Ds1.mp3', 'F#1': 'Fs1.mp3',
+                'A1': 'A1.mp3', 'C2': 'C2.mp3', 'D#2': 'Ds2.mp3', 'F#2': 'Fs2.mp3',
+                'A2': 'A2.mp3', 'C3': 'C3.mp3', 'D#3': 'Ds3.mp3', 'F#3': 'Fs3.mp3',
+                'A3': 'A3.mp3', 'C4': 'C4.mp3', 'D#4': 'Ds4.mp3', 'F#4': 'Fs4.mp3',
+                'A4': 'A4.mp3', 'C5': 'C5.mp3', 'D#5': 'Ds5.mp3', 'F#5': 'Fs5.mp3',
+                'A5': 'A5.mp3', 'C6': 'C6.mp3', 'D#6': 'Ds6.mp3', 'F#6': 'Fs6.mp3',
+                'A6': 'A6.mp3', 'C7': 'C7.mp3', 'D#7': 'Ds7.mp3',
+                'A7': 'A7.mp3', 'C8': 'C8.mp3',
+            },
+            baseUrl: 'https://tonejs.github.io/audio/salamander/',
+            release: 1,
+            onload: function() {
+                // Disconnect and dispose the PolySynth, then slot in the sampler.
+                try { pianoSynth.disconnect(); pianoSynth.dispose(); } catch (e) {}
+                try { pianoLimiter.disconnect(); pianoLimiter.dispose(); } catch (e) {}
+                pianoLimiter = new Tone.Limiter(-3).toDestination();
+                tempSampler.connect(pianoLimiter);
+                var vol2 = parseInt(document.getElementById('volume-slider').value);
+                tempSampler.volume.value = volumeToDb(vol2);
+                pianoSynth = tempSampler;
+                indicator.style.display = 'none';
+                console.log('Salamander Piano samples loaded and hot-swapped');
+            },
+            onerror: function() {
+                // Salamander failed — keep using the PolySynth silently.
+                try { tempSampler.dispose(); } catch (e) {}
+                indicator.style.display = 'none';
+                console.log('Salamander load failed; keeping PolySynth');
+            },
         });
+        // Don't route tempSampler to destination yet; routing is done in onload
+        // via pianoLimiter so there is no double-path to the master output.
+
+        return Promise.resolve();
     }
 
     function volumeToDb(val) {
@@ -1658,9 +1662,8 @@
         buildKeyboard();
         renderPianoRoll();
 
-        if (soundEnabled && !samplesLoaded && !samplesLoading) {
-            initAudio();
-        }
+        // Don't call initAudio() here — AudioContext requires a user gesture first.
+        // It will be initialised on the first Play button click via startPlayback().
     }
 
     function loadNotesFromURL(url) {
@@ -1721,13 +1724,17 @@
         highlightActiveKeys();
         highlightPlayingNotes();
         updateMinimapViewport();
+    });
 
-        if (isPlaying && !programmaticScroll) {
-            if (!userIsScrolling) {
-                userIsScrolling = true;
-                wasPlayingBeforeScroll = true;
-                stopPlayback();
-            }
+    // Detect manual scroll intent via wheel (non-zoom) and touch events.
+    // Using these instead of 'scroll' avoids false triggers from programmatic scrollTop changes.
+    function onUserScrollIntent() {
+        if (isPlaying && !userIsScrolling) {
+            userIsScrolling = true;
+            wasPlayingBeforeScroll = true;
+            stopPlayback();
+        }
+        if (userIsScrolling) {
             clearTimeout(scrollResumeTimer);
             scrollResumeTimer = setTimeout(function() {
                 userIsScrolling = false;
@@ -1735,9 +1742,23 @@
                     wasPlayingBeforeScroll = false;
                     startPlayback();
                 }
-            }, 150);
+            }, 200);
         }
-    });
+    }
+
+    document.getElementById('piano-roll-container').addEventListener('wheel', function(e) {
+        if (!e.ctrlKey && !e.metaKey) {
+            onUserScrollIntent();
+        }
+    }, { passive: true });
+
+    document.getElementById('piano-roll-container').addEventListener('touchstart', function() {
+        onUserScrollIntent();
+    }, { passive: true });
+
+    document.getElementById('piano-roll-container').addEventListener('touchmove', function() {
+        onUserScrollIntent();
+    }, { passive: true });
 
     // ================================================================
     //  MINIMAP CLICK
@@ -1809,6 +1830,14 @@
                 if (notesData) scrollToTime(totalDuration);
                 if (isPlaying) stopPlayback();
                 break;
+            case 'ArrowUp':
+                e.preventDefault();
+                document.getElementById('piano-roll-container').scrollBy({ top: -120, behavior: 'smooth' });
+                break;
+            case 'ArrowDown':
+                e.preventDefault();
+                document.getElementById('piano-roll-container').scrollBy({ top: 120, behavior: 'smooth' });
+                break;
             case 'KeyL':
                 toggleLoop();
                 break;
@@ -1837,12 +1866,15 @@
         }
     });
 
-    // Ensure Tone.js audio context is started on first user gesture
-    document.addEventListener('click', function() {
+    // Ensure Tone.js audio context is resumed on any user gesture.
+    // This suppresses the browser's autoplay-policy warning.
+    function ensureToneStarted() {
         if (typeof Tone !== 'undefined' && Tone.context && Tone.context.state !== 'running') {
             Tone.start().catch(function() {});
         }
-    }, { once: false });
+    }
+    document.addEventListener('click', ensureToneStarted, { once: false });
+    document.addEventListener('keydown', ensureToneStarted, { once: false });
 
     // ================================================================
     //  WINDOW RESIZE
