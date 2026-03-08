@@ -89,13 +89,47 @@ def stitch_song(video_path: str,
     pre_keyboard_y, _ = detect_keyboard_region(mid_frame)
     _, pre_intro_end = detect_intro_end(cal_frames, pre_keyboard_y)
 
-    # ── 3. Start stitch decode in background ───────────────────────
+    # ── 3. Extract first full-res frame ──────────────────────────────
     #
-    # The ffmpeg subprocess decodes VP9 independently — no GIL
-    # contention with the main thread's calibrate() CPU work.
-    # Frames from the pipe are views into bytes objects that are
-    # safe to hold without copying.
+    # We need the first frame at full resolution for:
+    #   • initial_note_area (top keyboard_y rows — the notes visible
+    #     at start of song)
+    #   • keyboard_strip (the piano keys image)
     #
+    # All subsequent frames only need a thin strip from the top
+    # (scroll_speed / fps ≈ 24 px at 10 fps), so we can crop them
+    # in ffmpeg to save ~80% of pipe throughput.
+    #
+    first_ts = None
+    initial_note_area = None
+    keyboard_strip = None
+
+    for ts, frame in iter_frames_pipe(
+        video_path, fps=stitch_fps,
+        width=width, height=height,
+        start_time=pre_intro_end, end_time=duration,
+    ):
+        first_ts = ts
+        initial_note_area = frame[0:pre_keyboard_y, :].copy()
+        if include_keyboard:
+            kb_bottom = min(pre_keyboard_y + 500, frame.shape[0])
+            keyboard_strip = frame[pre_keyboard_y:kb_bottom, :].copy()
+        break
+
+    if initial_note_area is None:
+        raise RuntimeError("No frames extracted from video")
+
+    # ── 4. Start CROPPED stitch decode in background ─────────────
+    #
+    # The cropped decode reads only the top N rows of each frame,
+    # cutting pipe throughput from ~16 GB to ~700 MB (at 10 fps).
+    # VP9 still decodes full frames internally, but far less data
+    # flows through the pipe.
+    #
+    # Conservative: assume max scroll speed ~300 px/s.
+    strip_px = int(300.0 / stitch_fps) + 6  # generous margin
+    crop_h = max((strip_px + 1) & ~1, 50)  # round up to even, min 50
+
     reader_buf: deque[tuple[float, np.ndarray]] = deque()
     reader_done = False
 
@@ -105,17 +139,15 @@ def stitch_song(video_path: str,
             video_path, fps=stitch_fps,
             width=width, height=height,
             start_time=pre_intro_end, end_time=duration,
+            crop_height=crop_h,
         ):
-            # No .copy() — each frame's underlying bytes buffer is
-            # a separate object from each read() call, so it stays
-            # valid even after the generator advances.
             reader_buf.append((ts, frame))
         reader_done = True
 
     reader_thread = Thread(target=_reader, daemon=True)
     reader_thread.start()
 
-    # ── 4. Full calibration (overlaps with decode above) ───────────
+    # ── 5. Full calibration (overlaps with cropped decode) ─────────
     cal = calibrate(cal_frames)
 
     keyboard_y      = cal.keyboard_y
@@ -123,6 +155,12 @@ def stitch_song(video_path: str,
     scroll_speed    = cal.scroll_speed
     intro_end       = cal.intro_end_time
     note_area_h     = keyboard_y
+
+    # Trim keyboard_strip to the calibrated height
+    if keyboard_strip is not None:
+        keyboard_strip = keyboard_strip[0:keyboard_height, :]
+    # Trim initial_note_area to exact calibrated keyboard_y
+    initial_note_area = initial_note_area[0:keyboard_y, :]
 
     kb_map = build_keyboard_map(cal_frames[-1][1], keyboard_y, keyboard_height)
     del cal_frames
@@ -134,29 +172,26 @@ def stitch_song(video_path: str,
         print(f"       Scroll speed: {scroll_speed:.1f} px/s")
         print(f"       Intro ends: {intro_end:.1f} s")
         print(f"       Strip height at {stitch_fps} fps: {strip_h:.1f} px")
+        print(f"       Crop height: {crop_h} px")
 
-    # ── 5. Stitch strips ──────────────────────────────────────────
+    # ── 6. Stitch strips ──────────────────────────────────────────
     if verbose:
         print(f"[3/4] Stitching at {stitch_fps} fps …")
 
-    initial_note_area = None
-    keyboard_strip = None
     strips: list[np.ndarray] = []
     extracted_total = 0
-    first_ts = None
     stitch_count = 0
+    skipped_first = False
 
     def _process_stitch_frame(ts: float, frame: np.ndarray):
-        nonlocal initial_note_area, keyboard_strip, first_ts
-        nonlocal extracted_total, stitch_count
+        nonlocal extracted_total, stitch_count, skipped_first
 
         stitch_count += 1
-        if first_ts is None:
-            first_ts = ts
-            initial_note_area = frame[0:keyboard_y, :].copy()
-            if include_keyboard:
-                kb_bottom = min(keyboard_y + keyboard_height, frame.shape[0])
-                keyboard_strip = frame[keyboard_y:kb_bottom, :].copy()
+
+        # Skip the first frame — it corresponds to the same timestamp
+        # as the full-res frame we already used for initial_note_area.
+        if not skipped_first:
+            skipped_first = True
             return
 
         elapsed        = ts - first_ts
@@ -164,7 +199,7 @@ def stitch_song(video_path: str,
         new_rows       = int(round(expected_total)) - extracted_total
 
         if new_rows > 0:
-            new_rows = min(new_rows, note_area_h)
+            new_rows = min(new_rows, crop_h)
             strips.append(frame[0:new_rows, :].copy())
             extracted_total += new_rows
 
@@ -181,9 +216,6 @@ def stitch_song(video_path: str,
         _time.sleep(0.001)
 
     reader_thread.join()
-
-    if initial_note_area is None:
-        raise RuntimeError("No frames extracted from video")
 
     if verbose:
         total_strip_h = sum(s.shape[0] for s in strips)
