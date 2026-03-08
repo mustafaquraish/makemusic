@@ -1,0 +1,298 @@
+[
+  {
+    "center_x": 43,
+    "note_name": "A",
+    "is_black": false,
+    "octave": 2,
+    "full_name": "A2",
+    "midi": 45
+  },
+  {
+    "center_x": 79,
+    "note_name": "A#",
+    "is_black": true,
+    "octave": 2,
+    "full_name": "A#2",
+    "midi": 46
+  },
+  {
+    "center_x": 129,
+    "note_name": "B",
+    "is_black": false,
+    "octave": 2,
+    "full_name": "B2",
+    "midi": 47
+  },
+  {
+    "center_x": 217,
+    "note_name": "C",
+    "is_black": false,
+    "octave": 3,
+    "full_name": "C3",
+    "midi": 48
+  },
+  {
+    "center_x": 254,
+    "note_name": "C#",
+    "is_black": true,
+    "octave": 3,
+    "full_name": "C#3",
+    "midi": 49
+  },
+  {
+    "center_x": 304,
+    "note_name": "D",
+    "is_black": false,
+    "octave": 3,
+    "full_name": "D3",
+    "midi": 50
+  },
+  {
+    "center_x": 341,
+    "note_name": "D#",
+    "is_black": true,
+    "octave": 3,
+    "full_name": "D#3",
+    "midi": 51
+  },
+  {
+    "center_x": 391,
+    "note_name": "E",
+    "is_black": false,
+    "octave": 3,
+    "full_name": "E3",
+    "midi": 52
+  },
+  {
+    "center_x": 478,
+    "note_name": "F",
+    "is_black": false,
+    "octave": 3,
+    "full_name": "F3",
+    "midi": 53
+  },
+  {
+    "center_x": 515,
+    "note_name": "F#",
+    "is_black": true,
+    "octave": 3,
+    "full_name": "F#3",
+    "midi": 54
+  },
+  {
+    "center_x": 566,
+    "note_name": "G",
+    "is_black": false,
+    "octave": 3,
+    "full_name": "G3",
+    "midi": 55
+  },
+  {
+    "center_x": 603,
+    "note_name": "G#",
+    "is_black": true,
+    "octave": 3,
+    "full_name": "G#3",
+    "midi": 56
+  },
+  {
+    "center_x": 653,
+    "note_name": "A",
+    "is_black": false,
+    "octave": 3,
+    "full_name": "A3",
+    "midi": 57
+  },
+  {
+    "center_x": 690,
+    "note_name": "A#",
+    "is_black": true,
+    "octave": 3,
+    "full_name": "A#3",
+    "midi": 58
+  },
+  {
+    "center_x": 740,
+    "note_name": "B",
+    "is_black": false,
+    "octave": 3,
+    "full_name": "B3",
+    "midi": 59
+  },
+  {
+    "center_x": 828,
+    "note_name": "C",
+    "is_black": false,
+    "octave": 4,
+    "full_name": "C4",
+    "midi": 60
+  },
+  {
+    "center_x": 865,
+    "note_name": "C#",
+    "is_black": true,
+    "octave": 4,
+    "full_name": "C#4",
+    "midi": 61
+  },
+  {
+    "center_x": 915,
+    "note_name": "D",
+    "is_black": false,
+    "octave": 4,
+    "full_name": "D4",
+    "midi": 62
+  },
+  {
+    "center_x": 952,
+    "note_name": "D#",
+    "is_black": true,
+    "octave": 4,
+    "full_name": "D#4",
+    "midi": 63
+  },
+  {
+    "center_x": 1002,
+    "note_name": "E",
+    "is_black": false,
+    "octave": 4,
+    "full_name": "E4",
+    "midi": 64
+  },
+  {
+    "center_x": 1090,
+    "note_name": "F",
+    "is_black": false,
+    "octave": 4,
+    "full_name": "F4",
+    "midi": 65
+  },
+  {
+    "center_x": 1127,
+    "note_name": "F#",
+    "is_black": true,
+    "octave": 4,
+    "full_name": "F#4",
+    "midi": 66
+  },
+  {
+    "center_x": 1177,
+    "note_name": "G",
+    "is_black": false,
+    "octave": 4,
+    "full_name": "G4",
+    "midi": 67
+  },
+  {
+    "center_x": 1214,
+    "note_name": "G#",
+    "is_black": true,
+    "octave": 4,
+    "full_name": "G#4",
+    "midi": 68
+  },
+  {
+    "center_x": 1264,
+    "note_name": "A",
+    "is_black": false,
+    "octave": 4,
+    "full_name": "A4",
+    "midi": 69
+  },
+  {
+    "center_x": 1301,
+    "note_name": "A#",
+    "is_black": true,
+    "octave": 4,
+    "full_name": "A#4",
+    "midi": 70
+  },
+  {
+    "center_x": 1351,
+    "note_name": "B",
+    "is_black": false,
+    "octave": 4,
+    "full_name": "B4",
+    "midi": 71
+  },
+  {
+    "center_x": 1439,
+    "note_name": "C",
+    "is_black": false,
+    "octave": 5,
+    "full_name": "C5",
+    "midi": 72
+  },
+  {
+    "center_x": 1476,
+    "note_name": "C#",
+    "is_black": true,
+    "octave": 5,
+    "full_name": "C#5",
+    "midi": 73
+  },
+  {
+    "center_x": 1526,
+    "note_name": "D",
+    "is_black": false,
+    "octave": 5,
+    "full_name": "D5",
+    "midi": 74
+  },
+  {
+    "center_x": 1563,
+    "note_name": "D#",
+    "is_black": true,
+    "octave": 5,
+    "full_name": "D#5",
+    "midi": 75
+  },
+  {
+    "center_x": 1613,
+    "note_name": "E",
+    "is_black": false,
+    "octave": 5,
+    "full_name": "E5",
+    "midi": 76
+  },
+  {
+    "center_x": 1700,
+    "note_name": "F",
+    "is_black": false,
+    "octave": 5,
+    "full_name": "F5",
+    "midi": 77
+  },
+  {
+    "center_x": 1737,
+    "note_name": "F#",
+    "is_black": true,
+    "octave": 5,
+    "full_name": "F#5",
+    "midi": 78
+  },
+  {
+    "center_x": 1788,
+    "note_name": "G",
+    "is_black": false,
+    "octave": 5,
+    "full_name": "G5",
+    "midi": 79
+  },
+  {
+    "center_x": 1825,
+    "note_name": "G#",
+    "is_black": true,
+    "octave": 5,
+    "full_name": "G#5",
+    "midi": 80
+  },
+  {
+    "center_x": 1876,
+    "note_name": "A",
+    "is_black": false,
+    "octave": 5,
+    "full_name": "A5",
+    "midi": 81
+  }
+]
