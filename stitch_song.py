@@ -155,7 +155,14 @@ def stitch_song(video_path: str,
     # Trim initial_note_area to exact calibrated keyboard_y
     initial_note_area = initial_note_area[0:keyboard_y, :]
 
-    kb_map = build_keyboard_map(cal_frames[-1][1], keyboard_y, keyboard_height)
+    # Use a frame from just before intro_end for keyboard mapping.
+    # Later frames often have note bars covering the keys, which
+    # corrupts both the black-key detection and the brightness-based
+    # validation (notes darken some keys, creating false gaps).
+    kb_frame_idx = max(0, int(intro_end * 2) - 2)
+    kb_frame_idx = min(kb_frame_idx, len(cal_frames) - 1)
+    kb_map = build_keyboard_map(cal_frames[kb_frame_idx][1],
+                                keyboard_y, keyboard_height)
     del cal_frames
 
     if verbose:

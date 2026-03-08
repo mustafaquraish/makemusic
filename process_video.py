@@ -52,6 +52,82 @@ def note_name_to_key_index(name: str) -> int:
     return midi - 21
 
 
+def _merge_split_fragments(notes: list) -> list:
+    """Merge consecutive same-key fragments caused by rendering splits.
+
+    Accidental splits produce two consecutive detections of the same note where
+    one of them is abnormally short.  Two consecutive same-key/hand notes are
+    merged when EITHER condition is met:
+
+      (A) Global-fragment rule: the shorter note's duration is below
+          max(0.05 s, 0.25 × median_duration) AND the gap is ≤ gap_threshold.
+          (Catches short fragments that are outliers vs the whole piece.)
+
+      (B) Pair-relative rule: the shorter note is < 35 % of the longer one's
+          duration AND the gap is ≤ 0.10 s.
+          (Catches two-note pairs where the ratio reveals a split even when global
+          statistics don't help, e.g. a very short staccato piece.)
+
+    Only black keys (sharps/flats) are eligible — splits are overwhelmingly a
+    black-key rendering artefact; white-key merging is handled upstream.
+
+    Returns a new sorted list of notes with IDs left untouched (caller renumbers).
+    """
+    if len(notes) < 2:
+        return notes
+
+    durations = sorted(n['duration'] for n in notes)
+    # Median is more robust than a low percentile when fragments are present
+    med_idx = len(durations) // 2
+    median_dur = durations[med_idx]
+    fragment_threshold = max(0.05, 0.25 * median_dur)
+    gap_threshold = max(0.10, fragment_threshold)
+
+    # Group by (key_index, hand)
+    from collections import defaultdict
+    groups: dict = defaultdict(list)
+    for n in notes:
+        groups[(n['key_index'], n['hand'])].append(n)
+
+    merged: list = []
+    for (ki, hand), group in groups.items():
+        # Only apply to black keys (sharps / flats)
+        note_name = group[0]['note_name']
+        if '#' not in note_name and 'b' not in note_name:
+            merged.extend(group)
+            continue
+
+        group.sort(key=lambda n: n['start_time'])
+        result = [dict(group[0])]  # work on copies
+
+        for nxt in group[1:]:
+            prev = result[-1]
+            prev_end = prev['start_time'] + prev['duration']
+            gap = nxt['start_time'] - prev_end
+
+            d_prev, d_nxt = prev['duration'], nxt['duration']
+            shorter, longer = min(d_prev, d_nxt), max(d_prev, d_nxt)
+
+            # (A) Global fragment rule
+            global_fragment = shorter < fragment_threshold and gap <= gap_threshold
+            # (B) Pair-relative rule
+            pair_fragment = (longer > 0 and shorter / longer < 0.35
+                             and gap <= 0.10)
+
+            if global_fragment or pair_fragment:
+                # Merge: extend prev to span nxt as well
+                new_end = max(prev_end, nxt['start_time'] + d_nxt)
+                prev['duration'] = round(new_end - prev['start_time'], 4)
+            else:
+                result.append(dict(nxt))
+
+        merged.extend(result)
+
+    # Restore original sort order (by start_time, then key_index)
+    merged.sort(key=lambda n: (n['start_time'], n['key_index']))
+    return merged
+
+
 def build_notes_data(labelled_boxes, cal, note_area_bottom) -> dict:
     """Convert labelled bounding boxes into the EMBEDDED_NOTES_DATA format.
 
@@ -104,6 +180,14 @@ def build_notes_data(labelled_boxes, cal, note_area_bottom) -> dict:
             'center_x': round((x1 + x2) / 2, 1),
             'color_rgb': color_rgb,
         })
+
+    # ── Merge split fragments ─────────────────────────────────────
+    # Accidental splits produce two consecutive detections of the same
+    # black key where one fragment is abnormally short.  Two rules:
+    #   (A) Global: shorter note < max(0.05 s, 0.25 × median) + small gap
+    #   (B) Pair-relative: shorter < 35 % of longer + gap ≤ 0.10 s
+    # Only black keys are eligible; white-key merging is done upstream.
+    notes = _merge_split_fragments(notes)
 
     # Re-number IDs sequentially
     for i, n in enumerate(notes):

@@ -288,6 +288,10 @@ def build_keyboard_map(frame_bgr: np.ndarray,
         keys = _build_from_black_key_pattern(white_centers, black_groups, 
                                               white_key_width, octave_offset)
     
+    # Step 5: Validate assignment against actual black key positions
+    keys = _validate_with_black_keys(white_centers, black_centers, keys,
+                                     gray, keyboard_y, keyboard_height)
+    
     return keys
 
 
@@ -373,7 +377,10 @@ def _build_from_black_key_pattern(white_centers: List[int],
     
     if ref_group_idx is None:
         logger.warning("No identifiable black key groups, using position-only estimation")
-        return _estimate_keyboard(white_centers[-1] if white_centers else 1920, octave_offset)
+        # Use the actual detected white key centers with default C assumption;
+        # the downstream validation step will correct the starting note.
+        return _build_from_reference_c(white_centers, 0,
+                                        white_key_width, octave_offset)
     
     # Use the reference group to find a C
     grp = black_groups[ref_group_idx]
@@ -406,7 +413,9 @@ def _build_from_black_key_pattern(white_centers: List[int],
                 return _build_from_reference_f(white_centers, f_idx,
                                                 white_key_width, octave_offset)
     
-    return _estimate_keyboard(white_centers[-1] if white_centers else 1920, octave_offset)
+    # Last resort: use detected positions with default C assumption
+    return _build_from_reference_c(white_centers, 0,
+                                    white_key_width, octave_offset)
 
 
 def _build_from_reference_f(white_centers: List[int],
@@ -490,6 +499,249 @@ def _estimate_keyboard(frame_width: int,
     
     keys.sort(key=lambda k: k.center_x)
     return keys
+
+
+# ────────────────────────────────────────────────────────────────────
+#  Post-hoc validation using detected black-key positions
+# ────────────────────────────────────────────────────────────────────
+
+NO_BLACK_PAIRS = frozenset({('E', 'F'), ('B', 'C')})
+
+
+def _detect_halftone_gaps_from_brightness(
+    gray: np.ndarray,
+    keyboard_y: int,
+    keyboard_height: int,
+    white_centers: List[int],
+) -> Optional[List[bool]]:
+    """
+    Determine which white-key gaps have a black key by scanning the
+    keyboard image brightness at multiple heights.
+
+    In the region where black keys sit (roughly 50-70 % into the
+    keyboard from the top), the midpoint between two white keys is
+    dark if a black key is present and bright if not (E-F or B-C).
+
+    Returns
+    -------
+    has_black : list of bool (one per gap), or ``None`` if the signal
+        is too weak to be reliable.
+    """
+    n_gaps = len(white_centers) - 1
+    if n_gaps < 4:
+        return None
+
+    h_img = gray.shape[0]
+    best_separation = 0.0
+    best_has_black: Optional[List[bool]] = None
+
+    # Scan several heights inside the keyboard region
+    for frac in (0.55, 0.60, 0.50, 0.65, 0.70, 0.45, 0.75):
+        y = keyboard_y + int(keyboard_height * frac)
+        if y < 0 or y >= h_img:
+            continue
+
+        y_lo = max(0, y - 4)
+        y_hi = min(h_img, y + 5)
+        row = np.mean(gray[y_lo:y_hi, :].astype(float), axis=0)
+
+        mids = np.empty(n_gaps)
+        for i in range(n_gaps):
+            mid_x = (white_centers[i] + white_centers[i + 1]) // 2
+            mid_x = max(0, min(mid_x, len(row) - 1))
+            mids[i] = row[mid_x]
+
+        # Need a bimodal split: some gaps bright, some dark.
+        threshold = (np.max(mids) + np.min(mids)) / 2.0
+        bright = mids > threshold
+        dark = ~bright
+
+        if bright.sum() == 0 or dark.sum() == 0:
+            continue
+
+        mean_bright = float(np.mean(mids[bright]))
+        mean_dark = float(np.mean(mids[dark]))
+        separation = mean_bright - mean_dark
+
+        if separation <= best_separation:
+            continue
+
+        # Sanity: the bright (no-black-key) gaps should appear at
+        # intervals of 3 or 4 (the two half-step positions inside one
+        # octave are 3 and 4 white keys apart). Verify periodicity.
+        bright_idxs = list(np.where(bright)[0])
+        if len(bright_idxs) < 2:
+            # Only one bright gap — borderline, but still useful
+            # if the separation is dramatic.
+            if separation > 15:
+                best_separation = separation
+                best_has_black = [not b for b in bright]
+            continue
+
+        # Check if the spacings between bright gaps are multiples of 7
+        # (same junction type repeated), or a mix of 3/4 (alternating
+        # E-F / B-C within one octave).
+        spacings = np.diff(bright_idxs)
+        valid = all(s % 7 == 0 or s in (3, 4) for s in spacings)
+        if not valid:
+            continue
+
+        best_separation = separation
+        best_has_black = [not b for b in bright]
+
+    if best_separation < 15:
+        return None
+
+    return best_has_black
+
+
+def _validate_with_black_keys(
+    white_centers: List[int],
+    black_centers: List[int],
+    keys: List[KeyInfo],
+    gray: Optional[np.ndarray] = None,
+    keyboard_y: int = 0,
+    keyboard_height: int = 0,
+) -> List[KeyInfo]:
+    """
+    Validate the current note name assignment by checking each
+    adjacent white-key gap against the detected black key positions.
+
+    The piano has a fixed rule: there is NO black key between E-F and
+    B-C, and there IS a black key between all other adjacent white key
+    pairs.  We score all 7 possible white-key-name rotations and apply
+    a correction if a different rotation matches the physical layout
+    better than the current one.
+
+    When ``black_centers`` has too few entries (standard detection
+    failed), falls back to brightness-based gap analysis if a
+    grayscale frame is provided.
+
+    Returns the (possibly corrected) key list.
+    """
+    if len(white_centers) < 4:
+        return keys
+
+    has_black: Optional[List[bool]] = None
+
+    if len(black_centers) >= 2:
+        # ── Strategy A: use detected black-key centres ────────────
+        has_black = []
+        for i in range(len(white_centers) - 1):
+            mid = (white_centers[i] + white_centers[i + 1]) / 2.0
+            threshold = (white_centers[i + 1] - white_centers[i]) * 0.4
+            found = any(abs(bc - mid) < threshold for bc in black_centers)
+            has_black.append(found)
+
+    if has_black is None or sum(has_black) < 2:
+        # ── Strategy B: brightness-based gap analysis ─────────────
+        if gray is not None and keyboard_height > 0:
+            has_black = _detect_halftone_gaps_from_brightness(
+                gray, keyboard_y, keyboard_height, white_centers)
+
+    if has_black is None:
+        return keys
+
+    # ── Determine the current first-white-key note name ───────────
+    white_keys_sorted = sorted(
+        [k for k in keys if not k.is_black],
+        key=lambda k: k.center_x,
+    )
+    if not white_keys_sorted:
+        return keys
+    current_offset = WHITE_NOTES.index(white_keys_sorted[0].note_name)
+
+    # ── Score all 7 possible starting offsets ─────────────────────
+    #
+    # When brightness detection can only find one junction type (e.g.
+    # E-F shows as bright but B-C looks dark), two offsets will tie
+    # because the bright gaps match both E-F and B-C predictions
+    # equally.  We break ties using WHITE KEY GAP WIDTHS: gaps at
+    # half-step junctions (E-F, B-C) tend to be slightly narrower
+    # because the adjacent keys meet flush (no black key between them).
+    gap_widths = [white_centers[i + 1] - white_centers[i]
+                  for i in range(len(white_centers) - 1)]
+    median_gap = float(np.median(gap_widths)) if gap_widths else 1.0
+
+    best_offset = current_offset
+    best_score = -9999
+    best_width_score = 0.0
+
+    for offset in range(7):
+        score = 0
+        width_score = 0.0
+        for i in range(len(has_black)):
+            name_i = WHITE_NOTES[(i + offset) % 7]
+            name_next = WHITE_NOTES[(i + offset + 1) % 7]
+            expect_black = (name_i, name_next) not in NO_BLACK_PAIRS
+            if has_black[i] == expect_black:
+                score += 1
+            else:
+                score -= 1
+
+            # Width tiebreaker: narrower-than-median gaps at predicted
+            # half-step junctions support this offset.
+            if not expect_black and i < len(gap_widths):
+                # bonus if this predicted half-step gap IS narrow
+                width_score += (median_gap - gap_widths[i]) / median_gap
+
+        if (score > best_score or
+                (score == best_score and width_score > best_width_score)):
+            best_score = score
+            best_offset = offset
+            best_width_score = width_score
+
+    shift = (best_offset - current_offset) % 7
+    if shift > 3:
+        shift -= 7
+    if shift == 0:
+        return keys
+
+    logger.info("Black-key validation: correcting white-key shift by %+d", shift)
+    return _apply_white_key_shift(keys, shift)
+
+
+def _apply_white_key_shift(keys: List[KeyInfo], shift: int) -> List[KeyInfo]:
+    """
+    Shift all white-key names by *shift* positions in the C-D-E-F-G-A-B
+    cycle, then re-derive black keys from the corrected white keys.
+
+    Physical x-positions are preserved; only names and octaves change.
+    """
+    white_keys = sorted(
+        [k for k in keys if not k.is_black],
+        key=lambda k: k.center_x,
+    )
+    if not white_keys:
+        return list(keys)
+
+    new_keys: List[KeyInfo] = []
+    for wk in white_keys:
+        old_idx = WHITE_NOTES.index(wk.note_name)
+        new_idx = (old_idx + shift) % 7
+        octave_delta = (old_idx + shift) // 7
+        new_keys.append(KeyInfo(
+            center_x=wk.center_x,
+            note_name=WHITE_NOTES[new_idx],
+            is_black=False,
+            octave=wk.octave + octave_delta,
+        ))
+
+    # Re-derive black keys between appropriate white-key pairs.
+    for i in range(len(new_keys) - 1):
+        low, high = new_keys[i], new_keys[i + 1]
+        pair = (low.note_name, high.note_name)
+        if pair in BLACK_KEY_MAP:
+            bx = low.center_x + 0.42 * (high.center_x - low.center_x)
+            new_keys.append(KeyInfo(
+                center_x=int(round(bx)),
+                note_name=BLACK_KEY_MAP[pair],
+                is_black=True,
+                octave=low.octave,
+            ))
+
+    new_keys.sort(key=lambda k: k.center_x)
+    return new_keys
 
 
 def map_x_to_key(center_x: float, keyboard_map: List[KeyInfo]) -> Optional[KeyInfo]:
