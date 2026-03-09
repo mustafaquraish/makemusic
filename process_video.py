@@ -128,6 +128,91 @@ def _merge_split_fragments(notes: list) -> list:
     return merged
 
 
+def build_notes_from_detector(result) -> dict:
+    """Build notes data directly from stitch_detector results.
+
+    Uses the per-key-column detector notes (which correctly handle
+    adjacent-key bleed via valley splitting) instead of deriving timing
+    from CC-analysis bounding boxes.
+
+    The detector already knows: key_name, hand, y-position, height.
+    We convert y/height to start_time/duration using scroll_speed.
+    """
+    cal = result.calibration
+    img_h = result.image.shape[0]
+    note_area_bottom = img_h - cal.keyboard_height
+
+    notes = []
+    for i, n in enumerate(result.notes):
+        try:
+            key_idx = note_name_to_key_index(n.key_name)
+        except ValueError:
+            continue
+
+        y_bottom = n.y + n.height
+        y_bottom_c = min(y_bottom, note_area_bottom)
+        start_time = y_to_time(y_bottom_c, note_area_bottom,
+                               cal.scroll_speed, cal.intro_end_time)
+        duration = (y_bottom_c - n.y) / cal.scroll_speed
+
+        if duration < 0.02:
+            continue
+
+        # Get hand colour
+        if n.hand == 'right_hand' and len(cal.note_colors) > 0:
+            nc = cal.note_colors[0]
+            color_rgb = [int(x) for x in reversed(nc.center_bgr)]
+        elif n.hand == 'left_hand' and len(cal.note_colors) > 1:
+            nc = cal.note_colors[1]
+            color_rgb = [int(x) for x in reversed(nc.center_bgr)]
+        else:
+            color_rgb = [200, 200, 200]
+
+        notes.append({
+            'id': i + 1,
+            'note_name': n.key_name,
+            'start_time': round(start_time, 4),
+            'duration': round(duration, 4),
+            'hand': n.hand,
+            'key_index': key_idx,
+            'center_x': round(n.x + n.width / 2, 1),
+            'color_rgb': color_rgb,
+        })
+
+    # Merge split fragments (black-key rendering artefacts)
+    notes = _merge_split_fragments(notes)
+
+    # Re-number IDs sequentially
+    for i, n in enumerate(notes):
+        n['id'] = i + 1
+
+    # Build summary
+    rh = sum(1 for n in notes if n['hand'] == 'right_hand')
+    lh = sum(1 for n in notes if n['hand'] == 'left_hand')
+    times = [n['start_time'] for n in notes]
+    key_indices = [n['key_index'] for n in notes]
+
+    summary = {
+        'total_notes': len(notes),
+        'right_hand_notes': rh,
+        'left_hand_notes': lh,
+        'duration_range': [round(min(times), 2), round(max(times), 2)] if times else [0, 0],
+        'key_range': [min(key_indices), max(key_indices)] if key_indices else [0, 87],
+    }
+
+    metadata = {
+        'keyboard_y': cal.keyboard_y,
+        'keyboard_height': cal.keyboard_height,
+        'scroll_speed': cal.scroll_speed,
+        'intro_end_time': cal.intro_end_time,
+    }
+
+    return {
+        'metadata': metadata,
+        'notes': notes,
+        'summary': summary,
+    }
+
 def build_notes_data(labelled_boxes, cal, note_area_bottom) -> dict:
     """Convert labelled bounding boxes into the EMBEDDED_NOTES_DATA format.
 
@@ -779,16 +864,13 @@ def _analyze_boxes(result, verbose=False):
 
 
 def draw_boxes_on_stitched(result, verbose=False) -> np.ndarray:
-    """Run analysis and render labelled bounding boxes on a copy.
+    """Render labelled bounding boxes from detector notes on a copy.
 
-    Calls _analyze_boxes() if not already done, then draws.
+    Uses the cleaned detector notes (result.notes) directly so the
+    boxes match the final note output exactly.
     """
-    if not hasattr(result, '_labelled_boxes'):
-        _analyze_boxes(result, verbose=verbose)
-
     source = result.image
     img_h, img_w = source.shape[:2]
-    labelled = result._labelled_boxes
 
     img = source.copy()
     BOX_RH  = (0, 220, 120)      # green
@@ -798,7 +880,12 @@ def draw_boxes_on_stitched(result, verbose=False) -> np.ndarray:
     font_scale = 0.5
     thickness = 1
 
-    for (x1, y1, x2, y2, label, hand) in labelled:
+    for n in result.notes:
+        x1, y1 = n.x, n.y
+        x2, y2 = n.x + n.width, n.y + n.height
+        label = n.key_name
+        hand = n.hand
+
         colour = BOX_LH if hand == 'left_hand' else BOX_RH
         cv2.rectangle(img, (x1, y1), (x2, y2), colour, 2)
 
@@ -825,7 +912,7 @@ def label_notes(result, verbose=False):
 
     Sets result._labelled_boxes and result._note_area_bottom,
     needed by build_notes_data().  Much faster than
-    draw_boxes_on_stitched() since it skips the image copy and
+    draw_boxes_on_stitched() since it skips the expensive image copy and
     rendering.
     """
     _analyze_boxes(result, verbose=verbose)
@@ -934,21 +1021,16 @@ def main():
         verbose=not args.quiet,
     )
 
-    # ── 2. Analyse notes (CC labelling) ─────────────────────────
-    if args.boxes:
-        # Full draw — also produces labelled_boxes as side-effect
-        boxes_img = draw_boxes_on_stitched(result, verbose=not args.quiet)
-    else:
-        # Label-only — skips the expensive image copy + rendering
-        label_notes(result, verbose=not args.quiet)
-        boxes_img = None
+    # ── 2. Generate notes data from detector ──────────────────────
+    #   Use detector notes directly (per-key column scanning with
+    #   valley splitting) — avoids CC re-merging of adjacent notes.
+    notes_data = build_notes_from_detector(result)
 
-    # ── 3. Generate notes data from boxes ─────────────────────────
-    notes_data = build_notes_data(
-        result._labelled_boxes,
-        result.calibration,
-        result._note_area_bottom,
-    )
+    # ── 3. Draw boxes from detector notes ─────────────────────────
+    if args.boxes:
+        boxes_img = draw_boxes_on_stitched(result)
+    else:
+        boxes_img = None
 
     if not args.quiet:
         s = notes_data['summary']

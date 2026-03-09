@@ -107,7 +107,7 @@ def test_note_count_range(perfect_result: StitchResult):
 @needs_video
 def test_note_count_exact(perfect_result: StitchResult):
     """Exact note count at 10 fps."""
-    assert len(perfect_result.notes) == 412
+    assert len(perfect_result.notes) == 413
 
 
 @needs_video
@@ -121,7 +121,7 @@ def test_notes_have_hands(perfect_result: StitchResult):
 def test_note_hand_split(perfect_result: StitchResult):
     rh = sum(1 for n in perfect_result.notes if n.hand == 'right_hand')
     lh = sum(1 for n in perfect_result.notes if n.hand == 'left_hand')
-    assert rh == 312
+    assert rh == 313
     assert lh == 100
 
 

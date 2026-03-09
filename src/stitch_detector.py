@@ -47,6 +47,8 @@ class StitchedNote:
     height: int
     color_idx: int         # index into CalibrationResult.note_colors
     pixel_count: int = 0   # number of mask-positive pixels inside the box
+    center_density: float = 0.0  # density of center 1/3 columns (black keys)
+    mean_saturation: float = 0.0  # mean HSV S of mask-positive pixels
 
 
 # ────────────────────────────────────────────────────────────────────
@@ -147,6 +149,152 @@ def _find_vertical_runs(column_mask: np.ndarray,
     return [(int(s), int(e)) for s, e in zip(starts[valid], ends[valid])]
 
 
+def _split_runs_at_valleys(
+    column_mask: np.ndarray,
+    runs: List[Tuple[int, int]],
+    valley_ratio: float = 0.50,
+    max_valley_fill: float = 0.45,
+    min_valley_width: int = 30,
+    min_peak_fill: float = 0.80,
+    min_valley_floor: float = 0.10,
+    min_run_height: int = 8,
+    min_sub_run: int = 30,
+) -> List[Tuple[int, int]]:
+    """Split runs where the fill profile shows deep *bleed* valleys.
+
+    Prevents merging of separate notes when bleed from an adjacent key
+    keeps the row fill just above *fill_threshold* across note
+    boundaries.
+
+    A valley is a contiguous band of ≥ *min_valley_width* rows where
+    row fill is below the valley threshold (the lower of
+    *valley_ratio* × peak_fill and *max_valley_fill*).
+
+    Bleed valleys are distinguished from visual artifact valleys (text
+    overlays, frame-stitching boundaries, etc.) by two criteria:
+
+    * The run's 90th-percentile fill must be ≥ *min_peak_fill*.
+      Sparse black-key notes with lower peak fill are skipped entirely.
+    * Every row in the valley must have fill ≥ *min_valley_floor*.
+      Bleed valleys have consistently moderate fill (all rows ~ 0.2-0.4)
+      whereas artifact valleys contain zero-fill rows intermixed with
+      higher-fill rows.
+    """
+    if not runs:
+        return runs
+
+    col_width = column_mask.shape[1] if column_mask.ndim == 2 else 1
+    if col_width == 0:
+        return runs
+
+    refined: List[Tuple[int, int]] = []
+    for y_start, y_end in runs:
+        note_h = y_end - y_start
+        if note_h < 3 * min_run_height:
+            refined.append((y_start, y_end))
+            continue
+
+        strip = column_mask[y_start:y_end, :]
+        if strip.ndim == 2:
+            row_fill = np.mean(strip > 0, axis=1)
+        else:
+            row_fill = (strip > 0).astype(float)
+
+        peak_fill = float(np.percentile(row_fill, 90))
+        if peak_fill < 0.01:
+            continue  # empty run
+
+        # Skip sparse notes (black keys with inherently low fill)
+        if peak_fill < min_peak_fill:
+            refined.append((y_start, y_end))
+            continue
+
+        # Valley threshold: lower of relative and absolute
+        valley_threshold = min(peak_fill * valley_ratio, max_valley_fill)
+        is_peak = row_fill >= valley_threshold
+
+        # Edge-detect to find sub-runs above the valley threshold
+        padded = np.empty(len(is_peak) + 2, dtype=np.bool_)
+        padded[0] = False
+        padded[-1] = False
+        padded[1:-1] = is_peak
+        edges = np.diff(padded.view(np.uint8).astype(np.int8))
+        sub_starts = np.where(edges == 1)[0]
+        sub_ends = np.where(edges == -1)[0]
+
+        if len(sub_starts) <= 1:
+            # Single sub-run — check if leading/trailing bleed should
+            # be trimmed.  If the sub-run is much smaller than the
+            # whole run and both the leading and trailing margins are
+            # mostly bleed (fill < valley_threshold), trim to the
+            # sub-run so adjacent-key bleed doesn't inflate the note.
+            if len(sub_starts) == 1:
+                sr_s, sr_e = int(sub_starts[0]), int(sub_ends[0])
+                sr_h = sr_e - sr_s
+                lead = sr_s            # rows before sub-run
+                trail = note_h - sr_e  # rows after sub-run
+                # Trim if the sub-run occupies ≤ 70% of the run AND
+                # leading or trailing bleed margin ≥ min_valley_width.
+                if (sr_h <= note_h * 0.70
+                        and sr_h >= min_sub_run
+                        and (lead >= min_valley_width
+                             or trail >= min_valley_width)):
+                    refined.append((y_start + sr_s, y_start + sr_e))
+                    continue
+            refined.append((y_start, y_end))
+            continue
+
+        # Check each inter-sub-run gap.  Only split at gaps that are:
+        #   1. Wide enough  (≥ min_valley_width)
+        #   2. Consistently filled — bleed valleys have MOST rows at
+        #      moderate fill (≥ min_valley_floor), whereas artifact
+        #      valleys contain mostly zero-fill rows with only a few
+        #      higher-fill rows sprinkled in.  We require ≥ 80% of
+        #      valley rows to be above the floor.
+        min_valley_frac = 0.90
+        split_at: List[bool] = []
+        for gi in range(len(sub_starts) - 1):
+            gap_start = sub_ends[gi]
+            gap_end = sub_starts[gi + 1]
+            gap_width = gap_end - gap_start
+            if gap_width < min_valley_width:
+                split_at.append(False)
+                continue
+            valley_fills = row_fill[gap_start:gap_end]
+            frac_above = float(np.mean(valley_fills >= min_valley_floor))
+            if frac_above < min_valley_frac:
+                split_at.append(False)  # artifact valley (mostly zero rows)
+                continue
+            split_at.append(True)
+
+        if not any(split_at):
+            refined.append((y_start, y_end))
+            continue
+
+        # Build merged segments: join sub-runs across non-split gaps
+        segments: List[Tuple[int, int]] = []
+        seg_start = int(sub_starts[0])
+        for gi, do_split in enumerate(split_at):
+            if do_split:
+                seg_end = int(sub_ends[gi])
+                if seg_end - seg_start >= min_sub_run:
+                    segments.append((y_start + seg_start, y_start + seg_end))
+                seg_start = int(sub_starts[gi + 1])
+        # Last segment
+        seg_end = int(sub_ends[-1])
+        if seg_end - seg_start >= min_sub_run:
+            segments.append((y_start + seg_start, y_start + seg_end))
+
+        # Fallback: if splitting produces no viable segments, keep
+        # the original run so we don't lose the note entirely.
+        if segments:
+            refined.extend(segments)
+        else:
+            refined.append((y_start, y_end))
+
+    return refined
+
+
 # ────────────────────────────────────────────────────────────────────
 #  Key range helpers
 # ────────────────────────────────────────────────────────────────────
@@ -218,8 +366,8 @@ def detect_notes_on_stitched_image(
     min_gap_bridge: int = 15,
     min_pixel_count: int = 50,
     min_white_density: float = 0.40,
-    min_black_density: float = 0.45,
-    phantom_density_cap: float = 0.65,
+    min_black_density: float = 0.30,
+    phantom_density_cap: float = 0.70,
 ) -> List[StitchedNote]:
     """
     Detect all note rectangles in a stitched piano-roll image.
@@ -237,15 +385,16 @@ def detect_notes_on_stitched_image(
          removes them.
 
       2. **Black-key density filter** — initial threshold
-         *min_black_density* (default 0.45) removes the worst phantoms
-         while preserving genuine notes as low as ~0.47 density.
+         *min_black_density* (default 0.30) removes the worst phantoms
+         while preserving genuine notes as low as ~0.33 density.
 
       3. **Adjacency phantom check** — a black-key detection with
-         density < *phantom_density_cap* (default 0.65) is discarded
+         density < *phantom_density_cap* (default 0.70) is discarded
          if **both** of its adjacent white keys have detected notes
-         with overlapping Y ranges.  Additionally, if density < 0.60
-         and **at least one** adjacent white key has overlapping notes,
-         the detection is also discarded (single-adjacent phantom).
+         with overlapping Y ranges.  Additionally, if **at least one**
+         adjacent white key has overlapping notes, relative saturation
+         is used to distinguish genuine notes from edge bleed — bleed
+         phantoms have low relative saturation and are discarded.
          This catches phantoms caused by white-key notes whose edges
          spill into the black key's column zone.
 
@@ -278,7 +427,9 @@ def detect_notes_on_stitched_image(
         colour_masks_bk.append(
             _build_color_mask(hsv, nc, note_area_bottom,
                               v_low_override=v_lo_ext))
-    del hsv  # free ~360 MB
+    # Keep saturation channel for black-key bleed discrimination
+    sat_channel = hsv[:, :, 1].copy()
+    del hsv  # free ~360 MB (saturation copy is ~1/3 that)
 
     # Light morphology to remove single-pixel noise
     # Standard masks (white keys): 3×3 opening
@@ -342,6 +493,13 @@ def detect_notes_on_stitched_image(
                 min_gap=min_gap_bridge,
             )
 
+            # Split runs that have deep fill-profile valleys
+            # (prevents merging adjacent notes via low-level bleed)
+            runs = _split_runs_at_valleys(
+                raw_strip, runs,
+                min_run_height=min_note_height,
+            )
+
             for y_start, y_end in runs:
                 box_mask = raw_strip[y_start:y_end, :]
                 px_count = int(np.sum(box_mask > 0))
@@ -358,6 +516,24 @@ def detect_notes_on_stitched_image(
                 if not is_black and density < min_white_density:
                     continue
 
+                # Compute center density for black keys (middle 1/3)
+                c_density = 0.0
+                m_sat = 0.0
+                if is_black and col_w >= 3:
+                    c_lo = col_w // 3
+                    c_hi = col_w - c_lo
+                    center_strip = box_mask[:, c_lo:c_hi]
+                    c_area = (c_hi - c_lo) * note_h
+                    c_px = int(np.sum(center_strip > 0))
+                    c_density = c_px / c_area if c_area > 0 else 0.0
+
+                    # Mean saturation of mask-positive pixels
+                    sat_strip = sat_channel[y_start:y_end,
+                                            col_start:col_end]
+                    sat_vals = sat_strip[box_mask > 0]
+                    if len(sat_vals) > 0:
+                        m_sat = float(np.mean(sat_vals))
+
                 all_notes.append(StitchedNote(
                     key_name=key_name,
                     is_black=is_black,
@@ -368,15 +544,61 @@ def detect_notes_on_stitched_image(
                     height=note_h,
                     color_idx=ci,
                     pixel_count=px_count,
+                    center_density=c_density,
+                    mean_saturation=m_sat,
                 ))
+
+    del sat_channel  # free saturation channel
+
+    # ── Boundary artifact filter ──────────────────────────────────
+    #    Remove tiny notes right at the keyboard boundary — these are
+    #    usually keyboard-region colour bleeding into the note area.
+    boundary_buffer = 20
+    short_boundary = 20
+    all_notes = [n for n in all_notes
+                 if not (n.y + n.height > note_area_bottom - boundary_buffer
+                         and n.height < short_boundary)]
+
+    # ── Banner / overlay artifact filter ──────────────────────────
+    #    When a video overlay (title card, banner, etc.) is present,
+    #    every key column detects a note at the same Y position.
+    #    Remove any group of notes that start at the same Y position
+    #    (within tolerance) and span too many distinct keys.
+    _BANNER_KEY_THRESHOLD = 15  # more than this many keys → banner
+    _BANNER_Y_TOL = 5          # Y tolerance for grouping
+
+    if all_notes:
+        # Sort notes by y for efficient grouping
+        y_sorted = sorted(all_notes, key=lambda n: n.y)
+        banner_indices: set[int] = set()
+        i0 = 0
+        while i0 < len(y_sorted):
+            y_ref = y_sorted[i0].y
+            i1 = i0 + 1
+            while i1 < len(y_sorted) and y_sorted[i1].y <= y_ref + _BANNER_Y_TOL:
+                i1 += 1
+            group_size = i1 - i0
+            if group_size > _BANNER_KEY_THRESHOLD:
+                for j in range(i0, i1):
+                    banner_indices.add(id(y_sorted[j]))
+            i0 = i1
+        if banner_indices:
+            all_notes = [n for n in all_notes if id(n) not in banner_indices]
 
     # ── Adjacency phantom check for black keys ────────────────────
     #    Discard a black-key note if its density is below
     #    phantom_density_cap AND both of its adjacent white keys have
     #    detected notes with overlapping Y ranges (same hand).
-    #    This targets phantoms created when two white-key note edges
-    #    both spill into the black key's column zone (e.g. D4+E4
-    #    spilling into D#4).
+    #
+    #    Single-adjacent phantom check uses *relative saturation* to
+    #    distinguish genuine notes from edge bleed.  Genuine notes on
+    #    black keys have vivid, highly saturated pixels (relative_sat
+    #    near 1.0), while bleed from adjacent white keys produces
+    #    washed-out pixels with moderate saturation (relative_sat
+    #    around 0.5–0.65).  A relative_sat threshold of 0.75 cleanly
+    #    separates them.
+    RELATIVE_SAT_GENUINE = 0.80
+
     def _y_overlap(n1: StitchedNote, n2: StitchedNote) -> float:
         """Fraction of the shorter note's height that overlaps."""
         ys = max(n1.y, n2.y)
@@ -393,6 +615,10 @@ def detect_notes_on_stitched_image(
             if kn2 == n.key_name:
                 notes_by_ki.setdefault(ki2, []).append(n)
                 break
+
+    # Pre-compute per-color s_range for relative saturation
+    s_ranges = [(float(nc.s_range[0]), float(nc.s_range[1]))
+                for nc in calibration.note_colors]
 
     filtered: List[StitchedNote] = []
     for n in all_notes:
@@ -438,10 +664,18 @@ def detect_notes_on_stitched_image(
             # Phantom — both adjacent white keys have overlapping notes
             continue
 
-        # Single-adjacent phantom: lower density + strong overlap on
-        # one side (common for LH bass notes that spill one direction)
-        if (has_left_overlap or has_right_overlap) and density < 0.60:
-            continue
+        # Single-adjacent phantom: use relative saturation to decide.
+        # Genuine notes have vivid pixels (high relative saturation).
+        # Bleed phantoms have washed-out edge pixels (low relative sat).
+        if has_left_overlap or has_right_overlap:
+            s_lo, s_hi = s_ranges[n.color_idx]
+            s_span = s_hi - s_lo
+            if s_span > 0:
+                relative_sat = (n.mean_saturation - s_lo) / s_span
+            else:
+                relative_sat = 0.0
+            if relative_sat < RELATIVE_SAT_GENUINE:
+                continue  # phantom — washed-out edge bleed
 
         filtered.append(n)
 
