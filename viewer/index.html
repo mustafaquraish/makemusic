@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MakeMusic - Piano Roll Viewer</title>
     <style>
         :root {
@@ -40,6 +40,7 @@
             --note-text-shadow: rgba(0,0,0,0.5);
             --help-bg: #161625;
             --help-border: #2a2a40;
+            --keyboard-height: 100px;
         }
 
         :root[data-theme="light"] {
@@ -77,6 +78,7 @@
             --note-text-shadow: rgba(0,0,0,0.3);
             --help-bg: #ffffff;
             --help-border: #d0d0dd;
+            --keyboard-height: 100px;
         }
 
         * {
@@ -101,12 +103,12 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 48px;
+            height: 56px;
             background: var(--bg-toolbar);
             display: flex;
             align-items: center;
-            padding: 0 12px;
-            gap: 8px;
+            padding: 0 16px;
+            gap: 10px;
             z-index: 100;
             border-bottom: 1px solid var(--bg-toolbar-border);
             box-shadow: 0 2px 12px rgba(0,0,0,0.25);
@@ -154,10 +156,10 @@
             background: var(--btn-bg);
             color: var(--text-primary);
             border: 1px solid transparent;
-            padding: 5px 10px;
+            padding: 7px 14px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 500;
             transition: all 0.15s ease;
             white-space: nowrap;
@@ -184,21 +186,21 @@
         }
 
         .toolbar-btn .icon {
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .hand-toggle-btn {
             position: relative;
-            padding-left: 24px;
+            padding-left: 30px;
         }
 
         .hand-toggle-btn .hand-swatch {
             position: absolute;
-            left: 7px;
+            left: 9px;
             top: 50%;
             transform: translateY(-50%);
-            width: 10px;
-            height: 10px;
+            width: 14px;
+            height: 14px;
             border-radius: 3px;
             border: 1px solid rgba(255,255,255,0.2);
         }
@@ -211,9 +213,9 @@
             background: var(--btn-bg);
             color: var(--text-primary);
             border: 1px solid var(--bg-toolbar-border);
-            padding: 5px 8px;
+            padding: 7px 12px;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 14px;
             cursor: pointer;
             outline: none;
             -webkit-appearance: none;
@@ -223,9 +225,9 @@
         .toolbar-range {
             -webkit-appearance: none;
             appearance: none;
-            width: 70px;
-            height: 4px;
-            border-radius: 2px;
+            width: 90px;
+            height: 6px;
+            border-radius: 3px;
             background: var(--btn-bg);
             outline: none;
             cursor: pointer;
@@ -233,8 +235,8 @@
 
         .toolbar-range::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 14px;
-            height: 14px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: var(--accent);
             cursor: pointer;
@@ -243,8 +245,8 @@
         }
 
         .toolbar-range::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: var(--accent);
             cursor: pointer;
@@ -253,18 +255,18 @@
         }
 
         .toolbar-label {
-            font-size: 11px;
+            font-size: 13px;
             color: var(--text-muted);
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             white-space: nowrap;
         }
 
         /* ==================== Progress Bar ==================== */
         #progress-bar-container {
             position: fixed;
-            top: 48px;
+            top: 56px;
             left: 0;
             right: 0;
             height: 4px;
@@ -308,7 +310,7 @@
         /* ==================== Main Layout ==================== */
         #main-container {
             position: fixed;
-            top: 52px;
+            top: 60px;
             left: 0;
             right: 0;
             bottom: 0;
@@ -377,6 +379,21 @@
             to   { box-shadow: 0 0 16px 4px rgba(255,255,255,0.5), 0 0 30px 8px rgba(255,255,255,0.2); }
         }
 
+        /* ==================== Note Drop Lines ==================== */
+        .note-drop-line {
+            position: absolute;
+            width: 1px;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .note-block.sharp-note {
+            border-style: dashed;
+            border-width: 1px;
+        }
+
         /* ==================== Playhead ==================== */
         #playhead {
             position: absolute;
@@ -419,7 +436,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 72px;
+            height: var(--keyboard-height);
             background: var(--bg-keyboard);
             display: flex;
             z-index: 50;
@@ -475,7 +492,7 @@
         /* ==================== Time Indicator ==================== */
         #time-indicator {
             position: fixed;
-            top: 56px;
+            top: 64px;
             right: 50px;
             padding: 5px 10px;
             background: var(--tooltip-bg);
@@ -493,10 +510,10 @@
         /* ==================== Minimap ==================== */
         #minimap {
             position: fixed;
-            top: 52px;
+            top: 60px;
             right: 0;
             width: 36px;
-            bottom: 72px;
+            bottom: var(--keyboard-height);
             background: var(--minimap-bg);
             border-left: 1px solid var(--bg-toolbar-border);
             z-index: 55;
@@ -596,6 +613,974 @@
         .loading-text {
             font-size: 14px;
             color: var(--text-secondary);
+        }
+
+        /* ==================== Drop Zone ==================== */
+        #drop-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 360px;
+            height: 220px;
+            border: 2px dashed var(--text-muted);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        #drop-zone:hover, #drop-zone.drag-over {
+            border-color: var(--accent);
+            background: rgba(233, 69, 96, 0.06);
+        }
+
+        .drop-zone-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .drop-zone-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* ==================== Drag Overlay ==================== */
+        #drag-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(233, 69, 96, 0.08);
+            border: 3px dashed var(--accent);
+            z-index: 500;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #drag-overlay.visible {
+            display: flex;
+        }
+
+        #drag-overlay .drag-overlay-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent);
+            background: var(--bg-primary);
+            padding: 16px 32px;
+            border-radius: 12px;
+        }
+
+        /* ==================== Command Palette ==================== */
+        #command-palette-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--overlay-bg);
+            z-index: 400;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 15vh;
+        }
+
+        #command-palette-overlay.visible {
+            display: flex;
+        }
+
+        #command-palette {
+            width: 520px;
+            max-width: 90vw;
+            background: var(--bg-toolbar);
+            border: 1px solid var(--bg-toolbar-border);
+            border-radius: 12px;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+            overflow: hidden;
+        }
+
+        #command-palette-input {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 16px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: none;
+            border-bottom: 1px solid var(--bg-toolbar-border);
+            outline: none;
+            font-family: inherit;
+        }
+
+        #command-palette-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        #command-palette-list {
+            max-height: 360px;
+            overflow-y: auto;
+            padding: 4px 0;
+        }
+
+        .cmd-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 18px;
+            cursor: pointer;
+            gap: 12px;
+            transition: background 0.08s ease;
+        }
+
+        .cmd-item:hover, .cmd-item.selected {
+            background: var(--btn-hover);
+        }
+
+        .cmd-item.selected {
+            background: var(--btn-active);
+            color: #fff;
+        }
+
+        .cmd-item .cmd-icon {
+            font-size: 16px;
+            width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .cmd-item .cmd-label {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .cmd-item .cmd-shortcut {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+        }
+
+        .cmd-item.selected .cmd-shortcut {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .cmd-no-results {
+            padding: 20px 18px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* ==================== Edit Mode ==================== */
+        .note-block.selected {
+            outline: 2px solid #fff;
+            outline-offset: 1px;
+            z-index: 25;
+            filter: brightness(1.3);
+        }
+
+        .note-block.edit-mode-note {
+            cursor: move;
+        }
+
+        .note-block .resize-handle-top,
+        .note-block .resize-handle-bottom {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 6px;
+            cursor: ns-resize;
+            display: none;
+        }
+
+        .note-block .resize-handle-top {
+            top: -3px;
+        }
+
+        .note-block .resize-handle-bottom {
+            bottom: -3px;
+        }
+
+        body.edit-mode .note-block .resize-handle-top,
+        body.edit-mode .note-block .resize-handle-bottom {
+            display: block;
+        }
+
+        body.edit-mode #piano-roll {
+            cursor: crosshair;
+        }
+
+        #edit-indicator {
+            display: none;
+            position: fixed;
+            bottom: calc(var(--keyboard-height) + 8px);
+            left: 8px;
+            padding: 4px 12px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 60;
+        }
+
+        /* ==================== Edit Hand Selector ==================== */
+        #edit-hand-selector {
+            display: none;
+            position: fixed;
+            bottom: calc(var(--keyboard-height) + 8px);
+            left: 120px;
+            z-index: 60;
+            gap: 2px;
+        }
+
+        body.edit-mode #edit-hand-selector {
+            display: flex;
+        }
+
+        .edit-hand-btn {
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--bg-toolbar-border);
+            background: var(--btn-bg);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .edit-hand-btn:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+
+        .edit-hand-btn:last-child {
+            border-radius: 0 4px 4px 0;
+        }
+
+        .edit-hand-btn.active {
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .edit-hand-btn.active.rh {
+            background: rgb(100, 149, 237);
+        }
+
+        .edit-hand-btn.active.lh {
+            background: rgb(72, 191, 145);
+        }
+
+        /* ==================== Note Creation Preview ==================== */
+        #note-creation-preview {
+            position: absolute;
+            border-radius: 4px;
+            border: 2px dashed rgba(255,255,255,0.5);
+            pointer-events: none;
+            z-index: 30;
+            display: none;
+            opacity: 0.6;
+        }
+
+        /* ==================== Context Menu ==================== */
+        #context-menu {
+            position: fixed;
+            background: var(--bg-toolbar);
+            border: 1px solid var(--bg-toolbar-border);
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            z-index: 500;
+            min-width: 180px;
+            padding: 4px 0;
+            display: none;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        #context-menu.visible {
+            display: block;
+        }
+
+        .ctx-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-primary);
+            gap: 10px;
+            transition: background 0.08s ease;
+        }
+
+        .ctx-item:hover {
+            background: var(--btn-hover);
+        }
+
+        .ctx-item .ctx-icon {
+            font-size: 14px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .ctx-item .ctx-label {
+            flex: 1;
+        }
+
+        .ctx-item .ctx-shortcut {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+
+        .ctx-separator {
+            height: 1px;
+            background: var(--bg-toolbar-border);
+            margin: 4px 8px;
+        }
+
+        .ctx-item.danger {
+            color: #e94560;
+        }
+
+        .ctx-item.danger:hover {
+            background: rgba(233, 69, 96, 0.15);
+        }
+
+        /* ==================== Settings Panel ==================== */
+        #settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--overlay-bg);
+            z-index: 500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        #settings-modal.visible {
+            display: flex;
+        }
+
+        #settings-content {
+            background: var(--help-bg);
+            border: 1px solid var(--help-border);
+            border-radius: 16px;
+            padding: 28px 32px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            color: var(--text-primary);
+        }
+
+        #settings-content h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .settings-group {
+            margin-bottom: 20px;
+        }
+
+        .settings-group-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--help-border);
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .setting-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .setting-toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: var(--btn-bg);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border: 1px solid var(--bg-toolbar-border);
+            flex-shrink: 0;
+        }
+
+        .setting-toggle.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .setting-toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            transition: transform 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .setting-toggle.active::after {
+            transform: translateX(20px);
+        }
+
+        .setting-color {
+            width: 36px;
+            height: 24px;
+            border: 1px solid var(--bg-toolbar-border);
+            border-radius: 6px;
+            cursor: pointer;
+            padding: 0;
+            -webkit-appearance: none;
+            appearance: none;
+            background: none;
+        }
+
+        .setting-color::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .setting-color::-webkit-color-swatch {
+            border: none;
+            border-radius: 4px;
+        }
+
+        .setting-range {
+            width: 120px;
+        }
+
+        /* ==================== GitHub Panel ==================== */
+        #github-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--overlay-bg);
+            z-index: 500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        #github-modal.visible {
+            display: flex;
+        }
+
+        #github-content {
+            background: var(--help-bg);
+            border: 1px solid var(--help-border);
+            border-radius: 16px;
+            padding: 28px 32px;
+            max-width: 540px;
+            width: 92%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            color: var(--text-primary);
+        }
+
+        #github-content h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gh-section {
+            margin-bottom: 16px;
+        }
+
+        .gh-section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .gh-info {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .gh-info a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .gh-info a:hover {
+            text-decoration: underline;
+        }
+
+        .gh-input-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+        .gh-input {
+            flex: 1;
+            padding: 8px 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-toolbar-border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .gh-input:focus {
+            border-color: var(--accent);
+        }
+
+        .gh-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .gh-btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid var(--bg-toolbar-border);
+            background: var(--btn-bg);
+            color: var(--text-primary);
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .gh-btn:hover {
+            background: var(--btn-hover);
+        }
+
+        .gh-btn.primary {
+            background: var(--accent);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .gh-btn.primary:hover {
+            filter: brightness(1.1);
+        }
+
+        .gh-btn.danger {
+            color: #e94560;
+            border-color: #e94560;
+        }
+
+        .gh-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .gh-status.connected {
+            background: rgba(72, 191, 145, 0.1);
+            border: 1px solid rgba(72, 191, 145, 0.3);
+            color: #48BF91;
+        }
+
+        .gh-status.disconnected {
+            background: rgba(233, 69, 96, 0.08);
+            border: 1px solid rgba(233, 69, 96, 0.2);
+            color: var(--text-secondary);
+        }
+
+        .gh-file-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--bg-toolbar-border);
+            border-radius: 8px;
+            margin-top: 8px;
+        }
+
+        .gh-file-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 13px;
+            gap: 8px;
+            transition: background 0.08s ease;
+            border-bottom: 1px solid var(--bg-toolbar-border);
+        }
+
+        .gh-file-item:last-child {
+            border-bottom: none;
+        }
+
+        .gh-file-item:hover {
+            background: var(--btn-hover);
+        }
+
+        .gh-file-item .gh-file-name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .gh-file-item .gh-file-date {
+            font-size: 11px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .gh-message {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 12px;
+        }
+
+        .gh-btn-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        /* ==================== Homepage ==================== */
+        .hp-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 480px;
+            width: 92%;
+        }
+
+        .hp-logo {
+            font-size: 56px;
+            margin-bottom: 8px;
+        }
+
+        .hp-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .hp-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .hp-sign-in-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            background: #24292e;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+        .hp-sign-in-btn:hover {
+            background: #2f363d;
+        }
+
+        .hp-divider {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .hp-local-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        #hp-drop-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 140px;
+            border: 2px dashed var(--text-muted);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        #hp-drop-zone:hover, #hp-drop-zone.drag-over {
+            border-color: var(--accent);
+            background: rgba(233, 69, 96, 0.06);
+        }
+
+        #hp-drop-zone .drop-zone-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        #hp-drop-zone .drop-zone-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .hp-btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid var(--bg-toolbar-border);
+            background: var(--btn-bg);
+            color: var(--text-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .hp-btn:hover {
+            background: var(--btn-hover);
+        }
+
+        .hp-btn.primary {
+            background: var(--accent);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .hp-btn.primary:hover {
+            filter: brightness(1.1);
+        }
+
+        .hp-btn-sm {
+            padding: 4px 12px;
+            font-size: 12px;
+            border: 1px solid var(--bg-toolbar-border);
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .hp-btn-sm:hover {
+            background: var(--btn-hover);
+        }
+
+        .hp-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            width: 100%;
+        }
+
+        .hp-repo-badge {
+            font-size: 12px;
+            padding: 2px 8px;
+            background: rgba(72, 191, 145, 0.15);
+            border: 1px solid rgba(72, 191, 145, 0.3);
+            border-radius: 4px;
+            color: #48BF91;
+        }
+
+        .hp-user-info .hp-btn-sm {
+            margin-left: auto;
+        }
+
+        .hp-repo-options {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .hp-radio {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 10px 14px;
+            border: 1px solid var(--bg-toolbar-border);
+            border-radius: 8px;
+            transition: border-color 0.15s;
+        }
+
+        .hp-radio:has(input:checked) {
+            border-color: var(--accent);
+            background: rgba(233, 69, 96, 0.06);
+        }
+
+        .hp-radio input[type="radio"] {
+            accent-color: var(--accent);
+        }
+
+        .hp-radio code {
+            font-size: 13px;
+            padding: 1px 6px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+        }
+
+        .hp-input {
+            padding: 6px 10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-toolbar-border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .hp-input:focus {
+            border-color: var(--accent);
+        }
+
+        .hp-input:disabled {
+            opacity: 0.4;
+        }
+
+        #hp-repo-status {
+            width: 100%;
+            font-size: 13px;
+            margin-bottom: 8px;
+            min-height: 20px;
+        }
+
+        .hp-btn-row {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .hp-section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            width: 100%;
+        }
+
+        .hp-songs-container {
+            width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--bg-toolbar-border);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .hp-song-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 14px;
+            gap: 10px;
+            transition: background 0.08s ease;
+            border-bottom: 1px solid var(--bg-toolbar-border);
+        }
+
+        .hp-song-item:last-child {
+            border-bottom: none;
+        }
+
+        .hp-song-item:hover {
+            background: var(--btn-hover);
+        }
+
+        .hp-song-name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .hp-song-size {
+            font-size: 11px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .hp-loading, .hp-empty {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 24px 12px;
+        }
+
+        .hp-actions {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+
+        body.edit-mode #edit-indicator {
+            display: block;
         }
 
         #sample-loading-indicator {
@@ -729,9 +1714,9 @@
         /* ==================== Responsive ==================== */
         @media (max-width: 768px) {
             #toolbar {
-                height: 44px;
+                height: 48px;
                 padding: 0 8px;
-                gap: 4px;
+                gap: 6px;
             }
 
             #toolbar .title {
@@ -739,12 +1724,35 @@
             }
 
             .toolbar-btn {
-                padding: 4px 7px;
-                font-size: 11px;
+                padding: 8px 10px;
+                font-size: 13px;
+                min-height: 36px;
+                min-width: 36px;
+                justify-content: center;
+            }
+
+            .toolbar-btn .icon {
+                font-size: 16px;
+            }
+
+            .toolbar-select {
+                padding: 8px 10px;
+                font-size: 13px;
+                min-height: 36px;
+            }
+
+            .hand-toggle-btn {
+                padding-left: 28px;
+            }
+
+            .hand-toggle-btn .hand-swatch {
+                width: 12px;
+                height: 12px;
             }
 
             #keyboard {
-                height: 56px;
+                --keyboard-height: 64px;
+                height: var(--keyboard-height);
             }
 
             .key {
@@ -752,13 +1760,14 @@
             }
 
             #minimap {
-                width: 24px;
+                width: 28px;
+                top: 52px;
             }
 
             #time-indicator {
-                font-size: 11px;
-                top: 50px;
-                right: 30px;
+                font-size: 12px;
+                top: 54px;
+                right: 34px;
             }
 
             .toolbar-label { display: none; }
@@ -766,28 +1775,58 @@
             .note-count-badge { display: none !important; }
             .song-info { display: none !important; }
 
-            #main-container {
+            #progress-bar-container {
                 top: 48px;
+            }
+
+            #main-container {
+                top: 52px;
             }
         }
 
         @media (max-width: 480px) {
             #toolbar {
-                height: 40px;
-                gap: 3px;
+                height: 44px;
+                gap: 4px;
+                padding: 0 6px;
             }
 
             .toolbar-btn {
-                padding: 3px 6px;
-                font-size: 10px;
+                padding: 6px 8px;
+                font-size: 14px;
+                min-height: 34px;
+                min-width: 34px;
             }
 
             .toolbar-btn .btn-label {
                 display: none;
             }
 
+            .toolbar-select {
+                padding: 6px 8px;
+                font-size: 14px;
+                min-height: 34px;
+            }
+
+            .hand-toggle-btn {
+                padding-left: 8px;
+            }
+
+            .hand-toggle-btn .hand-swatch {
+                display: none;
+            }
+
             #keyboard {
-                height: 48px;
+                --keyboard-height: 56px;
+                height: var(--keyboard-height);
+            }
+
+            #progress-bar-container {
+                top: 44px;
+            }
+
+            #main-container {
+                top: 48px;
             }
 
             #minimap {
@@ -799,6 +1838,18 @@
 <body>
     <div id="toolbar">
         <span class="title">🎹 MakeMusic</span>
+        <button class="toolbar-btn" id="load-file-btn" onclick="openFilePicker()" title="Load JSON File (Cmd+O)">
+            <span class="icon">📂</span> <span class="btn-label">Open</span>
+        </button>
+        <button class="toolbar-btn" id="save-file-btn" onclick="exportJSON()" title="Save/Export JSON (Cmd+S)">
+            <span class="icon">💾</span> <span class="btn-label">Save</span>
+        </button>
+        <button class="toolbar-btn" id="github-btn" onclick="showGitHub()" title="GitHub Cloud Storage">
+            <span class="icon">☁️</span> <span class="btn-label">Cloud</span>
+        </button>
+        <button class="toolbar-btn" id="edit-mode-btn" onclick="toggleEditMode()" title="Toggle Edit Mode (E)">
+            <span class="icon">✏️</span> <span class="btn-label">Edit</span>
+        </button>
         <span class="song-info" id="song-info"></span>
         <span class="note-count-badge" id="note-count-badge"></span>
         <div class="spacer"></div>
@@ -844,6 +1895,9 @@
             <input type="range" class="toolbar-range" id="zoom-slider" min="20" max="300" value="80" title="Zoom (Ctrl+Scroll)">
         </label>
 
+        <button class="toolbar-btn" id="settings-btn" onclick="showSettings()" title="Settings">
+            <span class="icon">⚙️</span>
+        </button>
         <button class="toolbar-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle Light/Dark Theme (T)">
             <span class="icon" id="theme-icon">☀️</span>
         </button>
@@ -861,6 +1915,7 @@
             <div id="piano-roll">
                 <canvas id="density-canvas"></canvas>
                 <div id="playhead"></div>
+                <div id="note-creation-preview"></div>
             </div>
         </div>
     </div>
@@ -874,6 +1929,111 @@
     </div>
 
     <div id="time-indicator">0:00 / 0:00</div>
+    <div id="edit-indicator">EDIT MODE</div>
+
+    <div id="edit-hand-selector">
+        <button class="edit-hand-btn active rh" id="edit-hand-rh" onclick="setEditHand('right_hand')" title="New notes: Right Hand (R)">RH</button>
+        <button class="edit-hand-btn lh" id="edit-hand-lh" onclick="setEditHand('left_hand')" title="New notes: Left Hand (R)">LH</button>
+    </div>
+
+    <div id="context-menu">
+        <div class="ctx-item" data-action="toggle-hand"><span class="ctx-icon">🔄</span><span class="ctx-label">Toggle Hand</span><span class="ctx-shortcut">H</span></div>
+        <div class="ctx-item" data-action="duplicate"><span class="ctx-icon">📋</span><span class="ctx-label">Duplicate Note</span></div>
+        <div class="ctx-separator"></div>
+        <div class="ctx-item danger" data-action="delete"><span class="ctx-icon">🗑️</span><span class="ctx-label">Delete Note</span><span class="ctx-shortcut">Del</span></div>
+    </div>
+
+    <div id="settings-modal" onclick="hideSettings(event)">
+        <div id="settings-content" onclick="event.stopPropagation()">
+            <h2>⚙️ Settings</h2>
+            <div class="settings-group">
+                <div class="settings-group-title">Display</div>
+                <div class="setting-row">
+                    <div><div class="setting-label">Drop Lines</div><div class="setting-desc">Lines connecting notes to keyboard</div></div>
+                    <div class="setting-toggle active" id="setting-drop-lines" onclick="toggleSetting('dropLines')"></div>
+                </div>
+                <div class="setting-row">
+                    <div><div class="setting-label">Note Labels</div><div class="setting-desc">Show note names on note blocks</div></div>
+                    <div class="setting-toggle active" id="setting-note-labels" onclick="toggleSetting('noteLabels')"></div>
+                </div>
+                <div class="setting-row">
+                    <div><div class="setting-label">Density Heatmap</div><div class="setting-desc">Background density visualization</div></div>
+                    <div class="setting-toggle active" id="setting-density" onclick="toggleSetting('density')"></div>
+                </div>
+            </div>
+            <div class="settings-group">
+                <div class="settings-group-title">Colors</div>
+                <div class="setting-row">
+                    <div class="setting-label">Right Hand Color</div>
+                    <input type="color" class="setting-color" id="setting-rh-color" value="#6495ED" onchange="changeHandColor('right', this.value)">
+                </div>
+                <div class="setting-row">
+                    <div class="setting-label">Left Hand Color</div>
+                    <input type="color" class="setting-color" id="setting-lh-color" value="#48BF91" onchange="changeHandColor('left', this.value)">
+                </div>
+            </div>
+            <div class="settings-group">
+                <div class="settings-group-title">Playback</div>
+                <div class="setting-row">
+                    <div><div class="setting-label">Scroll Speed</div><div class="setting-desc">Arrow key scroll amount (px)</div></div>
+                    <input type="range" class="toolbar-range setting-range" id="setting-scroll-speed" min="40" max="400" value="120" onchange="changeSetting('scrollSpeed', this.value)">
+                </div>
+            </div>
+            <div style="margin-top: 16px; text-align: right;">
+                <button class="toolbar-btn" onclick="resetSettings()" style="font-size: 12px;">Reset Defaults</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="github-modal" onclick="hideGitHub(event)">
+        <div id="github-content" onclick="event.stopPropagation()">
+            <h2>☁️ GitHub Cloud Storage</h2>
+
+            <div id="gh-setup-section">
+                <div class="gh-section">
+                    <div id="gh-status-bar" class="gh-status disconnected">
+                        <span id="gh-status-icon">⚪</span>
+                        <span id="gh-status-text">Not connected</span>
+                    </div>
+                </div>
+
+                <div id="gh-connect-form">
+                    <div class="gh-info">
+                        Sign in with GitHub to save and load your music files in the cloud.
+                    </div>
+                    <div class="gh-btn-row">
+                        <button class="gh-btn primary" id="gh-sign-in-btn" onclick="signInWithGitHub()">
+                            <svg height="16" width="16" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 6px; fill: currentColor;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                            Sign in with GitHub
+                        </button>
+                    </div>
+                </div>
+
+                <div id="gh-connected-section" style="display:none;">
+                    <div class="gh-section">
+                        <div class="gh-section-title">Save to GitHub</div>
+                        <div class="gh-input-row">
+                            <input type="text" class="gh-input" id="gh-save-filename" placeholder="filename.json">
+                            <button class="gh-btn primary" onclick="saveToGitHub()">Save</button>
+                        </div>
+                        <div id="gh-save-message" class="gh-message" style="display:none;"></div>
+                    </div>
+
+                    <div class="gh-section">
+                        <div class="gh-section-title">Load from GitHub</div>
+                        <button class="gh-btn" onclick="refreshGitHubFiles()" style="margin-bottom: 8px;">🔄 Refresh Files</button>
+                        <div id="gh-file-list" class="gh-file-list">
+                            <div class="gh-message">Click "Refresh Files" to see your saved files.</div>
+                        </div>
+                    </div>
+
+                    <div class="gh-btn-row" style="justify-content: flex-end;">
+                        <button class="gh-btn danger" onclick="disconnectGitHub()">Disconnect</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="note-tooltip">
         <div class="tt-note" id="tt-note"></div>
@@ -881,8 +2041,78 @@
     </div>
 
     <div id="loading-overlay">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading viewer…</div>
+        <div class="loading-spinner" id="loading-spinner"></div>
+        <div class="loading-text" id="loading-text">Loading viewer…</div>
+        <div id="homepage" style="display:none;">
+            <div class="hp-container">
+                <div class="hp-logo">🎹</div>
+                <div class="hp-title">MakeMusic</div>
+                <div class="hp-subtitle">Piano roll viewer &amp; editor</div>
+
+                <!-- State 1: Not signed in -->
+                <div id="hp-signed-out">
+                    <button class="hp-sign-in-btn" id="hp-sign-in-btn" onclick="signInWithGitHub()">
+                        <svg height="18" width="18" viewBox="0 0 16 16" style="fill: currentColor;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                        Sign in with GitHub
+                    </button>
+                    <div class="hp-divider">— or —</div>
+                    <div class="hp-local-actions">
+                        <div id="hp-drop-zone">
+                            <div class="drop-zone-icon">📂</div>
+                            <div class="drop-zone-text">Drop a JSON file here<br>or click to browse</div>
+                            <input type="file" id="file-input" accept=".json,application/json" style="display:none;">
+                        </div>
+                        <button class="hp-btn" id="start-empty-btn" onclick="startEmpty()">✨ Start Empty Project</button>
+                    </div>
+                </div>
+
+                <!-- State 2: Signed in, choosing repo -->
+                <div id="hp-repo-setup" style="display:none;">
+                    <div class="hp-user-info">
+                        Signed in as <strong id="hp-username"></strong>
+                    </div>
+                    <div class="hp-repo-options">
+                        <label class="hp-radio">
+                            <input type="radio" name="hp-repo-choice" value="default" checked onchange="updateRepoChoice()">
+                            <span>Use default repository: <code id="hp-default-repo-name"></code></span>
+                        </label>
+                        <label class="hp-radio">
+                            <input type="radio" name="hp-repo-choice" value="custom" onchange="updateRepoChoice()">
+                            <span>Custom repository:</span>
+                            <input type="text" id="hp-custom-repo-name" placeholder="repo-name" class="hp-input" disabled onclick="event.stopPropagation()">
+                        </label>
+                    </div>
+                    <div id="hp-repo-status"></div>
+                    <div class="hp-btn-row">
+                        <button class="hp-btn primary" id="hp-continue-btn" onclick="continueWithRepo()">Continue</button>
+                        <button class="hp-btn primary" id="hp-create-repo-btn" onclick="createSelectedRepo()" style="display:none;">Create Repository</button>
+                    </div>
+                    <div class="hp-divider">— or —</div>
+                    <div class="hp-local-actions">
+                        <button class="hp-btn" onclick="document.getElementById('file-input').click()">📂 Upload File</button>
+                        <button class="hp-btn" onclick="startEmpty()">✨ Start Empty Project</button>
+                    </div>
+                </div>
+
+                <!-- State 3: Connected, showing songs -->
+                <div id="hp-song-list" style="display:none;">
+                    <div class="hp-user-info">
+                        <span>👤 <strong id="hp-user-display"></strong></span>
+                        <span class="hp-repo-badge" id="hp-repo-badge"></span>
+                        <button class="hp-btn-sm" onclick="disconnectAndReload()">Sign Out</button>
+                    </div>
+                    <div class="hp-section-title">Your Songs</div>
+                    <div id="hp-songs" class="hp-songs-container">
+                        <div class="hp-loading">Loading songs…</div>
+                    </div>
+                    <div class="hp-divider">— or —</div>
+                    <div class="hp-actions">
+                        <button class="hp-btn primary" onclick="startEmpty()">✨ Create New</button>
+                        <button class="hp-btn" onclick="document.getElementById('file-input').click()">📂 Upload File</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="sample-loading-indicator">
@@ -900,7 +2130,26 @@
             <div class="shortcut-row"><span class="shortcut-desc">Toggle Right Hand</span><span class="shortcut-key">1</span></div>
             <div class="shortcut-row"><span class="shortcut-desc">Toggle Left Hand</span><span class="shortcut-key">2</span></div>
             <div class="shortcut-row"><span class="shortcut-desc">Show Shortcuts</span><span class="shortcut-key">?</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">Command Palette</span><span class="shortcut-key">⌘P</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">Open File</span><span class="shortcut-key">⌘O</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">Save / Export</span><span class="shortcut-key">⌘S</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">Toggle Edit Mode</span><span class="shortcut-key">E</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">Delete Note (edit)</span><span class="shortcut-key">Del</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">Toggle Hand (edit)</span><span class="shortcut-key">H</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">Switch Edit Hand</span><span class="shortcut-key">R</span></div>
+            <div class="shortcut-row"><span class="shortcut-desc">Right-click Note</span><span class="shortcut-key">Context Menu</span></div>
             <div class="shortcut-row"><span class="shortcut-desc">Pinch / Ctrl+Scroll</span><span class="shortcut-key">Zoom</span></div>
+        </div>
+    </div>
+
+    <div id="drag-overlay">
+        <div class="drag-overlay-text">Drop JSON file to load</div>
+    </div>
+
+    <div id="command-palette-overlay" onclick="hideCommandPalette()">
+        <div id="command-palette" onclick="event.stopPropagation()">
+            <input type="text" id="command-palette-input" placeholder="Type a command…" autocomplete="off" spellcheck="false">
+            <div id="command-palette-list"></div>
         </div>
     </div>
 
@@ -952,7 +2201,7 @@
     const A0_INDEX = NOTE_NAMES.indexOf('A');
     const PIANO_KEYS = PIANO_88.slice(A0_INDEX, A0_INDEX + 88);
 
-    function isBlackKey(keyName) { return keyName.includes('#'); }
+    function isBlackKey(keyName) { return keyName ? keyName.includes('#') : false; }
 
     // ================================================================
     //  KEYBOARD
@@ -1163,12 +2412,18 @@
         var roll = document.getElementById('piano-roll');
         var container = document.getElementById('piano-roll-container');
 
-        var existingNotes = roll.querySelectorAll('.note-block');
+        var existingNotes = roll.querySelectorAll('.note-block, .note-drop-line');
         for (var i = 0; i < existingNotes.length; i++) existingNotes[i].remove();
         noteElements = [];
 
         var notes = notesData.notes;
-        if (notes.length === 0) return;
+        if (notes.length === 0) {
+            totalDuration = 0;
+            firstNoteTime = 0;
+            roll.style.height = container.clientHeight + 'px';
+            renderTrackLines();
+            return;
+        }
 
         var times = notes.map(function(n) { return n.start_time + n.duration; });
         var startTimes = notes.map(function(n) { return n.start_time; });
@@ -1195,6 +2450,16 @@
 
             var c = note.color_rgb || (note.hand === 'right_hand' ? rhColor : lhColor);
             var r = c[0], g = c[1], b = c[2];
+
+            // Sharp/flat notes: darken slightly and add subtle tint
+            var isSharp = (note.note_name || '').includes('#');
+            if (isSharp) {
+                r = Math.max(0, Math.round(r * 0.75));
+                g = Math.max(0, Math.round(g * 0.75));
+                b = Math.max(0, Math.round(b * 0.75));
+                div.classList.add('sharp-note');
+            }
+
             var r2 = Math.max(0, r - 30), g2 = Math.max(0, g - 30), b2 = Math.max(0, b - 30);
             div.style.background = 'linear-gradient(135deg, rgb(' + r + ',' + g + ',' + b + '), rgb(' + r2 + ',' + g2 + ',' + b2 + '))';
 
@@ -1208,14 +2473,23 @@
             div.style.left = leftPct + '%';
             div.style.width = widthPct + '%';
 
-            if (noteHeight > 18) {
+            if (noteHeight > 18 && appSettings.noteLabels) {
                 div.textContent = note.note_name || '';
             }
 
             if (note.hand === 'right_hand' && !showRightHand) div.style.display = 'none';
             if (note.hand === 'left_hand' && !showLeftHand) div.style.display = 'none';
 
+            // Add resize handles for edit mode
+            var handleTop = document.createElement('div');
+            handleTop.className = 'resize-handle-top';
+            div.appendChild(handleTop);
+            var handleBottom = document.createElement('div');
+            handleBottom.className = 'resize-handle-bottom';
+            div.appendChild(handleBottom);
+
             div.addEventListener('click', function() {
+                if (editMode) return; // In edit mode, handled by mousedown
                 if (soundEnabled && samplesLoaded) playNote(note.key_index, Math.min(note.duration, 2));
                 scrollToTime(note.start_time);
             });
@@ -1225,7 +2499,26 @@
             div.addEventListener('mouseleave', hideTooltip);
 
             frag.appendChild(div);
-            noteElements.push({ el: div, note: note });
+
+            // Drop line from bottom of note to bottom of roll
+            var dropLine = document.createElement('div');
+            dropLine.className = 'note-drop-line';
+            var dropTop = noteTop + noteHeight;
+            var dropHeight = bottomY - dropTop;
+            if (dropHeight > 0) {
+                dropLine.style.top = dropTop + 'px';
+                dropLine.style.height = dropHeight + 'px';
+                dropLine.style.left = 'calc(' + leftPct + '% + ' + (widthPct / 2) + '%)';
+                dropLine.style.background = 'rgb(' + r + ',' + g + ',' + b + ')';
+                if (note.hand === 'right_hand' && !showRightHand) dropLine.style.display = 'none';
+                if (note.hand === 'left_hand' && !showLeftHand) dropLine.style.display = 'none';
+                if (!appSettings.dropLines) dropLine.style.display = 'none';
+                dropLine.style.opacity = '0';
+                dropLine.style.transition = 'opacity 0.3s ease';
+                frag.appendChild(dropLine);
+            }
+
+            noteElements.push({ el: div, dropLine: dropLine, note: note });
         });
 
         roll.appendChild(frag);
@@ -1239,6 +2532,33 @@
         updateTimeIndicator();
         updateProgressBar();
         updateMinimapViewport();
+        updateDropLineVisibility();
+    }
+
+    // ================================================================
+    //  SMART DROP LINES (only visible notes)
+    // ================================================================
+    function updateDropLineVisibility() {
+        if (!appSettings.dropLines || noteElements.length === 0) return;
+        var container = document.getElementById('piano-roll-container');
+        var scrollTop = container.scrollTop;
+        var viewHeight = container.clientHeight;
+        var viewTop = scrollTop - 200; // small margin
+        var viewBottom = scrollTop + viewHeight + 200;
+
+        for (var i = 0; i < noteElements.length; i++) {
+            var item = noteElements[i];
+            if (!item.dropLine) continue;
+            var el = item.el;
+            var noteTop = parseFloat(el.style.top);
+            var noteHeight = parseFloat(el.style.height);
+            var noteBottom = noteTop + noteHeight;
+
+            // Check if note is within or near visible area
+            var isVisible = (noteBottom >= viewTop && noteTop <= viewBottom);
+            var hidden = el.style.display === 'none'; // hand toggle hidden
+            item.dropLine.style.opacity = (isVisible && !hidden) ? '0.18' : '0';
+        }
     }
 
     // ================================================================
@@ -1574,8 +2894,10 @@
             var entry = noteElements[i];
             if (entry.note.hand === 'right_hand') {
                 entry.el.style.display = showRightHand ? '' : 'none';
+                if (entry.dropLine) entry.dropLine.style.display = showRightHand ? '' : 'none';
             } else if (entry.note.hand === 'left_hand') {
                 entry.el.style.display = showLeftHand ? '' : 'none';
+                if (entry.dropLine) entry.dropLine.style.display = showLeftHand ? '' : 'none';
             }
         }
     }
@@ -1629,10 +2951,660 @@
     }
 
     // ================================================================
+    //  COMMAND PALETTE
+    // ================================================================
+    var commandPaletteOpen = false;
+    var commandPaletteSelectedIndex = 0;
+    var filteredCommands = [];
+
+    var allCommands = [
+        { icon: '▶', label: 'Play / Pause', shortcut: 'Space', action: function() { togglePlayback(); } },
+        { icon: '🔁', label: 'Toggle Loop', shortcut: 'L', action: function() { toggleLoop(); } },
+        { icon: '⏮', label: 'Jump to Start', shortcut: 'Home', action: function() { if (notesData) scrollToTime(firstNoteTime - 1); } },
+        { icon: '⏭', label: 'Jump to End', shortcut: 'End', action: function() { if (notesData) scrollToTime(totalDuration); } },
+        { icon: '🎹', label: 'Toggle Right Hand', shortcut: '1', action: function() { toggleHand('right'); } },
+        { icon: '🎹', label: 'Toggle Left Hand', shortcut: '2', action: function() { toggleHand('left'); } },
+        { icon: '☀️', label: 'Toggle Theme (Dark/Light)', shortcut: 'T', action: function() { toggleTheme(); } },
+        { icon: '📂', label: 'Open JSON File', shortcut: '⌘O', action: function() { openFilePicker(); } },
+        { icon: '💾', label: 'Save/Export JSON', shortcut: '⌘S', action: function() { exportJSON(); } },
+        { icon: '📄', label: 'New Empty Project', shortcut: '', action: function() { startEmpty(); } },
+        { icon: '🔊', label: 'Volume Up', shortcut: '', action: function() {
+            var slider = document.getElementById('volume-slider');
+            slider.value = Math.min(100, parseInt(slider.value) + 10);
+            slider.dispatchEvent(new Event('input'));
+        }},
+        { icon: '🔉', label: 'Volume Down', shortcut: '', action: function() {
+            var slider = document.getElementById('volume-slider');
+            slider.value = Math.max(0, parseInt(slider.value) - 10);
+            slider.dispatchEvent(new Event('input'));
+        }},
+        { icon: '🔍', label: 'Zoom In', shortcut: 'Ctrl+Scroll↑', action: function() {
+            pixelsPerSecond = Math.min(300, pixelsPerSecond * 1.2);
+            document.getElementById('zoom-slider').value = Math.round(pixelsPerSecond);
+            if (notesData) { var t = getTimeAtScroll(); renderPianoRoll(); scrollToTime(t); }
+        }},
+        { icon: '🔍', label: 'Zoom Out', shortcut: 'Ctrl+Scroll↓', action: function() {
+            pixelsPerSecond = Math.max(20, pixelsPerSecond / 1.2);
+            document.getElementById('zoom-slider').value = Math.round(pixelsPerSecond);
+            if (notesData) { var t = getTimeAtScroll(); renderPianoRoll(); scrollToTime(t); }
+        }},
+        { icon: '⏩', label: 'Speed: 0.25×', shortcut: '', action: function() { setSpeed(0.25); } },
+        { icon: '⏩', label: 'Speed: 0.5×', shortcut: '', action: function() { setSpeed(0.5); } },
+        { icon: '⏩', label: 'Speed: 0.75×', shortcut: '', action: function() { setSpeed(0.75); } },
+        { icon: '⏩', label: 'Speed: 1×', shortcut: '', action: function() { setSpeed(1); } },
+        { icon: '⏩', label: 'Speed: 1.5×', shortcut: '', action: function() { setSpeed(1.5); } },
+        { icon: '⏩', label: 'Speed: 2×', shortcut: '', action: function() { setSpeed(2); } },
+        { icon: '❓', label: 'Show Keyboard Shortcuts', shortcut: '?', action: function() { showHelp(); } },
+        { icon: '⬆', label: 'Scroll Up', shortcut: '↑', action: function() { document.getElementById('piano-roll-container').scrollBy({ top: -appSettings.scrollSpeed, behavior: 'smooth' }); } },
+        { icon: '⬇', label: 'Scroll Down', shortcut: '↓', action: function() { document.getElementById('piano-roll-container').scrollBy({ top: appSettings.scrollSpeed, behavior: 'smooth' }); } },
+        { icon: '✏️', label: 'Toggle Edit Mode', shortcut: 'E', action: function() { toggleEditMode(); } },
+        { icon: '🗑️', label: 'Delete Selected Note', shortcut: 'Del', action: function() { deleteSelectedNote(); } },
+        { icon: '🔄', label: 'Toggle Selected Note Hand', shortcut: 'H', action: function() { toggleSelectedNoteHand(); } },
+        { icon: '⚙️', label: 'Open Settings', shortcut: '', action: function() { showSettings(); } },
+        { icon: '🔄', label: 'Toggle Edit Hand (RH/LH)', shortcut: 'R', action: function() { setEditHand(editHand === 'right_hand' ? 'left_hand' : 'right_hand'); } },
+    ];
+
+    function setSpeed(speed) {
+        var oldSpeed = playbackSpeed;
+        playbackSpeed = speed;
+        document.getElementById('speed-select').value = String(speed);
+        if (isPlaying) {
+            var elapsed = (performance.now() - playbackStartTime) / 1000 * oldSpeed;
+            playbackTimeOffset += elapsed;
+            playbackStartTime = performance.now();
+        }
+    }
+
+    function fuzzyMatch(query, text) {
+        query = query.toLowerCase();
+        text = text.toLowerCase();
+        if (text.includes(query)) return true;
+        var qi = 0;
+        for (var ti = 0; ti < text.length && qi < query.length; ti++) {
+            if (text[ti] === query[qi]) qi++;
+        }
+        return qi === query.length;
+    }
+
+    function renderCommandList(query) {
+        var list = document.getElementById('command-palette-list');
+        list.innerHTML = '';
+        filteredCommands = query
+            ? allCommands.filter(function(cmd) { return fuzzyMatch(query, cmd.label); })
+            : allCommands.slice();
+
+        if (filteredCommands.length === 0) {
+            list.innerHTML = '<div class="cmd-no-results">No matching commands</div>';
+            return;
+        }
+
+        commandPaletteSelectedIndex = Math.min(commandPaletteSelectedIndex, filteredCommands.length - 1);
+
+        filteredCommands.forEach(function(cmd, i) {
+            var item = document.createElement('div');
+            item.className = 'cmd-item' + (i === commandPaletteSelectedIndex ? ' selected' : '');
+            item.innerHTML = '<span class="cmd-icon">' + cmd.icon + '</span>' +
+                '<span class="cmd-label">' + cmd.label + '</span>' +
+                (cmd.shortcut ? '<span class="cmd-shortcut">' + cmd.shortcut + '</span>' : '');
+            item.addEventListener('click', function() {
+                hideCommandPalette();
+                cmd.action();
+            });
+            item.addEventListener('mouseenter', function() {
+                commandPaletteSelectedIndex = i;
+                updateCommandSelection();
+            });
+            list.appendChild(item);
+        });
+    }
+
+    function updateCommandSelection() {
+        var items = document.querySelectorAll('#command-palette-list .cmd-item');
+        for (var i = 0; i < items.length; i++) {
+            items[i].classList.toggle('selected', i === commandPaletteSelectedIndex);
+        }
+        // Scroll selected item into view
+        if (items[commandPaletteSelectedIndex]) {
+            items[commandPaletteSelectedIndex].scrollIntoView({ block: 'nearest' });
+        }
+    }
+
+    function showCommandPalette() {
+        commandPaletteOpen = true;
+        commandPaletteSelectedIndex = 0;
+        var overlay = document.getElementById('command-palette-overlay');
+        overlay.classList.add('visible');
+        var input = document.getElementById('command-palette-input');
+        input.value = '';
+        input.focus();
+        renderCommandList('');
+    }
+
+    function hideCommandPalette() {
+        commandPaletteOpen = false;
+        document.getElementById('command-palette-overlay').classList.remove('visible');
+    }
+
+    document.getElementById('command-palette-input').addEventListener('input', function() {
+        commandPaletteSelectedIndex = 0;
+        renderCommandList(this.value);
+    });
+
+    document.getElementById('command-palette-input').addEventListener('keydown', function(e) {
+        if (e.code === 'ArrowDown') {
+            e.preventDefault();
+            if (filteredCommands.length > 0) {
+                commandPaletteSelectedIndex = (commandPaletteSelectedIndex + 1) % filteredCommands.length;
+                updateCommandSelection();
+            }
+        } else if (e.code === 'ArrowUp') {
+            e.preventDefault();
+            if (filteredCommands.length > 0) {
+                commandPaletteSelectedIndex = (commandPaletteSelectedIndex - 1 + filteredCommands.length) % filteredCommands.length;
+                updateCommandSelection();
+            }
+        } else if (e.code === 'Enter') {
+            e.preventDefault();
+            if (filteredCommands.length > 0 && filteredCommands[commandPaletteSelectedIndex]) {
+                var cmd = filteredCommands[commandPaletteSelectedIndex];
+                hideCommandPalette();
+                cmd.action();
+            }
+        } else if (e.code === 'Escape') {
+            e.preventDefault();
+            hideCommandPalette();
+        }
+    });
+
+    // ================================================================
+    //  EDIT MODE
+    // ================================================================
+    var editMode = false;
+    var selectedNoteId = null;
+    var editDragState = null; // { type: 'move'|'resize-top'|'resize-bottom', noteId, startY, startX, origTop, origHeight, origStartTime, origDuration, origKeyIndex }
+    var nextNoteId = 10000; // for newly added notes
+    var editHand = 'right_hand'; // currently selected hand for new notes
+    var creationDragState = null; // { startY, startClientY, keyIndex, startTime }
+    var contextMenuNoteId = null; // note ID for right-click context menu
+
+    // Settings with defaults
+    var appSettings = {
+        dropLines: true,
+        noteLabels: true,
+        density: true,
+        scrollSpeed: 120,
+        rhColorHex: '#6495ED',
+        lhColorHex: '#48BF91'
+    };
+
+    function loadSettings() {
+        try {
+            var saved = localStorage.getItem('makemusic_settings');
+            if (saved) {
+                var parsed = JSON.parse(saved);
+                Object.keys(parsed).forEach(function(key) {
+                    if (key in appSettings) appSettings[key] = parsed[key];
+                });
+            }
+        } catch(e) {}
+        applySettings();
+    }
+
+    function saveSettings() {
+        try {
+            localStorage.setItem('makemusic_settings', JSON.stringify(appSettings));
+        } catch(e) {}
+    }
+
+    function applySettings() {
+        // Drop lines
+        document.getElementById('setting-drop-lines').classList.toggle('active', appSettings.dropLines);
+        // Note labels
+        document.getElementById('setting-note-labels').classList.toggle('active', appSettings.noteLabels);
+        // Density
+        document.getElementById('setting-density').classList.toggle('active', appSettings.density);
+        var densityCanvas = document.getElementById('density-canvas');
+        if (densityCanvas) densityCanvas.style.display = appSettings.density ? '' : 'none';
+        // Scroll speed
+        document.getElementById('setting-scroll-speed').value = appSettings.scrollSpeed;
+        // Colors
+        document.getElementById('setting-rh-color').value = appSettings.rhColorHex;
+        document.getElementById('setting-lh-color').value = appSettings.lhColorHex;
+        rhColor = hexToRgb(appSettings.rhColorHex);
+        lhColor = hexToRgb(appSettings.lhColorHex);
+    }
+
+    function hexToRgb(hex) {
+        var r = parseInt(hex.slice(1,3), 16);
+        var g = parseInt(hex.slice(3,5), 16);
+        var b = parseInt(hex.slice(5,7), 16);
+        return [r, g, b];
+    }
+
+    function rgbToHex(rgb) {
+        return '#' + rgb.map(function(c) { return ('0' + c.toString(16)).slice(-2); }).join('');
+    }
+
+    function toggleSetting(key) {
+        appSettings[key] = !appSettings[key];
+        saveSettings();
+        applySettings();
+        if (notesData) renderPianoRoll();
+    }
+
+    function changeSetting(key, value) {
+        appSettings[key] = parseInt(value);
+        saveSettings();
+    }
+
+    function changeHandColor(hand, hexValue) {
+        if (hand === 'right') {
+            appSettings.rhColorHex = hexValue;
+            rhColor = hexToRgb(hexValue);
+        } else {
+            appSettings.lhColorHex = hexValue;
+            lhColor = hexToRgb(hexValue);
+        }
+        saveSettings();
+        updateHandColors();
+        if (notesData) {
+            // Update note colors to match new hand colors
+            notesData.notes.forEach(function(n) {
+                n.color_rgb = (n.hand === 'right_hand' ? rhColor : lhColor).slice();
+            });
+            renderPianoRoll();
+        }
+    }
+
+    function resetSettings() {
+        appSettings = {
+            dropLines: true,
+            noteLabels: true,
+            density: true,
+            scrollSpeed: 120,
+            rhColorHex: '#6495ED',
+            lhColorHex: '#48BF91'
+        };
+        saveSettings();
+        applySettings();
+        updateHandColors();
+        if (notesData) {
+            notesData.notes.forEach(function(n) {
+                n.color_rgb = (n.hand === 'right_hand' ? rhColor : lhColor).slice();
+            });
+            renderPianoRoll();
+        }
+    }
+
+    function showSettings() {
+        document.getElementById('settings-modal').classList.add('visible');
+    }
+
+    function hideSettings(e) {
+        if (e && e.target.id !== 'settings-modal') return;
+        document.getElementById('settings-modal').classList.remove('visible');
+    }
+
+    function setEditHand(hand) {
+        editHand = hand;
+        document.getElementById('edit-hand-rh').classList.toggle('active', hand === 'right_hand');
+        document.getElementById('edit-hand-lh').classList.toggle('active', hand === 'left_hand');
+    }
+
+    function toggleEditMode() {
+        editMode = !editMode;
+        document.body.classList.toggle('edit-mode', editMode);
+        document.getElementById('edit-mode-btn').classList.toggle('active', editMode);
+        if (!editMode) {
+            deselectNote();
+        }
+    }
+
+    function selectNote(noteId) {
+        deselectNote();
+        selectedNoteId = noteId;
+        var el = document.querySelector('.note-block[data-note-id="' + noteId + '"]');
+        if (el) el.classList.add('selected');
+    }
+
+    function deselectNote() {
+        if (selectedNoteId !== null) {
+            var el = document.querySelector('.note-block.selected');
+            if (el) el.classList.remove('selected');
+            selectedNoteId = null;
+        }
+    }
+
+    function getTimeAtY(y) {
+        var roll = document.getElementById('piano-roll');
+        var totalHeight = parseFloat(roll.style.height) || 0;
+        var bottomY = totalHeight - 80;
+        return (bottomY - y) / pixelsPerSecond;
+    }
+
+    function getKeyIndexAtX(clientX) {
+        if (!window.keyLayout) return 39; // default C4
+        var container = document.getElementById('piano-roll-container');
+        var containerRect = container.getBoundingClientRect();
+        var xPct = ((clientX - containerRect.left) / containerRect.width) * 100;
+        var layout = window.keyLayout;
+        // Find closest key
+        var bestKey = layout.minKey;
+        var bestDist = Infinity;
+        for (var i = layout.minKey; i <= layout.maxKey; i++) {
+            var keyCenter = getKeyXPercent(i);
+            var dist = Math.abs(keyCenter - xPct);
+            if (dist < bestDist) {
+                bestDist = dist;
+                bestKey = i;
+            }
+        }
+        return bestKey;
+    }
+
+    function addNoteAtPosition(clientX, clientY, duration) {
+        if (!notesData) return;
+        var container = document.getElementById('piano-roll-container');
+        var containerRect = container.getBoundingClientRect();
+        var scrollY = container.scrollTop + (clientY - containerRect.top);
+        var time = getTimeAtY(scrollY);
+        var keyIndex = getKeyIndexAtX(clientX);
+        var noteName = PIANO_KEYS[keyIndex] || 'C4';
+        var hand = editHand;
+        var color = hand === 'right_hand' ? rhColor : lhColor;
+
+        var newNote = {
+            id: nextNoteId++,
+            note_name: noteName,
+            start_time: Math.max(0, time),
+            duration: duration || 1.0,
+            hand: hand,
+            key_index: keyIndex,
+            center_x: 0,
+            color_rgb: color.slice()
+        };
+
+        notesData.notes.push(newNote);
+        renderPianoRoll();
+        selectNote(newNote.id);
+    }
+
+    function deleteSelectedNote() {
+        if (selectedNoteId === null || !notesData) return;
+        var idx = notesData.notes.findIndex(function(n) { return n.id === selectedNoteId; });
+        if (idx !== -1) {
+            notesData.notes.splice(idx, 1);
+            selectedNoteId = null;
+            renderPianoRoll();
+        }
+    }
+
+    function toggleSelectedNoteHand() {
+        if (selectedNoteId === null || !notesData) return;
+        var note = notesData.notes.find(function(n) { return n.id === selectedNoteId; });
+        if (!note) return;
+        note.hand = note.hand === 'right_hand' ? 'left_hand' : 'right_hand';
+        note.color_rgb = (note.hand === 'right_hand' ? rhColor : lhColor).slice();
+        renderPianoRoll();
+        selectNote(note.id);
+    }
+
+    function duplicateNote(noteId) {
+        if (!notesData) return;
+        var note = notesData.notes.find(function(n) { return n.id === noteId; });
+        if (!note) return;
+        var newNote = JSON.parse(JSON.stringify(note));
+        newNote.id = nextNoteId++;
+        newNote.start_time = note.start_time + note.duration + 0.1;
+        notesData.notes.push(newNote);
+        renderPianoRoll();
+        selectNote(newNote.id);
+    }
+
+    // ================================================================
+    //  CONTEXT MENU (right-click)
+    // ================================================================
+    function showContextMenu(x, y, noteId) {
+        contextMenuNoteId = noteId;
+        selectNote(noteId);
+        var menu = document.getElementById('context-menu');
+        // Position, keeping menu on screen
+        var menuW = 180, menuH = 120;
+        var winW = window.innerWidth, winH = window.innerHeight;
+        var left = (x + menuW > winW) ? x - menuW : x;
+        var top = (y + menuH > winH) ? y - menuH : y;
+        menu.style.left = Math.max(0, left) + 'px';
+        menu.style.top = Math.max(0, top) + 'px';
+        menu.classList.add('visible');
+    }
+
+    function hideContextMenu() {
+        document.getElementById('context-menu').classList.remove('visible');
+        contextMenuNoteId = null;
+    }
+
+    document.getElementById('context-menu').addEventListener('click', function(e) {
+        var item = e.target.closest('.ctx-item');
+        if (!item || contextMenuNoteId === null) return;
+        var action = item.dataset.action;
+        if (action === 'delete') {
+            selectedNoteId = contextMenuNoteId;
+            deleteSelectedNote();
+        } else if (action === 'toggle-hand') {
+            selectedNoteId = contextMenuNoteId;
+            toggleSelectedNoteHand();
+        } else if (action === 'duplicate') {
+            duplicateNote(contextMenuNoteId);
+        }
+        hideContextMenu();
+    });
+
+    // Right-click on notes in edit mode
+    document.getElementById('piano-roll').addEventListener('contextmenu', function(e) {
+        if (!editMode) return;
+        var noteBlock = e.target.closest('.note-block');
+        if (!noteBlock) return;
+        e.preventDefault();
+        showContextMenu(e.clientX, e.clientY, parseInt(noteBlock.dataset.noteId));
+    });
+
+    // Hide context menu on click elsewhere
+    document.addEventListener('mousedown', function(e) {
+        if (!e.target.closest('#context-menu')) {
+            hideContextMenu();
+        }
+    });
+
+    // Handle click on piano roll in edit mode (start drag to create note)
+    document.getElementById('piano-roll').addEventListener('mousedown', function(e) {
+        if (!editMode || !notesData) return;
+        if (e.target.closest('.note-block')) return; // Handled by note click
+        if (e.button !== 0) return;
+
+        var container = document.getElementById('piano-roll-container');
+        var containerRect = container.getBoundingClientRect();
+        var scrollY = container.scrollTop + (e.clientY - containerRect.top);
+        var time = getTimeAtY(scrollY);
+        var keyIndex = getKeyIndexAtX(e.clientX);
+
+        creationDragState = {
+            startClientY: e.clientY,
+            startScrollY: scrollY,
+            startTime: Math.max(0, time),
+            keyIndex: keyIndex,
+            hasDragged: false
+        };
+
+        // Show preview immediately
+        var preview = document.getElementById('note-creation-preview');
+        var hand = editHand;
+        var color = hand === 'right_hand' ? rhColor : lhColor;
+        preview.style.background = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ', 0.4)';
+        preview.style.borderColor = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ', 0.8)';
+
+        var roll = document.getElementById('piano-roll');
+        var totalHeight = parseFloat(roll.style.height) || container.clientHeight;
+        var bottomY = totalHeight - 80;
+        var leftPct = getKeyLeftPercent(keyIndex);
+        var widthPct = getKeyWidthPercent(keyIndex);
+        var minDuration = 0.2;
+
+        var noteTop = bottomY - (time + minDuration) * pixelsPerSecond;
+        var noteH = minDuration * pixelsPerSecond;
+        preview.style.left = leftPct + '%';
+        preview.style.width = widthPct + '%';
+        preview.style.top = noteTop + 'px';
+        preview.style.height = Math.max(4, noteH) + 'px';
+        preview.style.display = 'block';
+    });
+
+    // Handle note selection and drag in edit mode
+    document.getElementById('piano-roll').addEventListener('mousedown', function(e) {
+        if (!editMode) return;
+        var noteBlock = e.target.closest('.note-block');
+        if (!noteBlock) return;
+        e.preventDefault();
+        e.stopPropagation();
+
+        var noteId = parseInt(noteBlock.dataset.noteId);
+        selectNote(noteId);
+
+        var note = notesData.notes.find(function(n) { return n.id === noteId; });
+        if (!note) return;
+
+        var rect = noteBlock.getBoundingClientRect();
+        var isTopEdge = (e.clientY - rect.top) < 8;
+        var isBottomEdge = (rect.bottom - e.clientY) < 8;
+
+        editDragState = {
+            type: isTopEdge ? 'resize-top' : (isBottomEdge ? 'resize-bottom' : 'move'),
+            noteId: noteId,
+            startY: e.clientY,
+            startX: e.clientX,
+            origStartTime: note.start_time,
+            origDuration: note.duration,
+            origKeyIndex: note.key_index
+        };
+    }, true);
+
+    document.addEventListener('mousemove', function(e) {
+        // Handle note creation drag
+        if (creationDragState) {
+            var dy = Math.abs(e.clientY - creationDragState.startClientY);
+            if (dy > 5) creationDragState.hasDragged = true;
+
+            var container = document.getElementById('piano-roll-container');
+            var containerRect = container.getBoundingClientRect();
+            var currentScrollY = container.scrollTop + (e.clientY - containerRect.top);
+            var currentTime = Math.max(0, getTimeAtY(currentScrollY));
+
+            var startTime = Math.min(creationDragState.startTime, currentTime);
+            var endTime = Math.max(creationDragState.startTime, currentTime);
+            var duration = Math.max(0.1, endTime - startTime);
+
+            var roll = document.getElementById('piano-roll');
+            var totalHeight = parseFloat(roll.style.height) || container.clientHeight;
+            var bottomY = totalHeight - 80;
+
+            var preview = document.getElementById('note-creation-preview');
+            var noteTop = bottomY - (startTime + duration) * pixelsPerSecond;
+            var noteH = duration * pixelsPerSecond;
+            preview.style.top = noteTop + 'px';
+            preview.style.height = Math.max(4, noteH) + 'px';
+            return;
+        }
+
+        if (!editDragState) return;
+        var note = notesData.notes.find(function(n) { return n.id === editDragState.noteId; });
+        if (!note) { editDragState = null; return; }
+
+        var dy = e.clientY - editDragState.startY;
+        var timeDelta = dy / pixelsPerSecond; // positive dy = later time (scroll is inverted)
+
+        if (editDragState.type === 'move') {
+            note.start_time = Math.max(0, editDragState.origStartTime - timeDelta);
+            note.key_index = getKeyIndexAtX(e.clientX);
+            note.note_name = PIANO_KEYS[note.key_index] || note.note_name;
+        } else if (editDragState.type === 'resize-top') {
+            // Top edge = end of note (start_time + duration)
+            var newDuration = editDragState.origDuration - timeDelta;
+            note.duration = Math.max(0.1, newDuration);
+        } else if (editDragState.type === 'resize-bottom') {
+            // Bottom edge = start of note
+            var newStart = editDragState.origStartTime - timeDelta;
+            var endTime = editDragState.origStartTime + editDragState.origDuration;
+            note.start_time = Math.max(0, Math.min(newStart, endTime - 0.1));
+            note.duration = endTime - note.start_time;
+        }
+
+        var container = document.getElementById('piano-roll-container');
+        var savedScroll = container.scrollTop;
+        renderPianoRoll();
+        container.scrollTop = savedScroll;
+        selectNote(editDragState.noteId);
+    });
+
+    document.addEventListener('mouseup', function(e) {
+        // Handle note creation drag end
+        if (creationDragState) {
+            var preview = document.getElementById('note-creation-preview');
+            preview.style.display = 'none';
+
+            if (creationDragState.hasDragged) {
+                var container = document.getElementById('piano-roll-container');
+                var containerRect = container.getBoundingClientRect();
+                var currentScrollY = container.scrollTop + (e.clientY - containerRect.top);
+                var currentTime = Math.max(0, getTimeAtY(currentScrollY));
+
+                var startTime = Math.min(creationDragState.startTime, currentTime);
+                var endTime = Math.max(creationDragState.startTime, currentTime);
+                var duration = Math.max(0.1, endTime - startTime);
+
+                // Use startTime (lower time value) for the note
+                var keyIndex = creationDragState.keyIndex;
+                var noteName = PIANO_KEYS[keyIndex] || 'C4';
+                var hand = editHand;
+                var color = hand === 'right_hand' ? rhColor : lhColor;
+
+                var newNote = {
+                    id: nextNoteId++,
+                    note_name: noteName,
+                    start_time: Math.max(0, startTime),
+                    duration: duration,
+                    hand: hand,
+                    key_index: keyIndex,
+                    center_x: 0,
+                    color_rgb: color.slice()
+                };
+
+                notesData.notes.push(newNote);
+                var container2 = document.getElementById('piano-roll-container');
+                var savedScroll2 = container2.scrollTop;
+                renderPianoRoll();
+                container2.scrollTop = savedScroll2;
+                selectNote(newNote.id);
+            } else {
+                // Simple click - add note with default duration
+                addNoteAtPosition(e.clientX, creationDragState.startClientY);
+            }
+            creationDragState = null;
+            return;
+        }
+
+        editDragState = null;
+    });
+
+    // ================================================================
     //  DATA LOADING
     // ================================================================
     function loadNotesData(data) {
         notesData = data;
+
+        // Update nextNoteId to be higher than any existing note ID
+        if (data.notes && data.notes.length > 0) {
+            var maxId = Math.max.apply(null, data.notes.map(function(n) { return n.id || 0; }));
+            nextNoteId = Math.max(nextNoteId, maxId + 1);
+        }
 
         if (data.notes && data.notes.length > 0) {
             var maxKeyIdx = Math.max.apply(null, data.notes.map(function(n) { return n.key_index; }));
@@ -1669,12 +3641,100 @@
     function loadNotesFromURL(url) {
         fetch(url)
             .then(function(r) { return r.json(); })
-            .then(function(data) { loadNotesData(data); })
+            .then(function(data) {
+                if (!data || !data.notes || !Array.isArray(data.notes)) {
+                    document.querySelector('#loading-text').textContent = 'Invalid JSON: missing "notes" array.';
+                    return;
+                }
+                loadNotesData(data);
+            })
             .catch(function(err) {
                 console.error('Failed to load:', err);
-                document.querySelector('.loading-text').textContent = 'Failed to load data.';
+                document.querySelector('#loading-text').textContent = 'Failed to load data.';
             });
     }
+
+    // ================================================================
+    //  FILE LOADING (drag-and-drop, picker)
+    // ================================================================
+    function openFilePicker() {
+        document.getElementById('file-input').click();
+    }
+
+    function exportJSON() {
+        if (!notesData) {
+            alert('No data to export.');
+            return;
+        }
+        var exportData = JSON.parse(JSON.stringify(notesData));
+        var blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = (exportData.metadata && exportData.metadata.title ? exportData.metadata.title.replace(/[^a-z0-9]/gi, '_') : 'makemusic_export') + '.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function startEmpty() {
+        var emptyData = {
+            metadata: { title: 'Untitled', source: 'MakeMusic Editor' },
+            notes: []
+        };
+        loadNotesData(emptyData);
+    }
+
+    function handleFileLoad(file) {
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                var data = JSON.parse(e.target.result);
+                if (!data.notes || !Array.isArray(data.notes)) {
+                    alert('Invalid JSON: missing "notes" array.');
+                    return;
+                }
+                loadNotesData(data);
+            } catch (err) {
+                alert('Failed to parse JSON: ' + err.message);
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    document.getElementById('file-input').addEventListener('change', function(e) {
+        handleFileLoad(e.target.files[0]);
+        this.value = ''; // Reset so same file can be re-loaded
+    });
+
+    // Global drag-and-drop (works even after data is loaded)
+    var dragCounter = 0;
+    document.addEventListener('dragenter', function(e) {
+        e.preventDefault();
+        dragCounter++;
+        document.getElementById('drag-overlay').classList.add('visible');
+    });
+    document.addEventListener('dragleave', function(e) {
+        dragCounter--;
+        if (dragCounter <= 0) {
+            dragCounter = 0;
+            document.getElementById('drag-overlay').classList.remove('visible');
+        }
+    });
+    document.addEventListener('dragover', function(e) {
+        e.preventDefault();
+    });
+    document.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dragCounter = 0;
+        document.getElementById('drag-overlay').classList.remove('visible');
+        var file = e.dataTransfer.files[0];
+        if (file && file.name.endsWith('.json')) {
+            handleFileLoad(file);
+        }
+    });
 
     // ================================================================
     //  PINCH-TO-ZOOM (Y axis)
@@ -1724,6 +3784,7 @@
         highlightActiveKeys();
         highlightPlayingNotes();
         updateMinimapViewport();
+        updateDropLineVisibility();
     });
 
     // Detect manual scroll intent via wheel (non-zoom) and touch events.
@@ -1809,7 +3870,34 @@
     //  KEYBOARD SHORTCUTS
     // ================================================================
     document.addEventListener('keydown', function(e) {
+        // Allow Cmd+P / Ctrl+P everywhere (including when in inputs)
+        if ((e.metaKey || e.ctrlKey) && e.code === 'KeyP') {
+            e.preventDefault();
+            if (commandPaletteOpen) {
+                hideCommandPalette();
+            } else {
+                showCommandPalette();
+            }
+            return;
+        }
+
+        // Command palette input handles its own events
+        if (e.target.id === 'command-palette-input') return;
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+
+        // Cmd+O / Ctrl+O to open file
+        if ((e.metaKey || e.ctrlKey) && e.code === 'KeyO') {
+            e.preventDefault();
+            openFilePicker();
+            return;
+        }
+
+        // Cmd+S / Ctrl+S to save/export
+        if ((e.metaKey || e.ctrlKey) && e.code === 'KeyS') {
+            e.preventDefault();
+            exportJSON();
+            return;
+        }
 
         switch (e.code) {
             case 'Space':
@@ -1832,11 +3920,13 @@
                 break;
             case 'ArrowUp':
                 e.preventDefault();
-                document.getElementById('piano-roll-container').scrollBy({ top: -120, behavior: 'smooth' });
+                onUserScrollIntent();
+                document.getElementById('piano-roll-container').scrollBy({ top: -appSettings.scrollSpeed, behavior: 'smooth' });
                 break;
             case 'ArrowDown':
                 e.preventDefault();
-                document.getElementById('piano-roll-container').scrollBy({ top: 120, behavior: 'smooth' });
+                onUserScrollIntent();
+                document.getElementById('piano-roll-container').scrollBy({ top: appSettings.scrollSpeed, behavior: 'smooth' });
                 break;
             case 'KeyL':
                 toggleLoop();
@@ -1850,8 +3940,42 @@
             case 'Digit2':
                 toggleHand('left');
                 break;
+            case 'KeyE':
+                toggleEditMode();
+                break;
+            case 'Delete':
+            case 'Backspace':
+                if (editMode && selectedNoteId !== null) {
+                    e.preventDefault();
+                    deleteSelectedNote();
+                }
+                break;
+            case 'KeyH':
+                if (editMode && selectedNoteId !== null) {
+                    toggleSelectedNoteHand();
+                }
+                break;
+            case 'KeyR':
+                if (editMode) {
+                    setEditHand(editHand === 'right_hand' ? 'left_hand' : 'right_hand');
+                }
+                break;
             case 'Escape':
-                hideHelp();
+                if (document.getElementById('github-modal').classList.contains('visible')) {
+                    document.getElementById('github-modal').classList.remove('visible');
+                } else if (document.getElementById('settings-modal').classList.contains('visible')) {
+                    document.getElementById('settings-modal').classList.remove('visible');
+                } else if (document.getElementById('context-menu').classList.contains('visible')) {
+                    hideContextMenu();
+                } else if (commandPaletteOpen) {
+                    hideCommandPalette();
+                } else if (editMode && selectedNoteId !== null) {
+                    deselectNote();
+                } else if (editMode) {
+                    toggleEditMode();
+                } else {
+                    hideHelp();
+                }
                 break;
             default:
                 if (e.key === '?') {
@@ -1893,21 +4017,562 @@
     });
 
     // ================================================================
+    //  GITHUB CLOUD STORAGE (OAuth)
+    // ================================================================
+    var OAUTH_PROXY = 'https://github-oauth-proxy.mustafaq9.workers.dev';
+    var OAUTH_CLIENT_ID = (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            return 'Ov23liXQfJJcoAaMIdJm';
+        }
+        return 'Ov23liVzEUg6aUgl7hm6';
+    })();
+
+    var ghConfig = null; // { token, repo, path, username }
+
+    function loadGitHubConfig() {
+        try {
+            var saved = localStorage.getItem('makemusic_github');
+            if (saved) {
+                ghConfig = JSON.parse(saved);
+            }
+        } catch(e) {}
+    }
+
+    function saveGitHubConfig() {
+        try {
+            if (ghConfig) {
+                localStorage.setItem('makemusic_github', JSON.stringify(ghConfig));
+            } else {
+                localStorage.removeItem('makemusic_github');
+            }
+        } catch(e) {}
+    }
+
+    function showGitHub() {
+        document.getElementById('github-modal').classList.add('visible');
+        updateGitHubUI();
+        if (ghConfig && ghConfig.repo) refreshGitHubFiles();
+    }
+
+    function hideGitHub(e) {
+        if (e && e.target.id !== 'github-modal') return;
+        document.getElementById('github-modal').classList.remove('visible');
+    }
+
+    function updateGitHubUI() {
+        var statusBar = document.getElementById('gh-status-bar');
+        var statusIcon = document.getElementById('gh-status-icon');
+        var statusText = document.getElementById('gh-status-text');
+        var connectForm = document.getElementById('gh-connect-form');
+        var connectedSection = document.getElementById('gh-connected-section');
+
+        if (ghConfig && ghConfig.token && ghConfig.repo) {
+            statusBar.className = 'gh-status connected';
+            statusIcon.textContent = '🟢';
+            statusText.textContent = 'Connected as ' + (ghConfig.username || 'user') + ' → ' + ghConfig.repo + '/' + ghConfig.path;
+            connectForm.style.display = 'none';
+            connectedSection.style.display = '';
+            var saveInput = document.getElementById('gh-save-filename');
+            if (!saveInput.value) {
+                var title = (notesData && notesData.metadata && notesData.metadata.title) || 'untitled';
+                saveInput.value = title.replace(/[^a-z0-9_-]/gi, '_') + '.json';
+            }
+        } else {
+            statusBar.className = 'gh-status disconnected';
+            statusIcon.textContent = '⚪';
+            statusText.textContent = 'Not connected';
+            connectForm.style.display = '';
+            connectedSection.style.display = 'none';
+        }
+    }
+
+    function signInWithGitHub() {
+        var redirectUri = window.location.origin + window.location.pathname;
+        var authUrl = 'https://github.com/login/oauth/authorize?client_id=' +
+            encodeURIComponent(OAUTH_CLIENT_ID) +
+            '&scope=repo' +
+            '&redirect_uri=' + encodeURIComponent(redirectUri);
+        window.location.href = authUrl;
+    }
+
+    async function handleOAuthCallback(code) {
+        try {
+            var res = await fetch(OAUTH_PROXY, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ client_id: OAUTH_CLIENT_ID, code: code })
+            });
+            if (!res.ok) {
+                var errData = await res.json().catch(function() { return {}; });
+                console.error('OAuth token exchange failed:', errData);
+                alert('GitHub sign-in failed. Please try again.');
+                return;
+            }
+            var data = await res.json();
+            if (!data.access_token) {
+                console.error('No access_token in response:', data);
+                alert('GitHub sign-in failed: no access token received.');
+                return;
+            }
+
+            var userRes = await fetch('https://api.github.com/user', {
+                headers: { 'Authorization': 'Bearer ' + data.access_token, 'Accept': 'application/vnd.github.v3+json' }
+            });
+            var userData = userRes.ok ? await userRes.json() : { login: 'user' };
+
+            // Restore previous repo config if reconnecting
+            var prevConfig = null;
+            try {
+                var saved = localStorage.getItem('makemusic_github');
+                if (saved) prevConfig = JSON.parse(saved);
+            } catch(e) {}
+
+            ghConfig = {
+                token: data.access_token,
+                repo: (prevConfig && prevConfig.repo) || '',
+                path: (prevConfig && prevConfig.path) || 'songs',
+                username: userData.login
+            };
+            saveGitHubConfig();
+
+            // Show homepage with appropriate state
+            showHomepage();
+        } catch(err) {
+            console.error('OAuth callback error:', err);
+            alert('GitHub sign-in failed: ' + err.message);
+        }
+    }
+
+    // ================================================================
+    //  HOMEPAGE STATE MANAGEMENT
+    // ================================================================
+
+    function showHomepage() {
+        var homepage = document.getElementById('homepage');
+        var signedOut = document.getElementById('hp-signed-out');
+        var repoSetup = document.getElementById('hp-repo-setup');
+        var songList = document.getElementById('hp-song-list');
+        var spinner = document.getElementById('loading-spinner');
+        var loadingText = document.getElementById('loading-text');
+
+        spinner.style.display = 'none';
+        loadingText.style.display = 'none';
+        homepage.style.display = '';
+
+        if (ghConfig && ghConfig.token && ghConfig.repo) {
+            // Fully connected — show song list
+            signedOut.style.display = 'none';
+            repoSetup.style.display = 'none';
+            songList.style.display = '';
+            document.getElementById('hp-user-display').textContent = ghConfig.username;
+            document.getElementById('hp-repo-badge').textContent = ghConfig.repo.split('/')[1] || ghConfig.repo;
+            loadHomepageSongs();
+        } else if (ghConfig && ghConfig.token) {
+            // Signed in but no repo — show repo setup
+            signedOut.style.display = 'none';
+            repoSetup.style.display = '';
+            songList.style.display = 'none';
+            document.getElementById('hp-username').textContent = ghConfig.username;
+            document.getElementById('hp-default-repo-name').textContent = ghConfig.username + '/makemusic_db';
+            // Reset repo setup state
+            document.getElementById('hp-repo-status').textContent = '';
+            document.getElementById('hp-create-repo-btn').style.display = 'none';
+            document.getElementById('hp-continue-btn').style.display = '';
+        } else {
+            // Not signed in
+            signedOut.style.display = '';
+            repoSetup.style.display = 'none';
+            songList.style.display = 'none';
+        }
+    }
+
+    function updateRepoChoice() {
+        var choice = document.querySelector('input[name="hp-repo-choice"]:checked').value;
+        var customInput = document.getElementById('hp-custom-repo-name');
+        customInput.disabled = (choice !== 'custom');
+        if (choice === 'custom') customInput.focus();
+        // Reset status when switching
+        document.getElementById('hp-repo-status').textContent = '';
+        document.getElementById('hp-create-repo-btn').style.display = 'none';
+        document.getElementById('hp-continue-btn').style.display = '';
+    }
+
+    function getSelectedRepoName() {
+        var choice = document.querySelector('input[name="hp-repo-choice"]:checked').value;
+        if (choice === 'default') {
+            return 'makemusic_db';
+        }
+        return document.getElementById('hp-custom-repo-name').value.trim();
+    }
+
+    function getSelectedRepoFull() {
+        var name = getSelectedRepoName();
+        if (!name) return '';
+        return ghConfig.username + '/' + name;
+    }
+
+    async function continueWithRepo() {
+        if (!ghConfig || !ghConfig.token) return;
+        var repoName = getSelectedRepoName();
+        if (!repoName) {
+            document.getElementById('hp-repo-status').innerHTML = '<span style="color:#e94560;">Please enter a repository name.</span>';
+            return;
+        }
+
+        var fullRepo = ghConfig.username + '/' + repoName;
+        var statusEl = document.getElementById('hp-repo-status');
+        statusEl.innerHTML = '<span style="color:var(--text-secondary);">Checking repository…</span>';
+        document.getElementById('hp-continue-btn').disabled = true;
+
+        try {
+            var res = await fetch('https://api.github.com/repos/' + fullRepo, {
+                headers: { 'Authorization': 'Bearer ' + ghConfig.token, 'Accept': 'application/vnd.github.v3+json' }
+            });
+
+            if (res.ok) {
+                // Repo exists — connect and go to song list
+                ghConfig.repo = fullRepo;
+                ghConfig.path = 'songs';
+                saveGitHubConfig();
+                showHomepage();
+            } else if (res.status === 404) {
+                // Repo doesn't exist — show create button
+                statusEl.innerHTML = '<span style="color:#e9a045;">Repository "' + fullRepo + '" does not exist yet.</span>';
+                document.getElementById('hp-create-repo-btn').style.display = '';
+                document.getElementById('hp-continue-btn').style.display = 'none';
+            } else {
+                statusEl.innerHTML = '<span style="color:#e94560;">Failed to check repository (HTTP ' + res.status + ').</span>';
+            }
+        } catch(err) {
+            statusEl.innerHTML = '<span style="color:#e94560;">Error: ' + err.message + '</span>';
+        } finally {
+            document.getElementById('hp-continue-btn').disabled = false;
+        }
+    }
+
+    async function createSelectedRepo() {
+        if (!ghConfig || !ghConfig.token) return;
+        var repoName = getSelectedRepoName();
+        if (!repoName) return;
+
+        var statusEl = document.getElementById('hp-repo-status');
+        var createBtn = document.getElementById('hp-create-repo-btn');
+        createBtn.disabled = true;
+        statusEl.innerHTML = '<span style="color:var(--text-secondary);">Creating repository…</span>';
+
+        try {
+            var res = await fetch('https://api.github.com/user/repos', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + ghConfig.token,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: repoName,
+                    description: 'MakeMusic song storage',
+                    private: true,
+                    auto_init: true
+                })
+            });
+
+            if (res.ok || res.status === 201) {
+                var fullRepo = ghConfig.username + '/' + repoName;
+                ghConfig.repo = fullRepo;
+                ghConfig.path = 'songs';
+                saveGitHubConfig();
+                statusEl.innerHTML = '<span style="color:#48BF91;">Repository created!</span>';
+                setTimeout(function() { showHomepage(); }, 500);
+            } else {
+                var errData = await res.json().catch(function() { return {}; });
+                statusEl.innerHTML = '<span style="color:#e94560;">Failed to create: ' + (errData.message || 'Unknown error') + '</span>';
+            }
+        } catch(err) {
+            statusEl.innerHTML = '<span style="color:#e94560;">Error: ' + err.message + '</span>';
+        } finally {
+            createBtn.disabled = false;
+        }
+    }
+
+    async function loadHomepageSongs() {
+        if (!ghConfig || !ghConfig.repo) return;
+        var songsEl = document.getElementById('hp-songs');
+        songsEl.innerHTML = '<div class="hp-loading">Loading songs…</div>';
+
+        try {
+            var res = await fetch('https://api.github.com/repos/' + ghConfig.repo + '/contents/' + ghConfig.path, {
+                headers: { 'Authorization': 'Bearer ' + ghConfig.token, 'Accept': 'application/vnd.github.v3+json' }
+            });
+
+            if (res.status === 404) {
+                songsEl.innerHTML = '<div class="hp-empty">No songs yet. Create your first one!</div>';
+                return;
+            }
+
+            if (!res.ok) {
+                songsEl.innerHTML = '<div class="hp-empty">Failed to load songs.</div>';
+                return;
+            }
+
+            var files = await res.json();
+            if (!Array.isArray(files)) {
+                songsEl.innerHTML = '<div class="hp-empty">Unexpected response.</div>';
+                return;
+            }
+
+            var jsonFiles = files.filter(function(f) { return f.name.endsWith('.json'); });
+            if (jsonFiles.length === 0) {
+                songsEl.innerHTML = '<div class="hp-empty">No songs yet. Create your first one!</div>';
+                return;
+            }
+
+            songsEl.innerHTML = '';
+            jsonFiles.forEach(function(file) {
+                var item = document.createElement('div');
+                item.className = 'hp-song-item';
+                var displayName = file.name.replace(/\.json$/, '').replace(/_/g, ' ');
+                item.innerHTML = '<span>🎵</span><span class="hp-song-name">' + displayName + '</span><span class="hp-song-size">' + (Math.round(file.size / 1024) || '<1') + ' KB</span>';
+                item.addEventListener('click', function() { loadHomepageSong(file.path, file.name); });
+                songsEl.appendChild(item);
+            });
+        } catch(err) {
+            songsEl.innerHTML = '<div class="hp-empty">Error: ' + err.message + '</div>';
+        }
+    }
+
+    async function loadHomepageSong(filePath, fileName) {
+        if (!ghConfig) return;
+        var songsEl = document.getElementById('hp-songs');
+
+        // Visual feedback
+        var items = songsEl.querySelectorAll('.hp-song-item');
+        items.forEach(function(it) { it.style.pointerEvents = 'none'; it.style.opacity = '0.5'; });
+
+        try {
+            var res = await fetch('https://api.github.com/repos/' + ghConfig.repo + '/contents/' + filePath, {
+                headers: { 'Authorization': 'Bearer ' + ghConfig.token, 'Accept': 'application/vnd.github.v3+json' }
+            });
+
+            if (!res.ok) {
+                alert('Failed to load: ' + fileName);
+                items.forEach(function(it) { it.style.pointerEvents = ''; it.style.opacity = ''; });
+                return;
+            }
+
+            var fileData = await res.json();
+            var decoded = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, ''))));
+            var data = JSON.parse(decoded);
+
+            if (!data.notes || !Array.isArray(data.notes)) {
+                alert('Invalid JSON: missing "notes" array.');
+                items.forEach(function(it) { it.style.pointerEvents = ''; it.style.opacity = ''; });
+                return;
+            }
+
+            loadNotesData(data);
+            document.getElementById('gh-save-filename').value = fileName;
+            updateGitHubUI();
+        } catch(err) {
+            alert('Failed to load: ' + err.message);
+            items.forEach(function(it) { it.style.pointerEvents = ''; it.style.opacity = ''; });
+        }
+    }
+
+    function disconnectAndReload() {
+        ghConfig = null;
+        saveGitHubConfig();
+        showHomepage();
+    }
+
+    function disconnectGitHub() {
+        ghConfig = null;
+        saveGitHubConfig();
+        updateGitHubUI();
+    }
+
+    async function saveToGitHub() {
+        if (!ghConfig || !notesData) return;
+        var filename = document.getElementById('gh-save-filename').value.trim();
+        if (!filename) {
+            alert('Please enter a filename.');
+            return;
+        }
+        if (!filename.endsWith('.json')) filename += '.json';
+
+        var msgEl = document.getElementById('gh-save-message');
+        msgEl.style.display = '';
+        msgEl.textContent = 'Saving...';
+        msgEl.style.color = 'var(--text-secondary)';
+
+        var filePath = ghConfig.path + '/' + filename;
+        var content = btoa(unescape(encodeURIComponent(JSON.stringify(notesData, null, 2))));
+
+        try {
+            var existingRes = await fetch('https://api.github.com/repos/' + ghConfig.repo + '/contents/' + filePath, {
+                headers: { 'Authorization': 'Bearer ' + ghConfig.token, 'Accept': 'application/vnd.github.v3+json' }
+            });
+            var sha = null;
+            if (existingRes.ok) {
+                var existing = await existingRes.json();
+                sha = existing.sha;
+            }
+
+            var body = {
+                message: 'Update ' + filename + ' via MakeMusic',
+                content: content
+            };
+            if (sha) body.sha = sha;
+
+            var saveRes = await fetch('https://api.github.com/repos/' + ghConfig.repo + '/contents/' + filePath, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'Bearer ' + ghConfig.token,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+
+            if (saveRes.ok) {
+                msgEl.textContent = '✅ Saved successfully!';
+                msgEl.style.color = '#48BF91';
+                refreshGitHubFiles();
+                setTimeout(function() { msgEl.style.display = 'none'; }, 3000);
+            } else {
+                var err = await saveRes.json();
+                msgEl.textContent = '❌ Save failed: ' + (err.message || 'Unknown error');
+                msgEl.style.color = '#e94560';
+            }
+        } catch(err) {
+            msgEl.textContent = '❌ Save failed: ' + err.message;
+            msgEl.style.color = '#e94560';
+        }
+    }
+
+    async function refreshGitHubFiles() {
+        if (!ghConfig) return;
+        var listEl = document.getElementById('gh-file-list');
+        listEl.innerHTML = '<div class="gh-message">Loading...</div>';
+
+        try {
+            var res = await fetch('https://api.github.com/repos/' + ghConfig.repo + '/contents/' + ghConfig.path, {
+                headers: { 'Authorization': 'Bearer ' + ghConfig.token, 'Accept': 'application/vnd.github.v3+json' }
+            });
+
+            if (res.status === 404) {
+                listEl.innerHTML = '<div class="gh-message">No files yet. Save your first file to create the folder.</div>';
+                return;
+            }
+
+            if (!res.ok) {
+                listEl.innerHTML = '<div class="gh-message">Failed to load files.</div>';
+                return;
+            }
+
+            var files = await res.json();
+            if (!Array.isArray(files)) {
+                listEl.innerHTML = '<div class="gh-message">Unexpected response from GitHub.</div>';
+                return;
+            }
+
+            var jsonFiles = files.filter(function(f) { return f.name.endsWith('.json'); });
+            if (jsonFiles.length === 0) {
+                listEl.innerHTML = '<div class="gh-message">No JSON files found in ' + ghConfig.path + '/</div>';
+                return;
+            }
+
+            listEl.innerHTML = '';
+            jsonFiles.forEach(function(file) {
+                var item = document.createElement('div');
+                item.className = 'gh-file-item';
+                item.innerHTML = '<span>📄</span><span class="gh-file-name">' + file.name + '</span><span class="gh-file-date">' + (Math.round(file.size / 1024) || '<1') + ' KB</span>';
+                item.addEventListener('click', function() { loadFromGitHub(file.path, file.name); });
+                listEl.appendChild(item);
+            });
+        } catch(err) {
+            listEl.innerHTML = '<div class="gh-message">Error: ' + err.message + '</div>';
+        }
+    }
+
+    async function loadFromGitHub(filePath, fileName) {
+        if (!ghConfig) return;
+        try {
+            var res = await fetch('https://api.github.com/repos/' + ghConfig.repo + '/contents/' + filePath, {
+                headers: { 'Authorization': 'Bearer ' + ghConfig.token, 'Accept': 'application/vnd.github.v3+json' }
+            });
+
+            if (!res.ok) {
+                alert('Failed to load file: ' + fileName);
+                return;
+            }
+
+            var fileData = await res.json();
+            var decoded = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, ''))));
+            var data = JSON.parse(decoded);
+
+            if (!data.notes || !Array.isArray(data.notes)) {
+                alert('Invalid JSON: missing "notes" array.');
+                return;
+            }
+
+            loadNotesData(data);
+            document.getElementById('github-modal').classList.remove('visible');
+            document.getElementById('gh-save-filename').value = fileName;
+        } catch(err) {
+            alert('Failed to load file: ' + err.message);
+        }
+    }
+
+    // ================================================================
     //  INIT
     // ================================================================
-    document.getElementById('loading-overlay').querySelector('.loading-text').textContent = 'Waiting for data\u2026';
+
+    // Load saved settings from localStorage
+    loadSettings();
+    loadGitHubConfig();
 
     // Check URL params
     const params = new URLSearchParams(window.location.search);
+    const oauthCode = params.get('code');
     const jsonUrl = params.get('json');
-    if (jsonUrl) {
-        document.getElementById('loading-overlay').querySelector('.loading-text').textContent = 'Loading notes\u2026';
+
+    // Handle GitHub OAuth callback
+    if (oauthCode) {
+        window.history.replaceState({}, '', window.location.pathname);
+        handleOAuthCallback(oauthCode);
+    } else if (jsonUrl) {
+        document.getElementById('loading-spinner').style.display = '';
+        document.getElementById('loading-text').textContent = 'Loading notes\u2026';
+        document.getElementById('homepage').style.display = 'none';
         loadNotesFromURL(jsonUrl);
+    } else if (typeof EMBEDDED_NOTES_DATA !== 'undefined') {
+        loadNotesData(EMBEDDED_NOTES_DATA);
+    } else {
+        // Show homepage
+        showHomepage();
     }
 
-    // Check if embedded data exists (for standalone HTML)
-    if (typeof EMBEDDED_NOTES_DATA !== 'undefined') {
-        loadNotesData(EMBEDDED_NOTES_DATA);
+    // Homepage drop zone
+    var hpDropZone = document.getElementById('hp-drop-zone');
+    if (hpDropZone) {
+        hpDropZone.addEventListener('click', function(e) {
+            document.getElementById('file-input').click();
+        });
+        hpDropZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('drag-over');
+        });
+        hpDropZone.addEventListener('dragleave', function() {
+            this.classList.remove('drag-over');
+        });
+        hpDropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+            var file = e.dataTransfer.files[0];
+            if (file && file.name.endsWith('.json')) {
+                handleFileLoad(file);
+            }
+        });
     }
     </script>
 </body>

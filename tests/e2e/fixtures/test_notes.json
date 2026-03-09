@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "keyboard_y": 653,
+    "keyboard_height": 423,
+    "scroll_speed": 242.0,
+    "intro_end_time": 2.0
+  },
+  "notes": [
+    {"id":1,"note_name":"C4","start_time":2.0,"duration":1.0,"hand":"right_hand","key_index":39,"center_x":800,"color_rgb":[189,131,196]},
+    {"id":2,"note_name":"E4","start_time":2.0,"duration":1.0,"hand":"right_hand","key_index":43,"center_x":900,"color_rgb":[189,131,196]},
+    {"id":3,"note_name":"G4","start_time":2.0,"duration":1.0,"hand":"right_hand","key_index":46,"center_x":1000,"color_rgb":[189,131,196]},
+    {"id":4,"note_name":"C3","start_time":2.0,"duration":2.0,"hand":"left_hand","key_index":27,"center_x":300,"color_rgb":[63,223,202]},
+    {"id":5,"note_name":"D4","start_time":4.0,"duration":0.5,"hand":"right_hand","key_index":41,"center_x":850,"color_rgb":[189,131,196]},
+    {"id":6,"note_name":"F4","start_time":4.5,"duration":0.5,"hand":"right_hand","key_index":44,"center_x":950,"color_rgb":[189,131,196]},
+    {"id":7,"note_name":"A4","start_time":5.0,"duration":1.0,"hand":"right_hand","key_index":48,"center_x":1050,"color_rgb":[189,131,196]},
+    {"id":8,"note_name":"G3","start_time":4.0,"duration":2.0,"hand":"left_hand","key_index":34,"center_x":500,"color_rgb":[63,223,202]},
+    {"id":9,"note_name":"F#4","start_time":6.0,"duration":0.8,"hand":"right_hand","key_index":45,"center_x":970,"color_rgb":[189,131,196]},
+    {"id":10,"note_name":"B4","start_time":7.0,"duration":1.5,"hand":"right_hand","key_index":50,"center_x":1100,"color_rgb":[189,131,196]},
+    {"id":11,"note_name":"E3","start_time":6.0,"duration":2.0,"hand":"left_hand","key_index":31,"center_x":400,"color_rgb":[63,223,202]},
+    {"id":12,"note_name":"C#4","start_time":8.5,"duration":0.5,"hand":"right_hand","key_index":40,"center_x":820,"color_rgb":[189,131,196]},
+    {"id":13,"note_name":"D#4","start_time":9.0,"duration":1.0,"hand":"right_hand","key_index":42,"center_x":880,"color_rgb":[189,131,196]},
+    {"id":14,"note_name":"G#3","start_time":8.0,"duration":2.0,"hand":"left_hand","key_index":35,"center_x":530,"color_rgb":[63,223,202]},
+    {"id":15,"note_name":"A#4","start_time":10.0,"duration":1.0,"hand":"right_hand","key_index":49,"center_x":1080,"color_rgb":[189,131,196]},
+    {"id":16,"note_name":"C4","start_time":11.0,"duration":2.0,"hand":"right_hand","key_index":39,"center_x":800,"color_rgb":[189,131,196]},
+    {"id":17,"note_name":"D3","start_time":10.0,"duration":3.0,"hand":"left_hand","key_index":29,"center_x":350,"color_rgb":[63,223,202]},
+    {"id":18,"note_name":"E4","start_time":13.0,"duration":1.0,"hand":"right_hand","key_index":43,"center_x":900,"color_rgb":[189,131,196]},
+    {"id":19,"note_name":"G4","start_time":14.0,"duration":1.0,"hand":"right_hand","key_index":46,"center_x":1000,"color_rgb":[189,131,196]},
+    {"id":20,"note_name":"C3","start_time":13.0,"duration":3.0,"hand":"left_hand","key_index":27,"center_x":300,"color_rgb":[63,223,202]}
+  ],
+  "summary": {
+    "total_notes": 20,
+    "right_hand_notes": 14,
+    "left_hand_notes": 6,
+    "duration_range": [2.0, 16.0],
+    "key_range": [27, 50]
+  }
+}
