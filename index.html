@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎹 MakeMusic - Piano Roll Viewer</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="toolbar">
+        <span class="title">🎹 MakeMusic</span>
+        <button class="toolbar-btn" id="load-file-btn" onclick="openFilePicker()" title="Load JSON File (Cmd+O)">
+            <span class="icon">📂</span> <span class="btn-label">Open</span>
+        </button>
+        <button class="toolbar-btn" id="save-file-btn" onclick="exportJSON()" title="Save/Export JSON (Cmd+S)">
+            <span class="icon">💾</span> <span class="btn-label">Save</span>
+        </button>
+        <button class="toolbar-btn" id="github-btn" onclick="showGitHub()" title="GitHub Cloud Storage">
+            <span class="icon">☁️</span> <span class="btn-label">Cloud</span>
+        </button>
+        <button class="toolbar-btn" id="edit-mode-btn" onclick="toggleEditMode()" title="Toggle Edit Mode (E)">
+            <span class="icon">✏️</span> <span class="btn-label">Edit</span>
+        </button>
+        <button class="toolbar-btn edit-only-btn" id="marker-btn" onclick="addMarkerAtScroll()" title="Add Marker at Current Position (M)">
+            <span class="icon">📌</span> <span class="btn-label">Marker</span>
+        </button>
+        <button class="toolbar-btn edit-only-btn" id="lyrics-btn" onclick="toggleLyricsMode()" title="Toggle Lyrics Mode (W)">
+            <span class="icon">🎵</span> <span class="btn-label">Lyrics</span>
+        </button>
+        <span class="song-info" id="song-info"></span>
+        <input type="text" id="song-title" class="song-title-input" placeholder="Untitled" title="Song name (click to edit)" spellcheck="false">
+        <span class="note-count-badge" id="note-count-badge"></span>
+        <div class="spacer"></div>
+
+        <button class="toolbar-btn hand-toggle-btn" id="rh-toggle" onclick="toggleHand('right')" title="Toggle Right Hand (1)">
+            <span class="hand-swatch" id="rh-swatch"></span>
+            <span class="btn-label">RH</span>
+        </button>
+        <button class="toolbar-btn hand-toggle-btn" id="lh-toggle" onclick="toggleHand('left')" title="Toggle Left Hand (2)">
+            <span class="hand-swatch" id="lh-swatch"></span>
+            <span class="btn-label">LH</span>
+        </button>
+
+        <div class="toolbar-sep"></div>
+
+        <button class="toolbar-btn" id="play-btn" onclick="togglePlayback()" title="Play / Pause (Space)">
+            <span class="icon">▶</span> <span class="btn-label">Play</span>
+        </button>
+        <button class="toolbar-btn" id="loop-btn" onclick="toggleLoop()" title="Toggle Loop (L)">
+            <span class="icon">🔁</span>
+        </button>
+
+        <div class="toolbar-sep"></div>
+
+        <label class="toolbar-label" title="Volume">
+            <span class="icon">🔊</span>
+            <input type="range" class="toolbar-range" id="volume-slider" min="0" max="100" value="80" title="Volume">
+        </label>
+
+        <select class="toolbar-select" id="speed-select" title="Playback Speed">
+            <option value="0.25">0.25×</option>
+            <option value="0.5">0.5×</option>
+            <option value="0.75">0.75×</option>
+            <option value="1" selected>1×</option>
+            <option value="1.5">1.5×</option>
+            <option value="2">2×</option>
+        </select>
+
+        <div class="toolbar-sep"></div>
+
+        <label class="toolbar-label" title="Zoom (Ctrl+Scroll)">
+            Zoom
+            <input type="range" class="toolbar-range" id="zoom-slider" min="20" max="300" value="80" title="Zoom (Ctrl+Scroll)">
+        </label>
+
+        <button class="toolbar-btn" id="settings-btn" onclick="showSettings()" title="Settings">
+            <span class="icon">⚙️</span>
+        </button>
+        <button class="toolbar-btn" onclick="showHelp()" title="Keyboard Shortcuts (?)">
+            <span class="icon">?</span>
+        </button>
+    </div>
+
+    <div id="progress-bar-container" onclick="onProgressClick(event)">
+        <div id="progress-bar-fill"></div>
+    </div>
+
+    <div id="main-container">
+        <div id="piano-roll-container">
+            <div id="piano-roll">
+                <canvas id="density-canvas"></canvas>
+                <div id="playhead"></div>
+                <div id="snap-indicator"></div>
+                <div id="note-creation-preview"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="keyboard">
+        <div id="keyboard-wrapper"></div>
+    </div>
+
+    <div id="minimap">
+        <div id="minimap-viewport"></div>
+    </div>
+
+    <div id="time-indicator">0:00 / 0:00</div>
+    <div id="edit-indicator" onclick="toggleEditMode()" title="Click to exit edit mode" style="cursor:pointer;">EDIT MODE</div>
+    <div id="lyrics-indicator" onclick="toggleLyricsMode()" title="Click to exit lyrics mode" style="cursor:pointer;">LYRICS MODE</div>
+
+    <!-- Lyrics side panel -->
+    <div id="lyrics-panel">
+        <div class="lyrics-panel-header">
+            <span class="lyrics-panel-title">🎵 Lyrics Editor</span>
+            <button class="lyrics-panel-close" onclick="toggleLyricsMode()" title="Close lyrics panel">✕</button>
+        </div>
+        <div class="lyrics-filter-bar">
+            <button class="lyrics-filter-btn" data-filter="right_hand" onclick="setLyricsHandFilter('right_hand')">RH</button>
+            <button class="lyrics-filter-btn" data-filter="left_hand" onclick="setLyricsHandFilter('left_hand')">LH</button>
+            <button class="lyrics-filter-btn" data-filter="all" onclick="setLyricsHandFilter('all')">All</button>
+        </div>
+        <div id="lyrics-note-list"></div>
+    </div>
+
+    <div id="marker-input-overlay">
+        <input type="text" id="marker-input" placeholder="e.g. Verse, Chorus…" autocomplete="off" spellcheck="false">
+    </div>
+
+    <div id="edit-hand-selector">
+        <button class="edit-hand-btn active rh" id="edit-hand-rh" onclick="setEditHand('right_hand')" title="New notes: Right Hand (R)">RH</button>
+        <button class="edit-hand-btn lh" id="edit-hand-lh" onclick="setEditHand('left_hand')" title="New notes: Left Hand (R)">LH</button>
+    </div>
+
+    <div id="context-menu">
+        <div class="ctx-item" data-action="toggle-hand"><span class="ctx-icon">🔄</span><span class="ctx-label">Toggle Hand</span><span class="ctx-shortcut">H</span></div>
+        <div class="ctx-item" data-action="duplicate"><span class="ctx-icon">📋</span><span class="ctx-label">Duplicate Note</span></div>
+        <div class="ctx-item" data-action="edit-lyric"><span class="ctx-icon">🎵</span><span class="ctx-label">Edit Lyric</span><span class="ctx-shortcut">W</span></div>
+        <div class="ctx-separator"></div>
+        <div class="ctx-item danger" data-action="delete"><span class="ctx-icon">🗑️</span><span class="ctx-label">Delete Note</span><span class="ctx-shortcut">Del</span></div>
+    </div>
+
+    <div id="context-menu-empty">
+        <div class="ctx-item" data-action="add-note-here"><span class="ctx-icon">➕</span><span class="ctx-label">Add Note Here</span></div>
+        <div class="ctx-item" data-action="add-marker-here"><span class="ctx-icon">📌</span><span class="ctx-label">Add Marker Here</span><span class="ctx-shortcut">M</span></div>
+        <div class="ctx-separator"></div>
+        <div class="ctx-item" data-action="paste-note"><span class="ctx-icon">📋</span><span class="ctx-label">Paste Note</span></div>
+    </div>
+
+    <div id="settings-modal" onclick="hideSettings(event)">
+        <div id="settings-content" onclick="event.stopPropagation()">
+            <h2>⚙️ Settings</h2>
+            <div class="settings-group">
+                <div class="settings-group-title">Display</div>
+                <div class="setting-row">
+                    <div><div class="setting-label">Drop Lines</div><div class="setting-desc">Lines connecting notes to keyboard</div></div>
+                    <div class="setting-toggle active" id="setting-drop-lines" onclick="toggleSetting('dropLines')"></div>
+                </div>
+                <div class="setting-row">
+                    <div><div class="setting-label">Note Labels</div><div class="setting-desc">Show note names on note blocks</div></div>
+                    <div class="setting-toggle active" id="setting-note-labels" onclick="toggleSetting('noteLabels')"></div>
+                </div>
+                <div class="setting-row">
+                    <div><div class="setting-label">Density Heatmap</div><div class="setting-desc">Background density visualization</div></div>
+                    <div class="setting-toggle active" id="setting-density" onclick="toggleSetting('density')"></div>
+                </div>
+                <div class="setting-row">
+                    <div><div class="setting-label">Dark Mode</div><div class="setting-desc">Toggle dark/light theme (T)</div></div>
+                    <div class="setting-toggle active" id="setting-dark-mode" onclick="toggleTheme()"></div>
+                </div>
+                <div class="setting-row">
+                    <div><div class="setting-label">Keyboard Height</div><div class="setting-desc">Height of piano keyboard (px)</div></div>
+                    <input type="range" class="toolbar-range setting-range" id="setting-keyboard-height" min="50" max="200" value="100" onchange="changeSetting('keyboardHeight', this.value)">
+                </div>
+            </div>
+            <div class="settings-group">
+                <div class="settings-group-title">Colors</div>
+                <div class="setting-row">
+                    <div class="setting-label">Right Hand Color</div>
+                    <input type="color" class="setting-color" id="setting-rh-color" value="#6495ED" onchange="changeHandColor('right', this.value)">
+                </div>
+                <div class="setting-row">
+                    <div class="setting-label">Left Hand Color</div>
+                    <input type="color" class="setting-color" id="setting-lh-color" value="#48BF91" onchange="changeHandColor('left', this.value)">
+                </div>
+            </div>
+            <div class="settings-group">
+                <div class="settings-group-title">Playback</div>
+                <div class="setting-row">
+                    <div><div class="setting-label">Scroll Speed</div><div class="setting-desc">Arrow key scroll amount (px)</div></div>
+                    <input type="range" class="toolbar-range setting-range" id="setting-scroll-speed" min="40" max="400" value="120" onchange="changeSetting('scrollSpeed', this.value)">
+                </div>
+            </div>
+            <div style="margin-top: 16px; text-align: right;">
+                <button class="toolbar-btn" onclick="resetSettings()" style="font-size: 12px;">Reset Defaults</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="github-modal" onclick="hideGitHub(event)">
+        <div id="github-content" onclick="event.stopPropagation()">
+            <h2>☁️ GitHub Cloud Storage</h2>
+
+            <div id="gh-setup-section">
+                <div class="gh-section">
+                    <div id="gh-status-bar" class="gh-status disconnected">
+                        <span id="gh-status-icon">⚪</span>
+                        <span id="gh-status-text">Not connected</span>
+                    </div>
+                </div>
+
+                <div id="gh-connect-form">
+                    <div class="gh-info">
+                        Sign in with GitHub to save and load your music files in the cloud.
+                    </div>
+                    <div class="gh-btn-row">
+                        <button class="gh-btn primary" id="gh-sign-in-btn" onclick="signInWithGitHub()">
+                            <svg height="16" width="16" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 6px; fill: currentColor;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                            Sign in with GitHub
+                        </button>
+                    </div>
+                </div>
+
+                <div id="gh-connected-section" style="display:none;">
+                    <div class="gh-section">
+                        <div class="gh-section-title">Save to GitHub</div>
+                        <div class="gh-input-row">
+                            <input type="text" class="gh-input" id="gh-save-filename" placeholder="filename.json">
+                            <button class="gh-btn primary" onclick="saveToGitHub()">Save</button>
+                        </div>
+                        <div id="gh-save-message" class="gh-message" style="display:none;"></div>
+                    </div>
+
+                    <div class="gh-section">
+                        <div class="gh-section-title">Load from GitHub</div>
+                        <button class="gh-btn" onclick="refreshGitHubFiles()" style="margin-bottom: 8px;">🔄 Refresh Files</button>
+                        <div id="gh-file-list" class="gh-file-list">
+                            <div class="gh-message">Click "Refresh Files" to see your saved files.</div>
+                        </div>
+                    </div>
+
+                    <div class="gh-btn-row" style="justify-content: flex-end;">
+                        <button class="gh-btn danger" onclick="disconnectGitHub()">Disconnect</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="note-tooltip">
+        <div class="tt-note" id="tt-note"></div>
+        <div class="tt-detail" id="tt-detail"></div>
+    </div>
+
+    <div id="loading-overlay">
+        <div class="loading-spinner" id="loading-spinner"></div>
+        <div class="loading-text" id="loading-text">Loading viewer…</div>
+        <div id="homepage" style="display:none;">
+            <div class="hp-container">
+                <div class="hp-logo">🎹</div>
+                <div class="hp-title">MakeMusic</div>
+                <div class="hp-subtitle">Piano roll viewer &amp; editor</div>
+
+                <!-- State 1: Not signed in -->
+                <div id="hp-signed-out">
+                    <button class="hp-sign-in-btn" id="hp-sign-in-btn" onclick="signInWithGitHub()">
+                        <svg height="18" width="18" viewBox="0 0 16 16" style="fill: currentColor;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                        Sign in with GitHub
+                    </button>
+                    <div class="hp-divider">— or —</div>
+                    <div class="hp-local-actions">
+                        <div id="hp-drop-zone">
+                            <div class="drop-zone-icon">📂</div>
+                            <div class="drop-zone-text">Drop a JSON file here<br>or click to browse</div>
+                            <input type="file" id="file-input" accept=".json,application/json" style="display:none;">
+                        </div>
+                        <button class="hp-btn" id="start-empty-btn" onclick="startEmpty()">✨ Start Empty Project</button>
+                    </div>
+                </div>
+
+                <!-- State 2: Signed in, choosing repo -->
+                <div id="hp-repo-setup" style="display:none;">
+                    <div class="hp-user-info">
+                        Signed in as <strong id="hp-username"></strong>
+                    </div>
+                    <div class="hp-repo-options">
+                        <label class="hp-radio">
+                            <input type="radio" name="hp-repo-choice" value="default" checked onchange="updateRepoChoice()">
+                            <span>Use default repository: <code id="hp-default-repo-name"></code></span>
+                        </label>
+                        <label class="hp-radio">
+                            <input type="radio" name="hp-repo-choice" value="custom" onchange="updateRepoChoice()">
+                            <span>Custom repository:</span>
+                            <input type="text" id="hp-custom-repo-name" placeholder="repo-name" class="hp-input" disabled onclick="event.stopPropagation()">
+                        </label>
+                    </div>
+                    <div id="hp-repo-status"></div>
+                    <div class="hp-btn-row">
+                        <button class="hp-btn primary" id="hp-continue-btn" onclick="continueWithRepo()">Continue</button>
+                        <button class="hp-btn primary" id="hp-create-repo-btn" onclick="createSelectedRepo()" style="display:none;">Create Repository</button>
+                    </div>
+                    <div class="hp-divider">— or —</div>
+                    <div class="hp-local-actions">
+                        <button class="hp-btn" onclick="document.getElementById('file-input').click()">📂 Upload File</button>
+                        <button class="hp-btn" onclick="startEmpty()">✨ Start Empty Project</button>
+                    </div>
+                </div>
+
+                <!-- State 3: Connected, showing songs -->
+                <div id="hp-song-list" style="display:none;">
+                    <div class="hp-user-info">
+                        <span>👤 <strong id="hp-user-display"></strong></span>
+                        <span class="hp-repo-badge" id="hp-repo-badge"></span>
+                        <button class="hp-btn-sm" onclick="disconnectAndReload()">Sign Out</button>
+                    </div>
+                    <div class="hp-section-title">Your Songs</div>
+                    <div id="hp-songs" class="hp-songs-container">
+                        <div class="hp-loading">Loading songs…</div>
+                    </div>
+                    <div class="hp-divider">— or —</div>
+                    <div class="hp-actions">
+                        <button class="hp-btn primary" onclick="startEmpty()">✨ Create New</button>
+                        <button class="hp-btn" onclick="document.getElementById('file-input').click()">📂 Upload File</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sample-loading-indicator">
+        <span class="sample-spinner"></span> Loading piano samples…
+    </div>
+
+    <div id="help-modal" onclick="hideHelp()">
+        <div id="help-content" onclick="event.stopPropagation()">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                <h2 style="margin:0;">Keyboard Shortcuts &amp; Controls</h2>
+                <button class="toolbar-btn" onclick="hideHelp()" style="font-size:16px;padding:2px 8px;" title="Close">✕</button>
+            </div>
+
+            <div class="shortcut-section">
+                <div class="shortcut-section-title">Playback</div>
+                <div class="shortcut-row"><span class="shortcut-desc">Play / Pause</span><span class="shortcut-key">Space</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Toggle Loop</span><span class="shortcut-key">L</span><span class="shortcut-mouse">🔁 button</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Jump to Start</span><span class="shortcut-key">Home</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Jump to End</span><span class="shortcut-key">End</span></div>
+            </div>
+
+            <div class="shortcut-section">
+                <div class="shortcut-section-title">Navigation &amp; View</div>
+                <div class="shortcut-row"><span class="shortcut-desc">Scroll Up / Down</span><span class="shortcut-key">↑ ↓</span><span class="shortcut-mouse">Mouse wheel</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Zoom In / Out</span><span class="shortcut-key">Ctrl+Scroll</span><span class="shortcut-mouse">Zoom slider</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Toggle Right Hand</span><span class="shortcut-key">1</span><span class="shortcut-mouse">RH button</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Toggle Left Hand</span><span class="shortcut-key">2</span><span class="shortcut-mouse">LH button</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Toggle Theme</span><span class="shortcut-key">T</span><span class="shortcut-mouse">⚙️ Settings</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Click note</span><span class="shortcut-key"></span><span class="shortcut-mouse">Play &amp; scroll to note</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Click minimap</span><span class="shortcut-key"></span><span class="shortcut-mouse">Jump to time</span></div>
+            </div>
+
+            <div class="shortcut-section">
+                <div class="shortcut-section-title">Files</div>
+                <div class="shortcut-row"><span class="shortcut-desc">Open File</span><span class="shortcut-key">⌘O</span><span class="shortcut-mouse">📂 Open button</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Save / Export</span><span class="shortcut-key">⌘S</span><span class="shortcut-mouse">💾 Save button</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Command Palette</span><span class="shortcut-key">⌘P</span></div>
+            </div>
+
+            <div class="shortcut-section">
+                <div class="shortcut-section-title">Editing</div>
+                <div class="shortcut-row"><span class="shortcut-desc">Toggle Edit Mode</span><span class="shortcut-key">E</span><span class="shortcut-mouse">✏️ Edit button</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Add Note</span><span class="shortcut-key"></span><span class="shortcut-mouse">Click empty area / drag to size</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Delete Note</span><span class="shortcut-key">Del</span><span class="shortcut-mouse">Right-click → Delete</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Undo</span><span class="shortcut-key">⌘Z</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Redo</span><span class="shortcut-key">⌘⇧Z / ⌘Y</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Toggle Note Hand</span><span class="shortcut-key">H</span><span class="shortcut-mouse">Right-click → Toggle Hand</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Duplicate Note</span><span class="shortcut-key"></span><span class="shortcut-mouse">Right-click → Duplicate</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Switch Edit Hand</span><span class="shortcut-key">R</span><span class="shortcut-mouse">RH/LH selector</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Drag note</span><span class="shortcut-key"></span><span class="shortcut-mouse">Drag to move / resize edges</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Right-click empty space</span><span class="shortcut-key"></span><span class="shortcut-mouse">Add note / marker here</span></div>
+            </div>
+
+            <div class="shortcut-section">
+                <div class="shortcut-section-title">Markers &amp; Lyrics</div>
+                <div class="shortcut-row"><span class="shortcut-desc">Add Marker</span><span class="shortcut-key">M</span><span class="shortcut-mouse">📌 Marker button / right-click</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Edit Marker</span><span class="shortcut-key"></span><span class="shortcut-mouse">Click marker label</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Delete Marker</span><span class="shortcut-key"></span><span class="shortcut-mouse">× button / right-click label</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Toggle Lyrics Mode</span><span class="shortcut-key">W</span><span class="shortcut-mouse">🎵 Lyrics button</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Next/Prev word (lyrics)</span><span class="shortcut-key">Tab / Shift+Tab</span><span class="shortcut-mouse">Click any note</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Exit Lyrics Mode</span><span class="shortcut-key">Esc</span></div>
+            </div>
+
+            <div class="shortcut-row"><span class="shortcut-desc">Show this help</span><span class="shortcut-key">?</span><span class="shortcut-mouse">? button</span></div>
+        </div>
+    </div>
+
+    <div id="drag-overlay">
+        <div class="drag-overlay-text">Drop JSON file to load</div>
+    </div>
+
+    <div id="command-palette-overlay" onclick="hideCommandPalette()">
+        <div id="command-palette" onclick="event.stopPropagation()">
+            <input type="text" id="command-palette-input" placeholder="Type a command…" autocomplete="off" spellcheck="false">
+            <div id="command-palette-list"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
+    <script src="js/constants.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/keyboard.js"></script>
+    <script src="js/rendering.js"></script>
+    <script src="js/playback.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/file-io.js"></script>
+    <script src="js/github.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
