@@ -6,6 +6,15 @@
 loadSettings();
 loadGitHubConfig();
 
+// Initialize touch support
+initTouchSupport();
+
+// Set initial mobile nav visibility
+(function() {
+    var nav = document.getElementById('mobile-nav');
+    if (nav) nav.style.display = isMobileViewport() ? 'flex' : 'none';
+})();
+
 // Check URL params
 var params = new URLSearchParams(window.location.search);
 var oauthCode = params.get('code');

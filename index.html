@@ -8,6 +8,9 @@
 </head>
 <body>
     <div id="toolbar">
+        <button class="toolbar-btn mobile-only-btn" id="mobile-menu-btn" onclick="showMobileMenu()" title="Menu">
+            <span class="icon">☰</span>
+        </button>
         <span class="title">🎹 MakeMusic</span>
         <button class="toolbar-btn" id="load-file-btn" onclick="openFilePicker()" title="Load JSON File (Cmd+O)">
             <span class="icon">📂</span> <span class="btn-label">Open</span>
@@ -408,6 +411,89 @@
         </div>
     </div>
 
+    <!-- Mobile bottom navigation -->
+    <nav id="mobile-nav">
+        <button class="mobile-nav-btn active" data-tab="view" onclick="handleMobileNavTap('view')">
+            <span class="nav-icon">🎹</span>
+            <span class="nav-label">View</span>
+        </button>
+        <button class="mobile-nav-btn" data-tab="play" onclick="handleMobileNavTap('play')">
+            <span class="nav-icon">▶</span>
+            <span class="nav-label">Play</span>
+        </button>
+        <button class="mobile-nav-btn" data-tab="edit" onclick="handleMobileNavTap('edit')">
+            <span class="nav-icon">✏️</span>
+            <span class="nav-label">Edit</span>
+        </button>
+        <button class="mobile-nav-btn" data-tab="lyrics" onclick="handleMobileNavTap('lyrics')">
+            <span class="nav-icon">🎵</span>
+            <span class="nav-label">Lyrics</span>
+        </button>
+        <button class="mobile-nav-btn" data-tab="more" onclick="handleMobileNavTap('more')">
+            <span class="nav-icon">⋯</span>
+            <span class="nav-label">More</span>
+        </button>
+    </nav>
+
+    <!-- Mobile playback panel (slides up above mobile nav) -->
+    <div id="mobile-playback-panel">
+        <div class="mobile-playback-row">
+            <button class="mobile-transport-btn mobile-rewind-btn" onclick="if(notesData) scrollToTime(firstNoteTime - 1);" title="Jump to Start">⏮</button>
+            <button class="mobile-transport-btn mobile-play-btn" onclick="togglePlayback()" title="Play/Pause">▶</button>
+            <button class="mobile-transport-btn mobile-loop-btn" onclick="toggleLoop()" title="Toggle Loop">🔁</button>
+        </div>
+        <div class="mobile-playback-row">
+            <label class="mobile-control-label">
+                <span class="mobile-control-icon">🔊</span>
+                <input type="range" class="mobile-volume-slider" min="0" max="100" value="80" oninput="document.getElementById('volume-slider').value=this.value; document.getElementById('volume-slider').dispatchEvent(new Event('input'));">
+            </label>
+        </div>
+        <div class="mobile-playback-row">
+            <label class="mobile-control-label">Speed</label>
+            <select class="mobile-speed-select" onchange="document.getElementById('speed-select').value=this.value; document.getElementById('speed-select').dispatchEvent(new Event('change'));">
+                <option value="0.25">0.25×</option>
+                <option value="0.5">0.5×</option>
+                <option value="0.75">0.75×</option>
+                <option value="1" selected>1×</option>
+                <option value="1.5">1.5×</option>
+                <option value="2">2×</option>
+            </select>
+            <label class="mobile-control-label">Zoom</label>
+            <input type="range" class="mobile-zoom-slider" min="20" max="300" value="80" oninput="document.getElementById('zoom-slider').value=this.value; document.getElementById('zoom-slider').dispatchEvent(new Event('input'));">
+        </div>
+        <div class="mobile-playback-row">
+            <button class="mobile-hand-btn" id="mobile-rh-toggle" onclick="toggleHand('right')">
+                <span class="mobile-hand-dot" id="mobile-rh-dot"></span> RH
+            </button>
+            <button class="mobile-hand-btn" id="mobile-lh-toggle" onclick="toggleHand('left')">
+                <span class="mobile-hand-dot" id="mobile-lh-dot"></span> LH
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile edit bar (floating actions for selected note) -->
+    <div id="mobile-edit-bar">
+        <button class="mobile-edit-action" onclick="if(editMode && selectedNoteId!==null) toggleSelectedNoteHand();" title="Toggle Hand">🔄</button>
+        <button class="mobile-edit-action" onclick="if(editMode && selectedNoteId!==null) duplicateNote(selectedNoteId);" title="Duplicate">📋</button>
+        <button class="mobile-edit-action" onclick="if(editMode && selectedNoteId!==null) lyricsSelectNote(selectedNoteId);" title="Edit Lyric">🎵</button>
+        <button class="mobile-edit-action" onclick="addMarkerAtScroll()" title="Add Marker">📌</button>
+        <button class="mobile-edit-action" onclick="undo()" title="Undo">↩️</button>
+        <button class="mobile-edit-action" onclick="redo()" title="Redo">↪️</button>
+        <button class="mobile-edit-action danger" onclick="if(editMode && selectedNoteId!==null) deleteSelectedNote();" title="Delete">🗑️</button>
+    </div>
+
+    <!-- Action sheet (replaces context menus on mobile) -->
+    <div id="action-sheet-overlay">
+        <div id="action-sheet">
+            <div class="action-sheet-handle"></div>
+            <div class="action-sheet-title" id="action-sheet-title"></div>
+            <div id="action-sheet-items"></div>
+            <button class="action-sheet-cancel" onclick="hideActionSheet()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Mobile menu button (shown in toolbar on mobile) -->
+
     <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
     <script src="js/constants.js"></script>
     <script src="js/state.js"></script>
@@ -420,6 +506,7 @@
     <script src="js/github.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/events.js"></script>
+    <script src="js/touch.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
