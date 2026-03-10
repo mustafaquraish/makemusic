@@ -1134,15 +1134,25 @@ test.describe('Responsive Design', () => {
 
   test('mobile buttons have adequate touch targets (min 34px)', async ({ page }) => {
     await loadViewerMobile(page);
-    const playBtn = await page.locator('#play-btn').boundingBox();
-    expect(playBtn.height).toBeGreaterThanOrEqual(34);
-    expect(playBtn.width).toBeGreaterThanOrEqual(34);
+    // On mobile, desktop play-btn is hidden; check mobile nav buttons instead
+    const navBtns = page.locator('.mobile-nav-btn');
+    const count = await navBtns.count();
+    expect(count).toBeGreaterThan(0);
+    for (let i = 0; i < count; i++) {
+      const box = await navBtns.nth(i).boundingBox();
+      expect(box).not.toBeNull();
+      expect(box.height).toBeGreaterThanOrEqual(34);
+      expect(box.width).toBeGreaterThanOrEqual(34);
+    }
   });
 
   test('mobile speed select has adequate size', async ({ page }) => {
     await loadViewerMobile(page);
-    const speedBox = await page.locator('#speed-select').boundingBox();
-    expect(speedBox.height).toBeGreaterThanOrEqual(34);
+    // On mobile, desktop speed-select is hidden; mobile menu button should be visible
+    const menuBtn = page.locator('#mobile-menu-btn');
+    await expect(menuBtn).toBeVisible();
+    const box = await menuBtn.boundingBox();
+    expect(box.height).toBeGreaterThanOrEqual(34);
   });
 
   test('works at tablet viewport (768x1024)', async ({ page }) => {
