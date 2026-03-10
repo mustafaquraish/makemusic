@@ -1,0 +1,8581 @@
+{
+  "metadata": {
+    "keyboard_y": 653,
+    "keyboard_height": 423,
+    "scroll_speed": 242,
+    "intro_end_time": 7
+  },
+  "notes": [
+    {
+      "id": 1,
+      "note_name": "G3",
+      "start_time": 9.8471,
+      "duration": 4,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 2,
+      "note_name": "D4",
+      "start_time": 12.843,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "i"
+    },
+    {
+      "id": 3,
+      "note_name": "E4",
+      "start_time": 13.1818,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 43,
+      "center_x": 1003.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "found"
+    },
+    {
+      "id": 4,
+      "note_name": "G4",
+      "start_time": 13.5165,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "a"
+    },
+    {
+      "id": 5,
+      "note_name": "G3",
+      "start_time": 13.843,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 6,
+      "note_name": "G4",
+      "start_time": 13.843,
+      "duration": 3,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "love"
+    },
+    {
+      "id": 7,
+      "note_name": "G3",
+      "start_time": 14.843,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 8,
+      "note_name": "G3",
+      "start_time": 15.843,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 9,
+      "note_name": "B4",
+      "start_time": 16.8388,
+      "duration": 0.3471,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "for"
+    },
+    {
+      "id": 10,
+      "note_name": "G3",
+      "start_time": 16.843,
+      "duration": 1,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 11,
+      "note_name": "A4",
+      "start_time": 17.1818,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 12,
+      "note_name": "G4",
+      "start_time": 17.5124,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 13,
+      "note_name": "E3",
+      "start_time": 17.8388,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 14,
+      "note_name": "G4",
+      "start_time": 17.8388,
+      "duration": 3.0083,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "me"
+    },
+    {
+      "id": 15,
+      "note_name": "B4",
+      "start_time": 17.8388,
+      "duration": 3.0083,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 16,
+      "note_name": "E3",
+      "start_time": 18.843,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 17,
+      "note_name": "E3",
+      "start_time": 19.8388,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 18,
+      "note_name": "E3",
+      "start_time": 20.8388,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 19,
+      "note_name": "A4",
+      "start_time": 20.8388,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "darling"
+    },
+    {
+      "id": 20,
+      "note_name": "B4",
+      "start_time": 21.1777,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 21,
+      "note_name": "B4",
+      "start_time": 21.5165,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "just"
+    },
+    {
+      "id": 22,
+      "note_name": "C3",
+      "start_time": 21.843,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 23,
+      "note_name": "A4",
+      "start_time": 21.843,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "dive"
+    },
+    {
+      "id": 24,
+      "note_name": "G4",
+      "start_time": 22.1777,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 25,
+      "note_name": "G4",
+      "start_time": 22.5165,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "right"
+    },
+    {
+      "id": 26,
+      "note_name": "C3",
+      "start_time": 22.843,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 27,
+      "note_name": "G4",
+      "start_time": 22.843,
+      "duration": 2.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "in"
+    },
+    {
+      "id": 28,
+      "note_name": "C3",
+      "start_time": 23.843,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 29,
+      "note_name": "C3",
+      "start_time": 24.843,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 30,
+      "note_name": "G4",
+      "start_time": 24.843,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "and"
+    },
+    {
+      "id": 31,
+      "note_name": "A4",
+      "start_time": 25.1818,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "follow"
+    },
+    {
+      "id": 32,
+      "note_name": "B4",
+      "start_time": 25.5124,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "my"
+    },
+    {
+      "id": 33,
+      "note_name": "F#4",
+      "start_time": 25.8388,
+      "duration": 2.0124,
+      "hand": "right_hand",
+      "key_index": 45,
+      "center_x": 1122,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 34,
+      "note_name": "D3",
+      "start_time": 25.843,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 35,
+      "note_name": "A4",
+      "start_time": 25.843,
+      "duration": 2.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "lead"
+    },
+    {
+      "id": 36,
+      "note_name": "D3",
+      "start_time": 26.8388,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 37,
+      "note_name": "D3",
+      "start_time": 27.8388,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 38,
+      "note_name": "G4",
+      "start_time": 28.5124,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "well"
+    },
+    {
+      "id": 39,
+      "note_name": "D3",
+      "start_time": 28.843,
+      "duration": 1,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 40,
+      "note_name": "B4",
+      "start_time": 28.843,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "i"
+    },
+    {
+      "id": 41,
+      "note_name": "A4",
+      "start_time": 29.1818,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "found"
+    },
+    {
+      "id": 42,
+      "note_name": "G4",
+      "start_time": 29.5165,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "a"
+    },
+    {
+      "id": 43,
+      "note_name": "G3",
+      "start_time": 29.843,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 44,
+      "note_name": "B4",
+      "start_time": 29.843,
+      "duration": 3.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "girl"
+    },
+    {
+      "id": 45,
+      "note_name": "G3",
+      "start_time": 30.843,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 46,
+      "note_name": "G3",
+      "start_time": 31.843,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 47,
+      "note_name": "G3",
+      "start_time": 32.843,
+      "duration": 1,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 48,
+      "note_name": "D5",
+      "start_time": 32.843,
+      "duration": 0.6736,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "beautiful"
+    },
+    {
+      "id": 49,
+      "note_name": "B4",
+      "start_time": 33.5124,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 50,
+      "note_name": "E3",
+      "start_time": 33.8388,
+      "duration": 0.9959,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 51,
+      "note_name": "A4",
+      "start_time": 33.8388,
+      "duration": 0.3471,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 52,
+      "note_name": "G4",
+      "start_time": 34.1818,
+      "duration": 0.6529,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "and"
+    },
+    {
+      "id": 53,
+      "note_name": "E3",
+      "start_time": 34.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 54,
+      "note_name": "G4",
+      "start_time": 34.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "sweet"
+    },
+    {
+      "id": 55,
+      "note_name": "E3",
+      "start_time": 35.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 56,
+      "note_name": "G4",
+      "start_time": 36.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "oh"
+    },
+    {
+      "id": 57,
+      "note_name": "E3",
+      "start_time": 36.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 58,
+      "note_name": "G4",
+      "start_time": 36.8306,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "i"
+    },
+    {
+      "id": 59,
+      "note_name": "A4",
+      "start_time": 37.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "never"
+    },
+    {
+      "id": 60,
+      "note_name": "B4",
+      "start_time": 37.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 61,
+      "note_name": "C3",
+      "start_time": 37.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 62,
+      "note_name": "C5",
+      "start_time": 37.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "knew"
+    },
+    {
+      "id": 63,
+      "note_name": "C5",
+      "start_time": 38.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "you"
+    },
+    {
+      "id": 64,
+      "note_name": "C3",
+      "start_time": 38.8306,
+      "duration": 1.0165,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 65,
+      "note_name": "B4",
+      "start_time": 38.8306,
+      "duration": 0.3512,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "were"
+    },
+    {
+      "id": 66,
+      "note_name": "A4",
+      "start_time": 39.1777,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "the"
+    },
+    {
+      "id": 67,
+      "note_name": "A4",
+      "start_time": 39.5124,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "someone"
+    },
+    {
+      "id": 68,
+      "note_name": "C3",
+      "start_time": 39.8388,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 69,
+      "note_name": "A4",
+      "start_time": 39.843,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 70,
+      "note_name": "G4",
+      "start_time": 40.1818,
+      "duration": 0.6653,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "waiting"
+    },
+    {
+      "id": 71,
+      "note_name": "C3",
+      "start_time": 40.843,
+      "duration": 0.9917,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 72,
+      "note_name": "G4",
+      "start_time": 40.843,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 73,
+      "note_name": "A4",
+      "start_time": 41.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "for"
+    },
+    {
+      "id": 74,
+      "note_name": "B4",
+      "start_time": 41.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "me"
+    },
+    {
+      "id": 75,
+      "note_name": "D3",
+      "start_time": 41.8306,
+      "duration": 0.9917,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 76,
+      "note_name": "F#4",
+      "start_time": 41.8306,
+      "duration": 1.6694,
+      "hand": "right_hand",
+      "key_index": 45,
+      "center_x": 1122,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 77,
+      "note_name": "A4",
+      "start_time": 41.8306,
+      "duration": 1.6653,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 78,
+      "note_name": "D3",
+      "start_time": 42.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 79,
+      "note_name": "G4",
+      "start_time": 43.4917,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "cause"
+    },
+    {
+      "id": 80,
+      "note_name": "D3",
+      "start_time": 43.8182,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 81,
+      "note_name": "D5",
+      "start_time": 43.8182,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "we"
+    },
+    {
+      "id": 82,
+      "note_name": "D5",
+      "start_time": 44.157,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "were"
+    },
+    {
+      "id": 83,
+      "note_name": "D5",
+      "start_time": 44.4917,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "just"
+    },
+    {
+      "id": 84,
+      "note_name": "E5",
+      "start_time": 44.8182,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1614,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "kids"
+    },
+    {
+      "id": 85,
+      "note_name": "A4",
+      "start_time": 45.157,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "when"
+    },
+    {
+      "id": 86,
+      "note_name": "A4",
+      "start_time": 45.4917,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "we"
+    },
+    {
+      "id": 87,
+      "note_name": "G3",
+      "start_time": 45.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 88,
+      "note_name": "D4",
+      "start_time": 45.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 89,
+      "note_name": "B4",
+      "start_time": 45.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "fell"
+    },
+    {
+      "id": 90,
+      "note_name": "D4",
+      "start_time": 46.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 91,
+      "note_name": "B4",
+      "start_time": 46.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "in"
+    },
+    {
+      "id": 92,
+      "note_name": "G3",
+      "start_time": 47.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 93,
+      "note_name": "D4",
+      "start_time": 47.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 94,
+      "note_name": "B4",
+      "start_time": 47.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "love"
+    },
+    {
+      "id": 95,
+      "note_name": "B4",
+      "start_time": 48.8264,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "not"
+    },
+    {
+      "id": 96,
+      "note_name": "A4",
+      "start_time": 49.1653,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "knowing"
+    },
+    {
+      "id": 97,
+      "note_name": "G4",
+      "start_time": 49.5,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 98,
+      "note_name": "E3",
+      "start_time": 49.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 99,
+      "note_name": "G4",
+      "start_time": 49.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 100,
+      "note_name": "B4",
+      "start_time": 49.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "what"
+    },
+    {
+      "id": 101,
+      "note_name": "G4",
+      "start_time": 50.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 102,
+      "note_name": "B4",
+      "start_time": 50.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "it"
+    },
+    {
+      "id": 103,
+      "note_name": "E3",
+      "start_time": 51.8264,
+      "duration": 2,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 104,
+      "note_name": "G4",
+      "start_time": 51.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 105,
+      "note_name": "B4",
+      "start_time": 51.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "was"
+    },
+    {
+      "id": 106,
+      "note_name": "B4",
+      "start_time": 52.8264,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "i"
+    },
+    {
+      "id": 107,
+      "note_name": "A4",
+      "start_time": 53.1653,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "will"
+    },
+    {
+      "id": 108,
+      "note_name": "G4",
+      "start_time": 53.5,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "not"
+    },
+    {
+      "id": 109,
+      "note_name": "C3",
+      "start_time": 53.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 110,
+      "note_name": "E4",
+      "start_time": 53.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 43,
+      "center_x": 1003.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 111,
+      "note_name": "C5",
+      "start_time": 53.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "give"
+    },
+    {
+      "id": 112,
+      "note_name": "B4",
+      "start_time": 54.8264,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "you"
+    },
+    {
+      "id": 114,
+      "note_name": "G4",
+      "start_time": 55.5,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 115,
+      "note_name": "C3",
+      "start_time": 55.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 116,
+      "note_name": "G4",
+      "start_time": 55.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "up"
+    },
+    {
+      "id": 117,
+      "note_name": "D4",
+      "start_time": 56.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "this"
+    },
+    {
+      "id": 118,
+      "note_name": "G3",
+      "start_time": 57.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 119,
+      "note_name": "D4",
+      "start_time": 57.8264,
+      "duration": 1.343,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 120,
+      "note_name": "B4",
+      "start_time": 57.8264,
+      "duration": 1.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "time"
+    },
+    {
+      "id": 121,
+      "note_name": "G3",
+      "start_time": 58.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 122,
+      "note_name": "C5",
+      "start_time": 59.1653,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 123,
+      "note_name": "B4",
+      "start_time": 59.5,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 124,
+      "note_name": "D3",
+      "start_time": 59.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 125,
+      "note_name": "F#3",
+      "start_time": 59.8264,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 126,
+      "note_name": "A4",
+      "start_time": 59.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 127,
+      "note_name": "B4",
+      "start_time": 60.8264,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "darling"
+    },
+    {
+      "id": 128,
+      "note_name": "A4",
+      "start_time": 61.1653,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 129,
+      "note_name": "G4",
+      "start_time": 61.5,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "just"
+    },
+    {
+      "id": 130,
+      "note_name": "G3",
+      "start_time": 61.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 131,
+      "note_name": "D4",
+      "start_time": 61.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 132,
+      "note_name": "B4",
+      "start_time": 61.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "kiss"
+    },
+    {
+      "id": 133,
+      "note_name": "D4",
+      "start_time": 62.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 134,
+      "note_name": "B4",
+      "start_time": 62.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "me"
+    },
+    {
+      "id": 135,
+      "note_name": "G3",
+      "start_time": 63.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 136,
+      "note_name": "D4",
+      "start_time": 63.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 137,
+      "note_name": "B4",
+      "start_time": 63.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "slow"
+    },
+    {
+      "id": 138,
+      "note_name": "B4",
+      "start_time": 64.8264,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "your"
+    },
+    {
+      "id": 139,
+      "note_name": "A4",
+      "start_time": 65.1653,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "hear"
+    },
+    {
+      "id": 140,
+      "note_name": "G4",
+      "start_time": 65.5,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "is"
+    },
+    {
+      "id": 141,
+      "note_name": "E3",
+      "start_time": 65.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 142,
+      "note_name": "G4",
+      "start_time": 65.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 143,
+      "note_name": "B4",
+      "start_time": 65.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "all"
+    },
+    {
+      "id": 144,
+      "note_name": "G4",
+      "start_time": 66.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 145,
+      "note_name": "B4",
+      "start_time": 66.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "i"
+    },
+    {
+      "id": 146,
+      "note_name": "E3",
+      "start_time": 67.8264,
+      "duration": 2,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 147,
+      "note_name": "G4",
+      "start_time": 67.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 148,
+      "note_name": "B4",
+      "start_time": 67.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "own"
+    },
+    {
+      "id": 149,
+      "note_name": "B4",
+      "start_time": 68.8264,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "and"
+    },
+    {
+      "id": 150,
+      "note_name": "A4",
+      "start_time": 69.1653,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "in"
+    },
+    {
+      "id": 151,
+      "note_name": "G4",
+      "start_time": 69.5,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "your"
+    },
+    {
+      "id": 152,
+      "note_name": "C3",
+      "start_time": 69.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 153,
+      "note_name": "E4",
+      "start_time": 69.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 43,
+      "center_x": 1003.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 154,
+      "note_name": "C5",
+      "start_time": 69.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "eyes"
+    },
+    {
+      "id": 155,
+      "note_name": "B4",
+      "start_time": 70.8264,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ],
+      "lyric": "you're"
+    },
+    {
+      "id": 156,
+      "note_name": "A4",
+      "start_time": 71.1653,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 157,
+      "note_name": "G4",
+      "start_time": 71.5,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 158,
+      "note_name": "C3",
+      "start_time": 71.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 159,
+      "note_name": "G4",
+      "start_time": 71.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 160,
+      "note_name": "D4",
+      "start_time": 72.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 161,
+      "note_name": "D3",
+      "start_time": 73.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 162,
+      "note_name": "A4",
+      "start_time": 73.8264,
+      "duration": 2.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 163,
+      "note_name": "G3",
+      "start_time": 74.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 164,
+      "note_name": "F#3",
+      "start_time": 75.8223,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 165,
+      "note_name": "D3",
+      "start_time": 75.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 166,
+      "note_name": "D5",
+      "start_time": 75.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 167,
+      "note_name": "B4",
+      "start_time": 76.8264,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 168,
+      "note_name": "A4",
+      "start_time": 77.1653,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 169,
+      "note_name": "G4",
+      "start_time": 77.4959,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 170,
+      "note_name": "E3",
+      "start_time": 77.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 171,
+      "note_name": "G4",
+      "start_time": 77.8264,
+      "duration": 2.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 172,
+      "note_name": "E3",
+      "start_time": 78.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 173,
+      "note_name": "C3",
+      "start_time": 79.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 174,
+      "note_name": "G3",
+      "start_time": 79.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 175,
+      "note_name": "G5",
+      "start_time": 79.8264,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 58,
+      "center_x": 1788.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 176,
+      "note_name": "F#5",
+      "start_time": 80.4959,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 177,
+      "note_name": "E5",
+      "start_time": 80.8264,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1613.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 178,
+      "note_name": "F#5",
+      "start_time": 81.4959,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 179,
+      "note_name": "G3",
+      "start_time": 81.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 180,
+      "note_name": "B4",
+      "start_time": 81.8264,
+      "duration": 1.6777,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 181,
+      "note_name": "G3",
+      "start_time": 82.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 182,
+      "note_name": "G4",
+      "start_time": 83.4959,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 183,
+      "note_name": "F#3",
+      "start_time": 83.8223,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 184,
+      "note_name": "D3",
+      "start_time": 83.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 185,
+      "note_name": "D5",
+      "start_time": 83.8264,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 186,
+      "note_name": "C5",
+      "start_time": 84.4959,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 187,
+      "note_name": "B4",
+      "start_time": 84.8264,
+      "duration": 0.6736,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 188,
+      "note_name": "A4",
+      "start_time": 85.4959,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 189,
+      "note_name": "E3",
+      "start_time": 85.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 190,
+      "note_name": "G4",
+      "start_time": 85.8264,
+      "duration": 2.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 191,
+      "note_name": "E3",
+      "start_time": 86.8264,
+      "duration": 1,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 192,
+      "note_name": "C3",
+      "start_time": 87.8223,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 193,
+      "note_name": "G3",
+      "start_time": 87.8223,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 194,
+      "note_name": "G5",
+      "start_time": 87.8223,
+      "duration": 0.6818,
+      "hand": "right_hand",
+      "key_index": 58,
+      "center_x": 1788.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 195,
+      "note_name": "F#5",
+      "start_time": 88.4959,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 196,
+      "note_name": "E5",
+      "start_time": 88.8264,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1613.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 197,
+      "note_name": "G4",
+      "start_time": 89.4959,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 198,
+      "note_name": "G3",
+      "start_time": 89.8223,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 199,
+      "note_name": "B4",
+      "start_time": 89.8264,
+      "duration": 2,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 200,
+      "note_name": "G3",
+      "start_time": 90.8223,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 201,
+      "note_name": "F#3",
+      "start_time": 91.8223,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 202,
+      "note_name": "D5",
+      "start_time": 91.8223,
+      "duration": 0.3471,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 203,
+      "note_name": "D3",
+      "start_time": 91.8264,
+      "duration": 2,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 204,
+      "note_name": "D5",
+      "start_time": 92.1653,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 205,
+      "note_name": "D5",
+      "start_time": 92.4959,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 206,
+      "note_name": "D5",
+      "start_time": 92.8223,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 207,
+      "note_name": "E5",
+      "start_time": 93.1653,
+      "duration": 0.6653,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1614,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 208,
+      "note_name": "B4",
+      "start_time": 93.8223,
+      "duration": 0.3512,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 209,
+      "note_name": "E3",
+      "start_time": 93.8264,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 210,
+      "note_name": "A4",
+      "start_time": 94.1653,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 211,
+      "note_name": "G4",
+      "start_time": 94.5,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 212,
+      "note_name": "E3",
+      "start_time": 94.8306,
+      "duration": 1,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 213,
+      "note_name": "B4",
+      "start_time": 95.1653,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 214,
+      "note_name": "D5",
+      "start_time": 95.5,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 215,
+      "note_name": "G3",
+      "start_time": 95.8264,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 216,
+      "note_name": "G5",
+      "start_time": 95.8264,
+      "duration": 0.6818,
+      "hand": "right_hand",
+      "key_index": 58,
+      "center_x": 1788.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 217,
+      "note_name": "C3",
+      "start_time": 95.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 218,
+      "note_name": "F#5",
+      "start_time": 96.5,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 219,
+      "note_name": "E5",
+      "start_time": 96.8264,
+      "duration": 0.6818,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1614,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 220,
+      "note_name": "F#5",
+      "start_time": 97.5,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 221,
+      "note_name": "G3",
+      "start_time": 97.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 222,
+      "note_name": "B4",
+      "start_time": 97.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 223,
+      "note_name": "G3",
+      "start_time": 98.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 224,
+      "note_name": "G4",
+      "start_time": 98.8264,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 225,
+      "note_name": "A4",
+      "start_time": 99.1653,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 226,
+      "note_name": "B4",
+      "start_time": 99.5,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 227,
+      "note_name": "D3",
+      "start_time": 99.8264,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 228,
+      "note_name": "F#3",
+      "start_time": 99.8264,
+      "duration": 2.0124,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 229,
+      "note_name": "D5",
+      "start_time": 99.8264,
+      "duration": 0.6818,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 230,
+      "note_name": "C5",
+      "start_time": 100.5,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 231,
+      "note_name": "B4",
+      "start_time": 100.8264,
+      "duration": 0.6818,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 232,
+      "note_name": "C5",
+      "start_time": 101.5,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 233,
+      "note_name": "E3",
+      "start_time": 101.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 234,
+      "note_name": "B4",
+      "start_time": 101.8264,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 235,
+      "note_name": "G4",
+      "start_time": 102.5,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 236,
+      "note_name": "E3",
+      "start_time": 102.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 237,
+      "note_name": "A4",
+      "start_time": 102.8264,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 238,
+      "note_name": "C3",
+      "start_time": 103.8264,
+      "duration": 1.9959,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 239,
+      "note_name": "G3",
+      "start_time": 103.8264,
+      "duration": 1.9959,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 240,
+      "note_name": "C5",
+      "start_time": 103.8264,
+      "duration": 0.9959,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 241,
+      "note_name": "B4",
+      "start_time": 104.8182,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 242,
+      "note_name": "G4",
+      "start_time": 105.157,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 243,
+      "note_name": "B4",
+      "start_time": 105.4917,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 244,
+      "note_name": "G3",
+      "start_time": 105.8182,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 245,
+      "note_name": "B4",
+      "start_time": 105.8182,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 246,
+      "note_name": "A4",
+      "start_time": 106.8182,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 247,
+      "note_name": "D3",
+      "start_time": 107.8182,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 248,
+      "note_name": "F#3",
+      "start_time": 107.8182,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 249,
+      "note_name": "A4",
+      "start_time": 107.8182,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 250,
+      "note_name": "G4",
+      "start_time": 108.8182,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 251,
+      "note_name": "G4",
+      "start_time": 109.157,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 252,
+      "note_name": "G4",
+      "start_time": 109.4917,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 253,
+      "note_name": "G3",
+      "start_time": 109.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 254,
+      "note_name": "B4",
+      "start_time": 109.8182,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 255,
+      "note_name": "F#3",
+      "start_time": 110.8182,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 256,
+      "note_name": "A4",
+      "start_time": 110.8182,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 257,
+      "note_name": "E3",
+      "start_time": 111.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 258,
+      "note_name": "G4",
+      "start_time": 111.8182,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 259,
+      "note_name": "D3",
+      "start_time": 112.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 260,
+      "note_name": "F#4",
+      "start_time": 112.8182,
+      "duration": 1.0083,
+      "hand": "right_hand",
+      "key_index": 45,
+      "center_x": 1122,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 261,
+      "note_name": "C3",
+      "start_time": 113.8182,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 262,
+      "note_name": "E4",
+      "start_time": 113.8182,
+      "duration": 2.0041,
+      "hand": "right_hand",
+      "key_index": 43,
+      "center_x": 1003.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 263,
+      "note_name": "D3",
+      "start_time": 115.8182,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 264,
+      "note_name": "F#4",
+      "start_time": 115.8182,
+      "duration": 0.6818,
+      "hand": "right_hand",
+      "key_index": 45,
+      "center_x": 1122,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 265,
+      "note_name": "G4",
+      "start_time": 116.4917,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 266,
+      "note_name": "B4",
+      "start_time": 116.8182,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 267,
+      "note_name": "D5",
+      "start_time": 117.157,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 268,
+      "note_name": "G4",
+      "start_time": 117.4917,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 269,
+      "note_name": "G3",
+      "start_time": 117.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 270,
+      "note_name": "B4",
+      "start_time": 117.8182,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 271,
+      "note_name": "G3",
+      "start_time": 118.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 272,
+      "note_name": "B4",
+      "start_time": 118.8182,
+      "duration": 2.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 273,
+      "note_name": "G3",
+      "start_time": 119.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 274,
+      "note_name": "G3",
+      "start_time": 120.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 275,
+      "note_name": "G4",
+      "start_time": 120.8182,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 276,
+      "note_name": "A4",
+      "start_time": 121.157,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 277,
+      "note_name": "B4",
+      "start_time": 121.4917,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 278,
+      "note_name": "E3",
+      "start_time": 121.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 279,
+      "note_name": "B4",
+      "start_time": 121.8182,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 280,
+      "note_name": "G4",
+      "start_time": 122.157,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 281,
+      "note_name": "G4",
+      "start_time": 122.4917,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 282,
+      "note_name": "E3",
+      "start_time": 122.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 283,
+      "note_name": "G4",
+      "start_time": 122.8182,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 284,
+      "note_name": "G4",
+      "start_time": 123.157,
+      "duration": 1.6653,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 285,
+      "note_name": "E3",
+      "start_time": 123.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 286,
+      "note_name": "E3",
+      "start_time": 124.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 287,
+      "note_name": "G4",
+      "start_time": 124.8182,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 288,
+      "note_name": "A4",
+      "start_time": 125.157,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 289,
+      "note_name": "B4",
+      "start_time": 125.4917,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 290,
+      "note_name": "C3",
+      "start_time": 125.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 291,
+      "note_name": "C5",
+      "start_time": 125.8182,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 292,
+      "note_name": "C5",
+      "start_time": 126.4917,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 293,
+      "note_name": "C3",
+      "start_time": 126.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 294,
+      "note_name": "B4",
+      "start_time": 126.8182,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 295,
+      "note_name": "B4",
+      "start_time": 127.4917,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 296,
+      "note_name": "C3",
+      "start_time": 127.8182,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 297,
+      "note_name": "A4",
+      "start_time": 127.8182,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 298,
+      "note_name": "G4",
+      "start_time": 128.157,
+      "duration": 0.6653,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 299,
+      "note_name": "C3",
+      "start_time": 128.8182,
+      "duration": 1.0207,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 300,
+      "note_name": "G4",
+      "start_time": 128.8182,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 301,
+      "note_name": "A4",
+      "start_time": 129.157,
+      "duration": 0.3554,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 302,
+      "note_name": "B4",
+      "start_time": 129.5083,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 303,
+      "note_name": "D3",
+      "start_time": 129.8347,
+      "duration": 4.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 304,
+      "note_name": "F#3",
+      "start_time": 129.8347,
+      "duration": 4.0083,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 512.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 305,
+      "note_name": "A4",
+      "start_time": 129.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 306,
+      "note_name": "B4",
+      "start_time": 130.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 307,
+      "note_name": "D5",
+      "start_time": 131.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 308,
+      "note_name": "E5",
+      "start_time": 132.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1614,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 309,
+      "note_name": "D5",
+      "start_time": 133.1736,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 310,
+      "note_name": "B4",
+      "start_time": 133.5083,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 311,
+      "note_name": "G3",
+      "start_time": 133.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 312,
+      "note_name": "D5",
+      "start_time": 133.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 313,
+      "note_name": "B4",
+      "start_time": 134.1736,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 314,
+      "note_name": "A4",
+      "start_time": 134.5083,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 315,
+      "note_name": "G3",
+      "start_time": 134.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 316,
+      "note_name": "G4",
+      "start_time": 134.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 317,
+      "note_name": "G3",
+      "start_time": 135.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 318,
+      "note_name": "G3",
+      "start_time": 136.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 319,
+      "note_name": "G4",
+      "start_time": 136.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 320,
+      "note_name": "B4",
+      "start_time": 137.1736,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 321,
+      "note_name": "D5",
+      "start_time": 137.5083,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 322,
+      "note_name": "E3",
+      "start_time": 137.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 323,
+      "note_name": "D5",
+      "start_time": 137.8347,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 324,
+      "note_name": "B4",
+      "start_time": 138.5083,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 325,
+      "note_name": "E3",
+      "start_time": 138.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 326,
+      "note_name": "B4",
+      "start_time": 138.8347,
+      "duration": 0.6736,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 327,
+      "note_name": "A4",
+      "start_time": 139.5083,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 328,
+      "note_name": "E3",
+      "start_time": 139.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 329,
+      "note_name": "A4",
+      "start_time": 139.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 330,
+      "note_name": "G4",
+      "start_time": 140.1736,
+      "duration": 0.6653,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 331,
+      "note_name": "E3",
+      "start_time": 140.8347,
+      "duration": 1,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 332,
+      "note_name": "G4",
+      "start_time": 140.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 333,
+      "note_name": "A4",
+      "start_time": 141.1736,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 334,
+      "note_name": "B4",
+      "start_time": 141.5083,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 335,
+      "note_name": "C3",
+      "start_time": 141.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 336,
+      "note_name": "C5",
+      "start_time": 141.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 337,
+      "note_name": "C3",
+      "start_time": 142.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 338,
+      "note_name": "G4",
+      "start_time": 142.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 339,
+      "note_name": "D5",
+      "start_time": 143.1736,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 340,
+      "note_name": "B4",
+      "start_time": 143.5083,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 341,
+      "note_name": "C3",
+      "start_time": 143.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 342,
+      "note_name": "A4",
+      "start_time": 143.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 343,
+      "note_name": "G4",
+      "start_time": 144.1736,
+      "duration": 0.6653,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 344,
+      "note_name": "C3",
+      "start_time": 144.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 345,
+      "note_name": "G4",
+      "start_time": 144.8347,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 346,
+      "note_name": "A4",
+      "start_time": 145.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 347,
+      "note_name": "D3",
+      "start_time": 145.8347,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 348,
+      "note_name": "F#3",
+      "start_time": 145.8347,
+      "duration": 2.1901,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 349,
+      "note_name": "A4",
+      "start_time": 145.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 350,
+      "note_name": "B4",
+      "start_time": 146.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 351,
+      "note_name": "D3",
+      "start_time": 147.8347,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 352,
+      "note_name": "D5",
+      "start_time": 147.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 353,
+      "note_name": "F#3",
+      "start_time": 148.0083,
+      "duration": 1.8306,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 354,
+      "note_name": "D5",
+      "start_time": 148.1736,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 355,
+      "note_name": "D5",
+      "start_time": 148.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 356,
+      "note_name": "E5",
+      "start_time": 148.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1614,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 357,
+      "note_name": "A4",
+      "start_time": 149.1736,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 358,
+      "note_name": "A4",
+      "start_time": 149.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 359,
+      "note_name": "G3",
+      "start_time": 149.8347,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 360,
+      "note_name": "D4",
+      "start_time": 149.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 361,
+      "note_name": "B4",
+      "start_time": 149.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 362,
+      "note_name": "D4",
+      "start_time": 150.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 363,
+      "note_name": "B4",
+      "start_time": 150.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 364,
+      "note_name": "G3",
+      "start_time": 151.8347,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 365,
+      "note_name": "D4",
+      "start_time": 151.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 366,
+      "note_name": "B4",
+      "start_time": 151.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 367,
+      "note_name": "B4",
+      "start_time": 152.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 368,
+      "note_name": "A4",
+      "start_time": 153.1736,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 369,
+      "note_name": "G4",
+      "start_time": 153.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 370,
+      "note_name": "E3",
+      "start_time": 153.8347,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 371,
+      "note_name": "G4",
+      "start_time": 153.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 372,
+      "note_name": "B4",
+      "start_time": 153.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 373,
+      "note_name": "G4",
+      "start_time": 154.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 374,
+      "note_name": "B4",
+      "start_time": 154.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 375,
+      "note_name": "E3",
+      "start_time": 155.8347,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 376,
+      "note_name": "G4",
+      "start_time": 155.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 377,
+      "note_name": "B4",
+      "start_time": 155.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 378,
+      "note_name": "B4",
+      "start_time": 156.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 379,
+      "note_name": "A4",
+      "start_time": 157.1736,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 380,
+      "note_name": "G4",
+      "start_time": 157.5083,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 381,
+      "note_name": "C3",
+      "start_time": 157.8347,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 382,
+      "note_name": "E4",
+      "start_time": 157.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 43,
+      "center_x": 1003.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 383,
+      "note_name": "C5",
+      "start_time": 157.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 384,
+      "note_name": "B4",
+      "start_time": 158.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 385,
+      "note_name": "A4",
+      "start_time": 159.1736,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 386,
+      "note_name": "G4",
+      "start_time": 159.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 387,
+      "note_name": "C3",
+      "start_time": 159.8347,
+      "duration": 2,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 388,
+      "note_name": "G4",
+      "start_time": 159.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 389,
+      "note_name": "D4",
+      "start_time": 160.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 41,
+      "center_x": 915.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 390,
+      "note_name": "D3",
+      "start_time": 161.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 391,
+      "note_name": "A4",
+      "start_time": 161.8347,
+      "duration": 2.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 392,
+      "note_name": "G3",
+      "start_time": 162.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 393,
+      "note_name": "D3",
+      "start_time": 163.8347,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 394,
+      "note_name": "F#3",
+      "start_time": 163.8347,
+      "duration": 2.0042,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 395,
+      "note_name": "D5",
+      "start_time": 163.8347,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 396,
+      "note_name": "B4",
+      "start_time": 164.8347,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 397,
+      "note_name": "A4",
+      "start_time": 165.1736,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 398,
+      "note_name": "G4",
+      "start_time": 165.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 399,
+      "note_name": "E3",
+      "start_time": 165.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 400,
+      "note_name": "G4",
+      "start_time": 165.8347,
+      "duration": 2.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 401,
+      "note_name": "E3",
+      "start_time": 166.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 402,
+      "note_name": "G3",
+      "start_time": 167.8306,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 403,
+      "note_name": "C3",
+      "start_time": 167.8347,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 404,
+      "note_name": "G5",
+      "start_time": 167.8347,
+      "duration": 0.6736,
+      "hand": "right_hand",
+      "key_index": 58,
+      "center_x": 1788.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 405,
+      "note_name": "F#5",
+      "start_time": 168.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 406,
+      "note_name": "E5",
+      "start_time": 168.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1613.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 407,
+      "note_name": "F#5",
+      "start_time": 169.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 408,
+      "note_name": "G3",
+      "start_time": 169.8306,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 409,
+      "note_name": "B4",
+      "start_time": 169.8306,
+      "duration": 1.6777,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 410,
+      "note_name": "G3",
+      "start_time": 170.8347,
+      "duration": 1,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 411,
+      "note_name": "G4",
+      "start_time": 171.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 412,
+      "note_name": "D3",
+      "start_time": 171.8306,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 304.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 413,
+      "note_name": "F#3",
+      "start_time": 171.8306,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 414,
+      "note_name": "D5",
+      "start_time": 171.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 415,
+      "note_name": "C5",
+      "start_time": 172.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 416,
+      "note_name": "B4",
+      "start_time": 172.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 417,
+      "note_name": "A4",
+      "start_time": 173.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 418,
+      "note_name": "G4",
+      "start_time": 173.8306,
+      "duration": 2.0083,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 419,
+      "note_name": "E3",
+      "start_time": 173.8347,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 420,
+      "note_name": "E3",
+      "start_time": 174.8347,
+      "duration": 1,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 421,
+      "note_name": "C3",
+      "start_time": 175.8306,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 422,
+      "note_name": "G3",
+      "start_time": 175.8306,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 423,
+      "note_name": "G5",
+      "start_time": 175.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 58,
+      "center_x": 1788.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 424,
+      "note_name": "F#5",
+      "start_time": 176.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 425,
+      "note_name": "E5",
+      "start_time": 176.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1613.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 426,
+      "note_name": "G4",
+      "start_time": 177.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 427,
+      "note_name": "G3",
+      "start_time": 177.8306,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 428,
+      "note_name": "B4",
+      "start_time": 177.8306,
+      "duration": 2.0083,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 429,
+      "note_name": "G3",
+      "start_time": 178.8306,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 430,
+      "note_name": "D3",
+      "start_time": 179.8306,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 431,
+      "note_name": "F#3",
+      "start_time": 179.8306,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 432,
+      "note_name": "D5",
+      "start_time": 179.8306,
+      "duration": 0.3471,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 433,
+      "note_name": "D5",
+      "start_time": 180.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 434,
+      "note_name": "D5",
+      "start_time": 180.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 435,
+      "note_name": "D5",
+      "start_time": 180.8306,
+      "duration": 0.3471,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 436,
+      "note_name": "E5",
+      "start_time": 181.1694,
+      "duration": 0.6694,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1614,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 437,
+      "note_name": "E3",
+      "start_time": 181.8306,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 438,
+      "note_name": "B4",
+      "start_time": 181.8306,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 439,
+      "note_name": "A4",
+      "start_time": 182.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 440,
+      "note_name": "G4",
+      "start_time": 182.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 441,
+      "note_name": "E3",
+      "start_time": 182.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 442,
+      "note_name": "B4",
+      "start_time": 183.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 443,
+      "note_name": "D5",
+      "start_time": 183.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 444,
+      "note_name": "C3",
+      "start_time": 183.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 445,
+      "note_name": "G3",
+      "start_time": 183.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 446,
+      "note_name": "G5",
+      "start_time": 183.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 58,
+      "center_x": 1788.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 447,
+      "note_name": "F#5",
+      "start_time": 184.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 448,
+      "note_name": "E5",
+      "start_time": 184.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1613.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 449,
+      "note_name": "F#5",
+      "start_time": 185.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 450,
+      "note_name": "G3",
+      "start_time": 185.8306,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 451,
+      "note_name": "B4",
+      "start_time": 185.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 452,
+      "note_name": "G3",
+      "start_time": 186.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 453,
+      "note_name": "G4",
+      "start_time": 186.8306,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 454,
+      "note_name": "A4",
+      "start_time": 187.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 455,
+      "note_name": "B4",
+      "start_time": 187.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 456,
+      "note_name": "D3",
+      "start_time": 187.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 457,
+      "note_name": "F#3",
+      "start_time": 187.8306,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 458,
+      "note_name": "D5",
+      "start_time": 187.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 459,
+      "note_name": "C5",
+      "start_time": 188.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 460,
+      "note_name": "B4",
+      "start_time": 188.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 461,
+      "note_name": "C5",
+      "start_time": 189.5041,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 462,
+      "note_name": "E3",
+      "start_time": 189.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 463,
+      "note_name": "B4",
+      "start_time": 189.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 464,
+      "note_name": "G4",
+      "start_time": 190.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 465,
+      "note_name": "E3",
+      "start_time": 190.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 466,
+      "note_name": "A4",
+      "start_time": 190.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1264.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 467,
+      "note_name": "C3",
+      "start_time": 191.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 468,
+      "note_name": "G3",
+      "start_time": 191.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 469,
+      "note_name": "C5",
+      "start_time": 191.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 470,
+      "note_name": "B4",
+      "start_time": 192.8306,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 471,
+      "note_name": "G4",
+      "start_time": 193.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 472,
+      "note_name": "B4",
+      "start_time": 193.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 473,
+      "note_name": "G3",
+      "start_time": 193.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 474,
+      "note_name": "B4",
+      "start_time": 193.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 475,
+      "note_name": "A4",
+      "start_time": 194.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 476,
+      "note_name": "D3",
+      "start_time": 195.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 477,
+      "note_name": "F#3",
+      "start_time": 195.8306,
+      "duration": 2.0083,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 478,
+      "note_name": "A4",
+      "start_time": 195.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 479,
+      "note_name": "G4",
+      "start_time": 196.8306,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 480,
+      "note_name": "G4",
+      "start_time": 197.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 481,
+      "note_name": "G4",
+      "start_time": 197.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 482,
+      "note_name": "G3",
+      "start_time": 197.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 483,
+      "note_name": "B4",
+      "start_time": 197.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 484,
+      "note_name": "F#3",
+      "start_time": 198.8306,
+      "duration": 1.0083,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 485,
+      "note_name": "A4",
+      "start_time": 198.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 486,
+      "note_name": "E3",
+      "start_time": 199.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 487,
+      "note_name": "G4",
+      "start_time": 199.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 488,
+      "note_name": "D3",
+      "start_time": 200.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 489,
+      "note_name": "F#4",
+      "start_time": 200.8306,
+      "duration": 1.0083,
+      "hand": "right_hand",
+      "key_index": 45,
+      "center_x": 1122,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 490,
+      "note_name": "C3",
+      "start_time": 201.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 491,
+      "note_name": "E4",
+      "start_time": 201.8306,
+      "duration": 2.0041,
+      "hand": "right_hand",
+      "key_index": 43,
+      "center_x": 1003.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 492,
+      "note_name": "D3",
+      "start_time": 203.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 493,
+      "note_name": "D5",
+      "start_time": 203.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 494,
+      "note_name": "E5",
+      "start_time": 204.8306,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1614,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 495,
+      "note_name": "D5",
+      "start_time": 205.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 496,
+      "note_name": "B4",
+      "start_time": 205.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 497,
+      "note_name": "E3",
+      "start_time": 205.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 498,
+      "note_name": "B4",
+      "start_time": 205.8306,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 499,
+      "note_name": "A4",
+      "start_time": 206.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 500,
+      "note_name": "G4",
+      "start_time": 206.5041,
+      "duration": 1.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 501,
+      "note_name": "E3",
+      "start_time": 206.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 502,
+      "note_name": "C3",
+      "start_time": 207.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 503,
+      "note_name": "G3",
+      "start_time": 207.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 504,
+      "note_name": "G5",
+      "start_time": 207.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 58,
+      "center_x": 1788.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 505,
+      "note_name": "F#5",
+      "start_time": 208.5,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 506,
+      "note_name": "E5",
+      "start_time": 208.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1614,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 507,
+      "note_name": "F#5",
+      "start_time": 209.5,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 508,
+      "note_name": "G3",
+      "start_time": 209.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 509,
+      "note_name": "B4",
+      "start_time": 209.8306,
+      "duration": 1.6777,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 510,
+      "note_name": "G3",
+      "start_time": 210.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 511,
+      "note_name": "G4",
+      "start_time": 211.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 512,
+      "note_name": "D3",
+      "start_time": 211.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 513,
+      "note_name": "F#3",
+      "start_time": 211.8306,
+      "duration": 2.0082,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 514,
+      "note_name": "D5",
+      "start_time": 211.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 515,
+      "note_name": "C5",
+      "start_time": 212.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 516,
+      "note_name": "B4",
+      "start_time": 212.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 517,
+      "note_name": "A4",
+      "start_time": 213.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 518,
+      "note_name": "E3",
+      "start_time": 213.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 519,
+      "note_name": "G4",
+      "start_time": 213.8306,
+      "duration": 2.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 520,
+      "note_name": "E3",
+      "start_time": 214.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 521,
+      "note_name": "C3",
+      "start_time": 215.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 522,
+      "note_name": "G3",
+      "start_time": 215.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 523,
+      "note_name": "G5",
+      "start_time": 215.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 58,
+      "center_x": 1788.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 524,
+      "note_name": "F#5",
+      "start_time": 216.5,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 525,
+      "note_name": "E5",
+      "start_time": 216.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1613.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 526,
+      "note_name": "G4",
+      "start_time": 217.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 527,
+      "note_name": "G3",
+      "start_time": 217.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 528,
+      "note_name": "B4",
+      "start_time": 217.8306,
+      "duration": 2.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 529,
+      "note_name": "G3",
+      "start_time": 218.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 530,
+      "note_name": "D3",
+      "start_time": 219.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 531,
+      "note_name": "F#3",
+      "start_time": 219.8306,
+      "duration": 2.0082,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 532,
+      "note_name": "D5",
+      "start_time": 219.8306,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 533,
+      "note_name": "D5",
+      "start_time": 220.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 534,
+      "note_name": "D5",
+      "start_time": 220.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 535,
+      "note_name": "D5",
+      "start_time": 220.8306,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 536,
+      "note_name": "E5",
+      "start_time": 221.1694,
+      "duration": 0.6653,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1614,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 537,
+      "note_name": "E3",
+      "start_time": 221.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 538,
+      "note_name": "B4",
+      "start_time": 221.8306,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 539,
+      "note_name": "A4",
+      "start_time": 222.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 540,
+      "note_name": "G4",
+      "start_time": 222.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 541,
+      "note_name": "E3",
+      "start_time": 222.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 542,
+      "note_name": "B4",
+      "start_time": 223.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 543,
+      "note_name": "D5",
+      "start_time": 223.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 544,
+      "note_name": "C3",
+      "start_time": 223.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 545,
+      "note_name": "G3",
+      "start_time": 223.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 546,
+      "note_name": "G5",
+      "start_time": 223.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 58,
+      "center_x": 1788.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 547,
+      "note_name": "F#5",
+      "start_time": 224.5,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 57,
+      "center_x": 1732.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 548,
+      "note_name": "E5",
+      "start_time": 224.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 55,
+      "center_x": 1614,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 549,
+      "note_name": "D5",
+      "start_time": 225.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 550,
+      "note_name": "G3",
+      "start_time": 225.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 551,
+      "note_name": "B4",
+      "start_time": 225.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 552,
+      "note_name": "G3",
+      "start_time": 226.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 553,
+      "note_name": "G4",
+      "start_time": 226.8306,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 554,
+      "note_name": "A4",
+      "start_time": 227.1694,
+      "duration": 0.3388,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 555,
+      "note_name": "B4",
+      "start_time": 227.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 556,
+      "note_name": "F#3",
+      "start_time": 227.8264,
+      "duration": 2.0124,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 557,
+      "note_name": "D3",
+      "start_time": 227.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 558,
+      "note_name": "D5",
+      "start_time": 227.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 53,
+      "center_x": 1526.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 559,
+      "note_name": "C5",
+      "start_time": 228.5,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 560,
+      "note_name": "B4",
+      "start_time": 228.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 561,
+      "note_name": "C5",
+      "start_time": 229.5,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 562,
+      "note_name": "E3",
+      "start_time": 229.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 563,
+      "note_name": "B4",
+      "start_time": 229.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 564,
+      "note_name": "E3",
+      "start_time": 230.8306,
+      "duration": 1,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 565,
+      "note_name": "A4",
+      "start_time": 230.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 566,
+      "note_name": "G4",
+      "start_time": 231.5,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 567,
+      "note_name": "C3",
+      "start_time": 231.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 568,
+      "note_name": "C5",
+      "start_time": 231.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 569,
+      "note_name": "B4",
+      "start_time": 232.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 570,
+      "note_name": "G4",
+      "start_time": 233.5041,
+      "duration": 0.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 571,
+      "note_name": "G3",
+      "start_time": 233.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 572,
+      "note_name": "B4",
+      "start_time": 233.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 573,
+      "note_name": "A4",
+      "start_time": 234.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 574,
+      "note_name": "F#3",
+      "start_time": 235.8264,
+      "duration": 2.0124,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 575,
+      "note_name": "D3",
+      "start_time": 235.8306,
+      "duration": 2.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 576,
+      "note_name": "A4",
+      "start_time": 235.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 577,
+      "note_name": "G4",
+      "start_time": 236.8306,
+      "duration": 0.6777,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 578,
+      "note_name": "G4",
+      "start_time": 237.5,
+      "duration": 0.3347,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 579,
+      "note_name": "C3",
+      "start_time": 237.8306,
+      "duration": 4.0041,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 580,
+      "note_name": "B4",
+      "start_time": 237.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 581,
+      "note_name": "A4",
+      "start_time": 238.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 582,
+      "note_name": "C5",
+      "start_time": 239.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 51,
+      "center_x": 1439.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 583,
+      "note_name": "B4",
+      "start_time": 240.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 584,
+      "note_name": "F#3",
+      "start_time": 241.8264,
+      "duration": 4.0124,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 512,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 585,
+      "note_name": "D3",
+      "start_time": 241.8306,
+      "duration": 4.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 586,
+      "note_name": "B4",
+      "start_time": 241.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 587,
+      "note_name": "A4",
+      "start_time": 242.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 588,
+      "note_name": "A4",
+      "start_time": 243.8264,
+      "duration": 1.0083,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 589,
+      "note_name": "G4",
+      "start_time": 244.8306,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 590,
+      "note_name": "F#4",
+      "start_time": 245.1653,
+      "duration": 0.343,
+      "hand": "right_hand",
+      "key_index": 45,
+      "center_x": 1122,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 591,
+      "note_name": "G4",
+      "start_time": 245.5,
+      "duration": 1.3306,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 592,
+      "note_name": "G3",
+      "start_time": 245.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 593,
+      "note_name": "F#3",
+      "start_time": 246.8264,
+      "duration": 1.0124,
+      "hand": "left_hand",
+      "key_index": 33,
+      "center_x": 511.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 594,
+      "note_name": "A4",
+      "start_time": 246.8264,
+      "duration": 1.0083,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 1265,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 595,
+      "note_name": "E3",
+      "start_time": 247.8306,
+      "duration": 0.9959,
+      "hand": "left_hand",
+      "key_index": 31,
+      "center_x": 392.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 596,
+      "note_name": "G4",
+      "start_time": 247.8306,
+      "duration": 1.0041,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 597,
+      "note_name": "F#4",
+      "start_time": 248.8264,
+      "duration": 1.0083,
+      "hand": "right_hand",
+      "key_index": 45,
+      "center_x": 1122,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 598,
+      "note_name": "D3",
+      "start_time": 248.8306,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 599,
+      "note_name": "E4",
+      "start_time": 249.8264,
+      "duration": 2.0083,
+      "hand": "right_hand",
+      "key_index": 43,
+      "center_x": 1003.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 600,
+      "note_name": "C3",
+      "start_time": 249.8306,
+      "duration": 2,
+      "hand": "left_hand",
+      "key_index": 27,
+      "center_x": 217.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 601,
+      "note_name": "F#4",
+      "start_time": 251.8264,
+      "duration": 2.0083,
+      "hand": "right_hand",
+      "key_index": 45,
+      "center_x": 1122,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 602,
+      "note_name": "D3",
+      "start_time": 251.8306,
+      "duration": 1,
+      "hand": "left_hand",
+      "key_index": 29,
+      "center_x": 305.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 603,
+      "note_name": "A3",
+      "start_time": 252.8264,
+      "duration": 1.0041,
+      "hand": "left_hand",
+      "key_index": 36,
+      "center_x": 654,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 604,
+      "note_name": "G4",
+      "start_time": 253.8264,
+      "duration": 6.0083,
+      "hand": "right_hand",
+      "key_index": 46,
+      "center_x": 1177.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 605,
+      "note_name": "B4",
+      "start_time": 253.8264,
+      "duration": 6.0083,
+      "hand": "right_hand",
+      "key_index": 50,
+      "center_x": 1352.5,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    },
+    {
+      "id": 606,
+      "note_name": "G3",
+      "start_time": 253.8306,
+      "duration": 6.0041,
+      "hand": "left_hand",
+      "key_index": 34,
+      "center_x": 566.5,
+      "color_rgb": [
+        63,
+        223,
+        202
+      ]
+    },
+    {
+      "id": 10003,
+      "note_name": "A4",
+      "start_time": 55.1694,
+      "duration": 0.3211542469024522,
+      "hand": "right_hand",
+      "key_index": 48,
+      "center_x": 0,
+      "color_rgb": [
+        189,
+        131,
+        196
+      ]
+    }
+  ],
+  "summary": {
+    "total_notes": 606,
+    "right_hand_notes": 399,
+    "left_hand_notes": 207,
+    "duration_range": [
+      9.85,
+      253.83
+    ],
+    "key_range": [
+      27,
+      58
+    ]
+  },
+  "markers": []
+}
