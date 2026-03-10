@@ -1,4 +1,9 @@
 tmp/
 music/
 node_modules/
-test-results/soundfonts/
+test-results/
+soundfonts/
+__pycache__/
+**/__pycache__/
+.pytest_cache/
+venv
