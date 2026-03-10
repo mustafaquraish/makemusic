@@ -72,6 +72,29 @@ function loadNotesFromURL(url) {
         });
 }
 
+function loadExample(url, btn) {
+    var original = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="hp-spinner"></span> Loading…';
+    fetch(url)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (!data || !data.notes || !Array.isArray(data.notes)) {
+                document.querySelector('#loading-text').textContent = 'Invalid JSON: missing "notes" array.';
+                btn.disabled = false;
+                btn.innerHTML = original;
+                return;
+            }
+            loadNotesData(data);
+        })
+        .catch(function(err) {
+            console.error('Failed to load example:', err);
+            btn.disabled = false;
+            btn.innerHTML = original;
+            alert('Failed to load example. Check your connection and try again.');
+        });
+}
+
 function openFilePicker() {
     document.getElementById('file-input').click();
 }
