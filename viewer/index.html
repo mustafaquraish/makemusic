@@ -108,8 +108,18 @@
     <div id="edit-indicator" onclick="toggleEditMode()" title="Click to exit edit mode" style="cursor:pointer;">EDIT MODE</div>
     <div id="lyrics-indicator" onclick="toggleLyricsMode()" title="Click to exit lyrics mode" style="cursor:pointer;">LYRICS MODE</div>
 
-    <div id="lyrics-input-overlay">
-        <input type="text" id="lyrics-input" placeholder="lyric…" autocomplete="off" spellcheck="false">
+    <!-- Lyrics side panel -->
+    <div id="lyrics-panel">
+        <div class="lyrics-panel-header">
+            <span class="lyrics-panel-title">🎵 Lyrics Editor</span>
+            <button class="lyrics-panel-close" onclick="toggleLyricsMode()" title="Close lyrics panel">✕</button>
+        </div>
+        <div class="lyrics-filter-bar">
+            <button class="lyrics-filter-btn" data-filter="right_hand" onclick="setLyricsHandFilter('right_hand')">RH</button>
+            <button class="lyrics-filter-btn" data-filter="left_hand" onclick="setLyricsHandFilter('left_hand')">LH</button>
+            <button class="lyrics-filter-btn" data-filter="all" onclick="setLyricsHandFilter('all')">All</button>
+        </div>
+        <div id="lyrics-note-list"></div>
     </div>
 
     <div id="marker-input-overlay">
@@ -358,6 +368,8 @@
                 <div class="shortcut-row"><span class="shortcut-desc">Toggle Edit Mode</span><span class="shortcut-key">E</span><span class="shortcut-mouse">✏️ Edit button</span></div>
                 <div class="shortcut-row"><span class="shortcut-desc">Add Note</span><span class="shortcut-key"></span><span class="shortcut-mouse">Click empty area / drag to size</span></div>
                 <div class="shortcut-row"><span class="shortcut-desc">Delete Note</span><span class="shortcut-key">Del</span><span class="shortcut-mouse">Right-click → Delete</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Undo</span><span class="shortcut-key">⌘Z</span></div>
+                <div class="shortcut-row"><span class="shortcut-desc">Redo</span><span class="shortcut-key">⌘⇧Z / ⌘Y</span></div>
                 <div class="shortcut-row"><span class="shortcut-desc">Toggle Note Hand</span><span class="shortcut-key">H</span><span class="shortcut-mouse">Right-click → Toggle Hand</span></div>
                 <div class="shortcut-row"><span class="shortcut-desc">Duplicate Note</span><span class="shortcut-key"></span><span class="shortcut-mouse">Right-click → Duplicate</span></div>
                 <div class="shortcut-row"><span class="shortcut-desc">Switch Edit Hand</span><span class="shortcut-key">R</span><span class="shortcut-mouse">RH/LH selector</span></div>

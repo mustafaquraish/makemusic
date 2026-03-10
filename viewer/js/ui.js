@@ -249,6 +249,8 @@ var allCommands = [
     { icon: '\uD83D\uDD04', label: 'Toggle Edit Hand (RH/LH)', shortcut: 'R', action: function() { setEditHand(editHand === 'right_hand' ? 'left_hand' : 'right_hand'); } },
     { icon: '\uD83D\uDCCD', label: 'Add Marker at Current Position', shortcut: 'M', action: addMarkerAtScroll },
     { icon: '\uD83C\uDFB5', label: 'Toggle Lyrics Mode', shortcut: 'W', action: toggleLyricsMode },
+    { icon: '\u21A9\uFE0F', label: 'Undo', shortcut: '\u2318Z', action: undo },
+    { icon: '\u21AA\uFE0F', label: 'Redo', shortcut: '\u2318\u21E7Z', action: redo },
 ];
 
 function renderCommandList(query) {

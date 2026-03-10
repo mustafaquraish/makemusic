@@ -245,24 +245,88 @@ body {
 
 /* ==================== Note Lyrics ==================== */
 .note-lyric {
-    position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%);
+    position: absolute; top: 50%; right: -4px; transform: translate(100%, -50%);
     font-size: 10px; font-weight: 600; color: var(--text-primary);
     white-space: nowrap; pointer-events: none; z-index: 6;
     text-shadow: 0 1px 3px var(--bg-primary), 0 0 6px var(--bg-primary);
+    background: var(--bg-primary); padding: 1px 4px; border-radius: 3px;
+    opacity: 0.9;
 }
 
-/* ==================== Lyrics Input ==================== */
-#lyrics-input-overlay, #marker-input-overlay {
+/* ==================== Lyrics Input (kept for marker only) ==================== */
+#marker-input-overlay {
     position: fixed; z-index: 65; display: none;
     background: var(--bg-toolbar); border: 2px solid var(--accent);
     border-radius: 6px; padding: 4px 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.4);
 }
-#lyrics-input, #marker-input {
+#marker-input {
     font-size: 14px; font-weight: 600; color: var(--text-primary);
     background: transparent; border: none; outline: none;
     width: 160px; font-family: inherit;
 }
-#lyrics-input::placeholder, #marker-input::placeholder { color: var(--text-muted); }
+#marker-input::placeholder { color: var(--text-muted); }
+
+/* ==================== Lyrics Side Panel ==================== */
+#lyrics-panel {
+    position: fixed; top: 60px; right: 36px; width: 280px;
+    bottom: var(--keyboard-height);
+    background: var(--bg-toolbar); border-left: 1px solid var(--bg-toolbar-border);
+    z-index: 55; display: none; flex-direction: column;
+    box-shadow: -4px 0 16px rgba(0,0,0,0.2);
+}
+#lyrics-panel.visible { display: flex; }
+/* When lyrics panel is visible, shrink the minimap area */
+body.lyrics-mode #minimap { right: 280px; }
+.lyrics-panel-header {
+    padding: 10px 12px; border-bottom: 1px solid var(--bg-toolbar-border);
+    display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+}
+.lyrics-panel-title {
+    font-size: 14px; font-weight: 700; color: var(--accent); flex: 1;
+}
+.lyrics-panel-close {
+    background: none; border: none; color: var(--text-muted); cursor: pointer;
+    font-size: 16px; padding: 2px 6px; border-radius: 4px;
+}
+.lyrics-panel-close:hover { background: var(--btn-hover); color: var(--text-primary); }
+.lyrics-filter-bar {
+    padding: 6px 12px; border-bottom: 1px solid var(--bg-toolbar-border);
+    display: flex; gap: 4px; flex-shrink: 0;
+}
+.lyrics-filter-btn {
+    padding: 3px 10px; font-size: 11px; font-weight: 600;
+    border: 1px solid var(--bg-toolbar-border); background: var(--btn-bg);
+    color: var(--text-secondary); cursor: pointer; border-radius: 4px;
+    transition: all 0.15s ease;
+}
+.lyrics-filter-btn.active { background: var(--accent); color: #fff; border-color: transparent; }
+.lyrics-filter-btn:hover:not(.active) { background: var(--btn-hover); }
+#lyrics-note-list {
+    flex: 1; overflow-y: auto; padding: 4px 0;
+}
+.lyrics-row {
+    display: flex; align-items: center; gap: 6px; padding: 4px 12px;
+    cursor: pointer; border-bottom: 1px solid var(--bg-toolbar-border);
+    transition: background 0.08s ease;
+}
+.lyrics-row:last-child { border-bottom: none; }
+.lyrics-row:hover { background: var(--btn-hover); }
+.lyrics-row.active { background: rgba(233, 69, 96, 0.12); border-left: 3px solid var(--accent); }
+.lyrics-hand-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.lyrics-note-info {
+    font-size: 11px; color: var(--text-muted); white-space: nowrap; min-width: 60px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+}
+.lyrics-row-input {
+    flex: 1; padding: 3px 6px; font-size: 13px; font-weight: 500;
+    background: var(--bg-secondary); border: 1px solid transparent;
+    border-radius: 4px; color: var(--text-primary); outline: none;
+    font-family: inherit; min-width: 0;
+}
+.lyrics-row-input:focus { border-color: var(--accent); background: var(--bg-primary); }
+.lyrics-row-input::placeholder { color: var(--text-muted); }
 
 #lyrics-indicator {
     display: none; position: fixed;

@@ -7,7 +7,7 @@ function scrollToTime(time) {
     var container = document.getElementById('piano-roll-container');
     var roll = document.getElementById('piano-roll');
     var totalHeight = parseFloat(roll.style.height) || container.clientHeight;
-    var bottomY = totalHeight - BOTTOM_PADDING;
+    var bottomY = totalHeight - effectiveBottomPadding;
     var playheadOffset = container.clientHeight * 0.7;
     var targetY = bottomY - time * pixelsPerSecond - playheadOffset;
     container.scrollTop = Math.max(0, targetY);
@@ -18,7 +18,7 @@ function getTimeAtScroll() {
     var container = document.getElementById('piano-roll-container');
     var roll = document.getElementById('piano-roll');
     var totalHeight = parseFloat(roll.style.height) || container.clientHeight;
-    var bottomY = totalHeight - BOTTOM_PADDING;
+    var bottomY = totalHeight - effectiveBottomPadding;
     var playlineY = container.scrollTop + container.clientHeight * 0.7;
     return (bottomY - playlineY) / pixelsPerSecond;
 }

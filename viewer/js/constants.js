@@ -17,6 +17,12 @@ var PIANO_KEYS = PIANO_88.slice(A0_INDEX, A0_INDEX + 88);
 /** Bottom padding in px below the last note in the piano roll */
 var BOTTOM_PADDING = 80;
 
+/** Minimum drag distance (px) to create a note – prevents accidental clicks */
+var MIN_DRAG_PX = 12;
+
+/** Minimum note duration created from drag (seconds) */
+var MIN_NOTE_DURATION = 0.15;
+
 function isBlackKey(keyName) {
     return keyName ? keyName.includes('#') : false;
 }

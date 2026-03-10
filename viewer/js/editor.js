@@ -13,7 +13,7 @@ function rerenderPreservingScroll() {
 function getTimeAtY(y) {
     var roll = document.getElementById('piano-roll');
     var totalHeight = parseFloat(roll.style.height) || 0;
-    var bottomY = totalHeight - BOTTOM_PADDING;
+    var bottomY = totalHeight - effectiveBottomPadding;
     return (bottomY - y) / pixelsPerSecond;
 }
 
@@ -34,6 +34,183 @@ function getKeyIndexAtX(clientX) {
         }
     }
     return bestKey;
+}
+
+// ================================================================
+//  Undo / Redo
+// ================================================================
+
+var MAX_UNDO = 100;
+
+function pushUndo(action) {
+    if (undoRedoInProgress) return;
+    undoStack.push(action);
+    if (undoStack.length > MAX_UNDO) undoStack.shift();
+    redoStack = [];
+}
+
+function undo() {
+    if (undoStack.length === 0 || !notesData) return;
+    // Flush any pending lyric edit
+    var focused = document.activeElement;
+    if (focused && focused.classList && focused.classList.contains('lyrics-row-input')) {
+        focused.blur();
+    }
+    undoRedoInProgress = true;
+    var action = undoStack.pop();
+    redoStack.push(action);
+    applyUndoAction(action);
+    rerenderPreservingScroll();
+    if (lyricsMode) rebuildLyricsPanel();
+    undoRedoInProgress = false;
+}
+
+function redo() {
+    if (redoStack.length === 0 || !notesData) return;
+    var focused = document.activeElement;
+    if (focused && focused.classList && focused.classList.contains('lyrics-row-input')) {
+        focused.blur();
+    }
+    undoRedoInProgress = true;
+    var action = redoStack.pop();
+    undoStack.push(action);
+    applyRedoAction(action);
+    rerenderPreservingScroll();
+    if (lyricsMode) rebuildLyricsPanel();
+    undoRedoInProgress = false;
+}
+
+function applyUndoAction(action) {
+    switch (action.type) {
+        case 'addNote':
+        case 'duplicateNote': {
+            var idx = notesData.notes.findIndex(function(n) { return n.id === action.noteData.id; });
+            if (idx !== -1) notesData.notes.splice(idx, 1);
+            if (selectedNoteId === action.noteData.id) selectedNoteId = null;
+            break;
+        }
+        case 'deleteNote': {
+            notesData.notes.push(JSON.parse(JSON.stringify(action.noteData)));
+            selectNote(action.noteData.id);
+            break;
+        }
+        case 'moveNote': {
+            var note = notesData.notes.find(function(n) { return n.id === action.noteId; });
+            if (note) {
+                note.start_time = action.oldStartTime;
+                note.key_index = action.oldKeyIndex;
+                note.note_name = action.oldNoteName;
+            }
+            break;
+        }
+        case 'resizeNote': {
+            var note = notesData.notes.find(function(n) { return n.id === action.noteId; });
+            if (note) {
+                note.start_time = action.oldStartTime;
+                note.duration = action.oldDuration;
+            }
+            break;
+        }
+        case 'toggleHand': {
+            var note = notesData.notes.find(function(n) { return n.id === action.noteId; });
+            if (note) {
+                note.hand = action.oldHand;
+                note.color_rgb = action.oldColor.slice();
+            }
+            break;
+        }
+        case 'editLyric': {
+            var note = notesData.notes.find(function(n) { return n.id === action.noteId; });
+            if (note) note.lyric = action.oldLyric;
+            break;
+        }
+        case 'addMarker': {
+            if (notesData.markers) {
+                var idx = notesData.markers.findIndex(function(m) { return m.id === action.markerData.id; });
+                if (idx !== -1) notesData.markers.splice(idx, 1);
+            }
+            break;
+        }
+        case 'deleteMarker': {
+            if (!notesData.markers) notesData.markers = [];
+            notesData.markers.push(JSON.parse(JSON.stringify(action.markerData)));
+            notesData.markers.sort(function(a, b) { return a.time - b.time; });
+            break;
+        }
+        case 'editMarker': {
+            if (notesData.markers) {
+                var marker = notesData.markers.find(function(m) { return m.id === action.markerId; });
+                if (marker) marker.label = action.oldLabel;
+            }
+            break;
+        }
+    }
+}
+
+function applyRedoAction(action) {
+    switch (action.type) {
+        case 'addNote':
+        case 'duplicateNote': {
+            notesData.notes.push(JSON.parse(JSON.stringify(action.noteData)));
+            break;
+        }
+        case 'deleteNote': {
+            var idx = notesData.notes.findIndex(function(n) { return n.id === action.noteData.id; });
+            if (idx !== -1) notesData.notes.splice(idx, 1);
+            if (selectedNoteId === action.noteData.id) selectedNoteId = null;
+            break;
+        }
+        case 'moveNote': {
+            var note = notesData.notes.find(function(n) { return n.id === action.noteId; });
+            if (note) {
+                note.start_time = action.newStartTime;
+                note.key_index = action.newKeyIndex;
+                note.note_name = action.newNoteName;
+            }
+            break;
+        }
+        case 'resizeNote': {
+            var note = notesData.notes.find(function(n) { return n.id === action.noteId; });
+            if (note) {
+                note.start_time = action.newStartTime;
+                note.duration = action.newDuration;
+            }
+            break;
+        }
+        case 'toggleHand': {
+            var note = notesData.notes.find(function(n) { return n.id === action.noteId; });
+            if (note) {
+                note.hand = action.newHand;
+                note.color_rgb = action.newColor.slice();
+            }
+            break;
+        }
+        case 'editLyric': {
+            var note = notesData.notes.find(function(n) { return n.id === action.noteId; });
+            if (note) note.lyric = action.newLyric;
+            break;
+        }
+        case 'addMarker': {
+            if (!notesData.markers) notesData.markers = [];
+            notesData.markers.push(JSON.parse(JSON.stringify(action.markerData)));
+            notesData.markers.sort(function(a, b) { return a.time - b.time; });
+            break;
+        }
+        case 'deleteMarker': {
+            if (notesData.markers) {
+                var idx = notesData.markers.findIndex(function(m) { return m.id === action.markerData.id; });
+                if (idx !== -1) notesData.markers.splice(idx, 1);
+            }
+            break;
+        }
+        case 'editMarker': {
+            if (notesData.markers) {
+                var marker = notesData.markers.find(function(m) { return m.id === action.markerId; });
+                if (marker) marker.label = action.newLabel;
+            }
+            break;
+        }
+    }
 }
 
 function toggleEditMode() {
@@ -89,17 +266,22 @@ function addNoteAtPosition(clientX, clientY, duration) {
     };
 
     notesData.notes.push(newNote);
+    pushUndo({ type: 'addNote', noteData: JSON.parse(JSON.stringify(newNote)) });
     rerenderPreservingScroll();
     selectNote(newNote.id);
+    if (lyricsMode) rebuildLyricsPanel();
 }
 
 function deleteSelectedNote() {
     if (selectedNoteId === null || !notesData) return;
     var idx = notesData.notes.findIndex(function(n) { return n.id === selectedNoteId; });
     if (idx !== -1) {
+        var deletedNote = JSON.parse(JSON.stringify(notesData.notes[idx]));
+        pushUndo({ type: 'deleteNote', noteData: deletedNote });
         notesData.notes.splice(idx, 1);
         selectedNoteId = null;
         rerenderPreservingScroll();
+        if (lyricsMode) rebuildLyricsPanel();
     }
 }
 
@@ -107,10 +289,21 @@ function toggleSelectedNoteHand() {
     if (selectedNoteId === null || !notesData) return;
     var note = notesData.notes.find(function(n) { return n.id === selectedNoteId; });
     if (!note) return;
+    var oldHand = note.hand;
+    var oldColor = note.color_rgb.slice();
     note.hand = note.hand === 'right_hand' ? 'left_hand' : 'right_hand';
     note.color_rgb = (note.hand === 'right_hand' ? rhColor : lhColor).slice();
+    pushUndo({
+        type: 'toggleHand',
+        noteId: note.id,
+        oldHand: oldHand,
+        oldColor: oldColor,
+        newHand: note.hand,
+        newColor: note.color_rgb.slice()
+    });
     rerenderPreservingScroll();
     selectNote(note.id);
+    if (lyricsMode) rebuildLyricsPanel();
 }
 
 function duplicateNote(noteId) {
@@ -121,8 +314,10 @@ function duplicateNote(noteId) {
     newNote.id = nextNoteId++;
     newNote.start_time = note.start_time + note.duration + 0.1;
     notesData.notes.push(newNote);
+    pushUndo({ type: 'duplicateNote', noteData: JSON.parse(JSON.stringify(newNote)) });
     rerenderPreservingScroll();
     selectNote(newNote.id);
+    if (lyricsMode) rebuildLyricsPanel();
 }
 
 // ================================================================
@@ -180,6 +375,7 @@ function addMarkerAtTime(time, label) {
     };
     notesData.markers.push(marker);
     notesData.markers.sort(function(a, b) { return a.time - b.time; });
+    pushUndo({ type: 'addMarker', markerData: JSON.parse(JSON.stringify(marker)) });
     rerenderPreservingScroll();
     return marker;
 }
@@ -216,7 +412,7 @@ function showMarkerInput(time, existingMarkerId) {
         var containerRect = container.getBoundingClientRect();
         var roll = document.getElementById('piano-roll');
         var totalHeight = parseFloat(roll.style.height) || container.clientHeight;
-        var bottomY = totalHeight - BOTTOM_PADDING;
+        var bottomY = totalHeight - effectiveBottomPadding;
         var y = bottomY - time * pixelsPerSecond;
         var screenY = y - container.scrollTop + containerRect.top;
         overlay.style.left = (containerRect.left + 100) + 'px';
@@ -241,7 +437,11 @@ function commitMarkerInput() {
     } else if (markerInputMode && markerInputMode.type === 'edit') {
         var marker = notesData.markers.find(function(m) { return m.id === markerInputMode.id; });
         if (marker) {
+            var oldLabel = marker.label;
             marker.label = label;
+            if (oldLabel !== label) {
+                pushUndo({ type: 'editMarker', markerId: marker.id, oldLabel: oldLabel, newLabel: label });
+            }
             renderMarkers();
         }
     }
@@ -262,13 +462,15 @@ function deleteMarker(markerId) {
     if (!notesData || !notesData.markers) return;
     var idx = notesData.markers.findIndex(function(m) { return m.id === markerId; });
     if (idx !== -1) {
+        var deletedMarker = JSON.parse(JSON.stringify(notesData.markers[idx]));
+        pushUndo({ type: 'deleteMarker', markerData: deletedMarker });
         notesData.markers.splice(idx, 1);
         renderMarkers();
     }
 }
 
 // ================================================================
-//  Lyrics mode
+//  Lyrics mode — side panel approach
 // ================================================================
 
 function toggleLyricsMode() {
@@ -276,63 +478,195 @@ function toggleLyricsMode() {
     lyricsMode = !lyricsMode;
     document.body.classList.toggle('lyrics-mode', lyricsMode);
     if (lyricsMode) {
-        // Sort notes by start_time, then by key_index (lower note first)
-        lyricsSortedNotes = notesData.notes.slice().sort(function(a, b) {
+        // Default filter to the current edit hand (updates buttons + rebuilds)
+        setLyricsHandFilter(editHand);
+        showLyricsPanel();
+    } else {
+        hideLyricsPanel();
+    }
+}
+
+function showLyricsPanel() {
+    document.getElementById('lyrics-panel').classList.add('visible');
+}
+
+function hideLyricsPanel() {
+    // Flush any pending lyric edit before hiding
+    var focused = document.activeElement;
+    if (focused && focused.classList && focused.classList.contains('lyrics-row-input')) {
+        focused.blur();
+    }
+    document.getElementById('lyrics-panel').classList.remove('visible');
+    lyricsMode = false;
+    document.body.classList.remove('lyrics-mode');
+}
+
+function setLyricsHandFilter(filter) {
+    lyricsHandFilter = filter;
+    // Update filter buttons
+    var btns = document.querySelectorAll('.lyrics-filter-btn');
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle('active', btns[i].dataset.filter === filter);
+    }
+    rebuildLyricsPanel();
+}
+
+function rebuildLyricsPanel() {
+    if (!notesData) return;
+    var list = document.getElementById('lyrics-note-list');
+    list.innerHTML = '';
+
+    // Filter and sort notes by time, then by key_index
+    lyricsSortedNotes = notesData.notes.slice()
+        .filter(function(n) {
+            if (lyricsHandFilter === 'all') return true;
+            return n.hand === lyricsHandFilter;
+        })
+        .sort(function(a, b) {
             if (a.start_time !== b.start_time) return a.start_time - b.start_time;
             return a.key_index - b.key_index;
         });
-        // Select first note and show lyrics input
-        if (lyricsSortedNotes.length > 0) {
-            selectNote(lyricsSortedNotes[0].id);
-            showLyricsInput(lyricsSortedNotes[0]);
-        }
-    } else {
-        hideLyricsInput();
-    }
+
+    var frag = document.createDocumentFragment();
+    lyricsSortedNotes.forEach(function(note) {
+        var row = document.createElement('div');
+        row.className = 'lyrics-row';
+        row.dataset.noteId = note.id;
+        if (note.id === selectedNoteId) row.classList.add('active');
+
+        var handDot = document.createElement('span');
+        handDot.className = 'lyrics-hand-dot';
+        var handColor = note.hand === 'right_hand' ? rhColor : lhColor;
+        handDot.style.background = 'rgb(' + handColor[0] + ',' + handColor[1] + ',' + handColor[2] + ')';
+        row.appendChild(handDot);
+
+        var info = document.createElement('span');
+        info.className = 'lyrics-note-info';
+        info.textContent = note.note_name + ' (' + note.start_time.toFixed(1) + 's)';
+        row.appendChild(info);
+
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'lyrics-row-input';
+        input.placeholder = 'lyric…';
+        input.value = note.lyric || '';
+        input.autocomplete = 'off';
+        input.spellcheck = false;
+
+        (function(n, inp, r) {
+            var lyricOnFocus = n.lyric;
+            inp.addEventListener('input', function() {
+                n.lyric = this.value.trim() || undefined;
+                rerenderPreservingScroll();
+            });
+            inp.addEventListener('focus', function() {
+                lyricOnFocus = n.lyric;
+                selectNote(n.id);
+                scrollToTimeSmooth(n.start_time);
+                // Highlight active row
+                var allRows = document.querySelectorAll('.lyrics-row');
+                for (var j = 0; j < allRows.length; j++) allRows[j].classList.remove('active');
+                r.classList.add('active');
+            });
+            inp.addEventListener('blur', function() {
+                var newLyric = n.lyric;
+                if (lyricOnFocus !== newLyric) {
+                    pushUndo({
+                        type: 'editLyric',
+                        noteId: n.id,
+                        oldLyric: lyricOnFocus,
+                        newLyric: newLyric
+                    });
+                }
+            });
+            inp.addEventListener('keydown', function(e) {
+                if (e.code === 'Tab' || e.code === 'Enter') {
+                    e.preventDefault();
+                    lyricsAdvance(n.id, e.shiftKey ? -1 : 1);
+                } else if (e.code === 'Escape') {
+                    e.preventDefault();
+                    toggleLyricsMode();
+                }
+            });
+            r.addEventListener('click', function(e) {
+                if (e.target === inp) return; // Don't re-focus if already clicking input
+                selectNote(n.id);
+                scrollToTimeSmooth(n.start_time);
+                inp.focus();
+                // Highlight active row
+                var allRows = document.querySelectorAll('.lyrics-row');
+                for (var j = 0; j < allRows.length; j++) allRows[j].classList.remove('active');
+                r.classList.add('active');
+            });
+        })(note, input, row);
+
+        row.appendChild(input);
+        frag.appendChild(row);
+    });
+
+    list.appendChild(frag);
 }
 
-function showLyricsInput(note) {
-    var el = document.querySelector('.note-block[data-note-id="' + note.id + '"]');
-    if (!el) return;
-    var rect = el.getBoundingClientRect();
-    var overlay = document.getElementById('lyrics-input-overlay');
-    var input = document.getElementById('lyrics-input');
-    overlay.style.display = 'block';
-    overlay.style.left = rect.left + 'px';
-    overlay.style.top = (rect.bottom + 4) + 'px';
-    input.value = note.lyric || '';
-    input.focus();
-    input.select();
-
-    // Scroll the note into view if needed
-    scrollToTime(note.start_time);
-}
-
-function hideLyricsInput() {
-    document.getElementById('lyrics-input-overlay').style.display = 'none';
-}
-
-function saveLyricAndAdvance(direction) {
-    if (!notesData || !lyricsMode) return;
-    var input = document.getElementById('lyrics-input');
-    var note = notesData.notes.find(function(n) { return n.id === selectedNoteId; });
-    if (note) {
-        note.lyric = input.value.trim() || undefined;
-    }
-
-    // Find current index in sorted list
-    var idx = lyricsSortedNotes.findIndex(function(n) { return n.id === selectedNoteId; });
+function lyricsAdvance(currentNoteId, direction) {
+    var idx = lyricsSortedNotes.findIndex(function(n) { return n.id === currentNoteId; });
     var nextIdx = idx + direction;
     if (nextIdx >= 0 && nextIdx < lyricsSortedNotes.length) {
         var nextNote = lyricsSortedNotes[nextIdx];
         selectNote(nextNote.id);
-        showLyricsInput(nextNote);
-    } else {
-        // End of notes, exit lyrics mode
-        hideLyricsInput();
+        scrollToTimeSmooth(nextNote.start_time);
+        // Focus the corresponding input row
+        var nextRow = document.querySelector('.lyrics-row[data-note-id="' + nextNote.id + '"] .lyrics-row-input');
+        if (nextRow) nextRow.focus();
+        // Scroll the panel to show the focused row
+        var rowEl = document.querySelector('.lyrics-row[data-note-id="' + nextNote.id + '"]');
+        if (rowEl) rowEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        // Update active highlight
+        var allRows = document.querySelectorAll('.lyrics-row');
+        for (var j = 0; j < allRows.length; j++) allRows[j].classList.remove('active');
+        if (rowEl) rowEl.classList.add('active');
     }
+}
 
-    // Refresh rendering
-    rerenderPreservingScroll();
-    if (selectedNoteId !== null) selectNote(selectedNoteId);
+function lyricsSelectNote(noteId) {
+    var note = notesData.notes.find(function(n) { return n.id === noteId; });
+    if (!note) return;
+    if (!lyricsMode) {
+        if (!editMode) toggleEditMode();
+        lyricsMode = true;
+        document.body.classList.add('lyrics-mode');
+        // Default filter to the note's hand (preserves hand context)
+        setLyricsHandFilter(note.hand);
+        showLyricsPanel();
+    } else {
+        // Already in lyrics mode — if the note isn't visible with current filter, switch
+        var noteVisible = (lyricsHandFilter === 'all' || note.hand === lyricsHandFilter);
+        if (!noteVisible) {
+            setLyricsHandFilter(note.hand);
+        }
+    }
+    selectNote(noteId);
+    scrollToTimeSmooth(note.start_time);
+    var inp = document.querySelector('.lyrics-row[data-note-id="' + noteId + '"] .lyrics-row-input');
+    if (inp) {
+        inp.focus();
+        // Scroll the panel row into view
+        var rowEl = inp.closest('.lyrics-row');
+        if (rowEl) rowEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        var allRows = document.querySelectorAll('.lyrics-row');
+        for (var j = 0; j < allRows.length; j++) allRows[j].classList.remove('active');
+        if (rowEl) rowEl.classList.add('active');
+    }
+}
+
+function scrollToTimeSmooth(time) {
+    var container = document.getElementById('piano-roll-container');
+    var roll = document.getElementById('piano-roll');
+    var totalHeight = parseFloat(roll.style.height) || container.clientHeight;
+    var bottomY = totalHeight - effectiveBottomPadding;
+    var playheadOffset = container.clientHeight * 0.7;
+    var targetY = bottomY - time * pixelsPerSecond - playheadOffset;
+    programmaticScroll = true;
+    container.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+    // Reset programmaticScroll after animation
+    setTimeout(function() { programmaticScroll = false; }, 500);
 }

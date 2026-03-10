@@ -47,6 +47,15 @@ var nextMarkerId = 1;
 // Lyrics mode
 var lyricsMode = false;
 var lyricsSortedNotes = [];
+var lyricsHandFilter = 'all'; // 'all', 'right_hand', 'left_hand'
+
+// Undo/Redo
+var undoStack = [];
+var redoStack = [];
+var undoRedoInProgress = false;
+
+// Dynamic bottom padding — computed in renderPianoRoll
+var effectiveBottomPadding = BOTTOM_PADDING;
 
 // Command palette
 var commandPaletteOpen = false;

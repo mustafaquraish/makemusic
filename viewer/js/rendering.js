@@ -31,7 +31,7 @@ function renderDensity() {
     var bucketCount = canvasH;
     var buckets = new Float32Array(bucketCount);
 
-    var bottomY = totalHeight - BOTTOM_PADDING;
+    var bottomY = totalHeight - effectiveBottomPadding;
     notesData.notes.forEach(function(note) {
         var yTop = bottomY - (note.start_time + note.duration) * pixelsPerSecond;
         var yBot = bottomY - note.start_time * pixelsPerSecond;
@@ -94,7 +94,7 @@ function updateMinimapViewport() {
     var roll = document.getElementById('piano-roll');
     var mmHeight = minimap.clientHeight;
     var totalH = parseFloat(roll.style.height) || 1;
-    var bottomY = totalH - BOTTOM_PADDING;
+    var bottomY = totalH - effectiveBottomPadding;
 
     var topTime = (bottomY - container.scrollTop) / pixelsPerSecond;
     var botTime = (bottomY - container.scrollTop - container.clientHeight) / pixelsPerSecond;
@@ -130,10 +130,12 @@ function renderPianoRoll() {
     totalDuration = maxTime;
     firstNoteTime = Math.min.apply(null, startTimes);
 
+    // Dynamic bottom padding: ensure scroll range always allows reaching time 0
+    effectiveBottomPadding = Math.max(BOTTOM_PADDING, Math.ceil(container.clientHeight * 0.35));
     var totalHeight = maxTime * pixelsPerSecond + container.clientHeight;
     roll.style.height = totalHeight + 'px';
 
-    var bottomY = totalHeight - BOTTOM_PADDING;
+    var bottomY = totalHeight - effectiveBottomPadding;
     var frag = document.createDocumentFragment();
 
     notes.forEach(function(note) {
@@ -191,9 +193,8 @@ function renderPianoRoll() {
 
         div.addEventListener('click', function() {
             if (lyricsMode) {
-                // In lyrics mode, clicking a note jumps the lyric input to it
-                selectNote(note.id);
-                showLyricsInput(note);
+                // In lyrics mode, clicking a note focuses it in the lyrics panel
+                lyricsSelectNote(note.id);
                 return;
             }
             if (editMode) return;
@@ -277,7 +278,7 @@ function renderMarkers() {
 
     var container = document.getElementById('piano-roll-container');
     var totalHeight = parseFloat(roll.style.height) || container.clientHeight;
-    var bottomY = totalHeight - BOTTOM_PADDING;
+    var bottomY = totalHeight - effectiveBottomPadding;
     var frag = document.createDocumentFragment();
 
     notesData.markers.forEach(function(marker) {

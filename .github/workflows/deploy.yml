@@ -1,0 +1,16 @@
+name: Push to docs branch
+
+on: [push]
+
+jobs:
+  generate_docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Copy
+        if: ${{ github.ref == 'refs/heads/master' }}
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: docs
+          folder: viewer

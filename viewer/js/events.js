@@ -50,12 +50,8 @@ document.getElementById('context-menu').addEventListener('click', function(e) {
     } else if (action === 'duplicate') {
         duplicateNote(contextMenuNoteId);
     } else if (action === 'edit-lyric') {
-        selectNote(contextMenuNoteId);
-        var note = notesData.notes.find(function(n) { return n.id === contextMenuNoteId; });
-        if (note) {
-            if (!lyricsMode) toggleLyricsMode();
-            showLyricsInput(note);
-        }
+        // Open lyrics panel and focus the note's input
+        lyricsSelectNote(contextMenuNoteId);
     }
     hideContextMenu();
 });
@@ -131,12 +127,14 @@ document.getElementById('piano-roll').addEventListener('mousedown', function(e) 
 
     var roll = document.getElementById('piano-roll');
     var totalHeight = parseFloat(roll.style.height) || container.clientHeight;
-    var bottomY = totalHeight - BOTTOM_PADDING;
+    var bottomY = totalHeight - effectiveBottomPadding;
     var leftPct = getKeyLeftPercent(keyIndex);
     var widthPct = getKeyWidthPercent(keyIndex);
     var minDuration = 0.2;
 
-    var noteTop = bottomY - (time + minDuration) * pixelsPerSecond;
+    // Use clamped time for preview position (matches final note placement)
+    var clampedTime = Math.max(0, time);
+    var noteTop = bottomY - (clampedTime + minDuration) * pixelsPerSecond;
     var noteH = minDuration * pixelsPerSecond;
     preview.style.left = leftPct + '%';
     preview.style.width = widthPct + '%';
@@ -171,7 +169,8 @@ document.getElementById('piano-roll').addEventListener('mousedown', function(e) 
         startX: e.clientX,
         origStartTime: note.start_time,
         origDuration: note.duration,
-        origKeyIndex: note.key_index
+        origKeyIndex: note.key_index,
+        origNoteName: note.note_name
     };
 }, true);
 
@@ -210,7 +209,7 @@ document.addEventListener('mousemove', function(e) {
 
         var roll = document.getElementById('piano-roll');
         var totalHeight = parseFloat(roll.style.height) || container.clientHeight;
-        var bottomY = totalHeight - BOTTOM_PADDING;
+        var bottomY = totalHeight - effectiveBottomPadding;
 
         var preview = document.getElementById('note-creation-preview');
         var noteTop = bottomY - (startTime + duration) * pixelsPerSecond;
@@ -265,7 +264,7 @@ document.addEventListener('mousemove', function(e) {
     var roll      = document.getElementById('piano-roll');
     var container = document.getElementById('piano-roll-container');
     var totalHeight = parseFloat(roll.style.height) || container.clientHeight;
-    var bottomY   = totalHeight - BOTTOM_PADDING;
+    var bottomY   = totalHeight - effectiveBottomPadding;
     var noteTop   = bottomY - (note.start_time + note.duration) * pixelsPerSecond;
     var noteHeight = Math.max(4, note.duration * pixelsPerSecond);
     var leftPct   = getKeyLeftPercent(note.key_index);
@@ -325,34 +324,67 @@ document.addEventListener('mouseup', function(e) {
             var endTime = Math.max(creationDragState.startTime, currentTime);
             var duration = Math.max(0.1, endTime - startTime);
 
-            var keyIndex = creationDragState.keyIndex;
-            var noteName = PIANO_KEYS[keyIndex] || 'C4';
-            var hand = editHand;
-            var color = hand === 'right_hand' ? rhColor : lhColor;
+            // Only create note if drag exceeded minimum pixel distance AND minimum duration
+            var dragPx = Math.abs(e.clientY - creationDragState.startClientY);
+            if (dragPx >= MIN_DRAG_PX && duration >= MIN_NOTE_DURATION) {
+                var keyIndex = creationDragState.keyIndex;
+                var noteName = PIANO_KEYS[keyIndex] || 'C4';
+                var hand = editHand;
+                var color = hand === 'right_hand' ? rhColor : lhColor;
 
-            var newNote = {
-                id: nextNoteId++,
-                note_name: noteName,
-                start_time: Math.max(0, startTime),
-                duration: duration,
-                hand: hand,
-                key_index: keyIndex,
-                center_x: 0,
-                color_rgb: color.slice()
-            };
+                var newNote = {
+                    id: nextNoteId++,
+                    note_name: noteName,
+                    start_time: Math.max(0, startTime),
+                    duration: duration,
+                    hand: hand,
+                    key_index: keyIndex,
+                    center_x: 0,
+                    color_rgb: color.slice()
+                };
 
-            notesData.notes.push(newNote);
-            rerenderPreservingScroll();
-            selectNote(newNote.id);
-        } else {
-            addNoteAtPosition(e.clientX, creationDragState.startClientY);
+                notesData.notes.push(newNote);
+                pushUndo({ type: 'addNote', noteData: JSON.parse(JSON.stringify(newNote)) });
+                rerenderPreservingScroll();
+                selectNote(newNote.id);
+                if (lyricsMode) rebuildLyricsPanel();
+            }
         }
+        // Single clicks (no drag) no longer create notes — prevents accidental placement
         creationDragState = null;
         return;
     }
 
     if (editDragState) {
         var finalNoteId = editDragState.noteId;
+        var draggedNote = notesData.notes.find(function(n) { return n.id === finalNoteId; });
+        if (draggedNote) {
+            if (editDragState.type === 'move') {
+                if (draggedNote.start_time !== editDragState.origStartTime || draggedNote.key_index !== editDragState.origKeyIndex) {
+                    pushUndo({
+                        type: 'moveNote',
+                        noteId: draggedNote.id,
+                        oldStartTime: editDragState.origStartTime,
+                        oldKeyIndex: editDragState.origKeyIndex,
+                        oldNoteName: editDragState.origNoteName,
+                        newStartTime: draggedNote.start_time,
+                        newKeyIndex: draggedNote.key_index,
+                        newNoteName: draggedNote.note_name
+                    });
+                }
+            } else if (editDragState.type === 'resize-top' || editDragState.type === 'resize-bottom') {
+                if (draggedNote.start_time !== editDragState.origStartTime || draggedNote.duration !== editDragState.origDuration) {
+                    pushUndo({
+                        type: 'resizeNote',
+                        noteId: draggedNote.id,
+                        oldStartTime: editDragState.origStartTime,
+                        oldDuration: editDragState.origDuration,
+                        newStartTime: draggedNote.start_time,
+                        newDuration: draggedNote.duration
+                    });
+                }
+            }
+        }
         editDragState = null;
         // Hide snap indicator when drag ends
         document.getElementById('snap-indicator').style.display = 'none';
@@ -363,19 +395,8 @@ document.addEventListener('mouseup', function(e) {
 
 // -- File input ------------------------------------------------------
 
-document.getElementById('lyrics-input').addEventListener('keydown', function(e) {
-    if (e.code === 'Tab' || e.code === 'Enter') {
-        e.preventDefault();
-        saveLyricAndAdvance(e.shiftKey ? -1 : 1);
-    } else if (e.code === 'Escape') {
-        e.preventDefault();
-        // Save current without advancing
-        var note = notesData && notesData.notes.find(function(n) { return n.id === selectedNoteId; });
-        if (note) note.lyric = this.value.trim() || undefined;
-        toggleLyricsMode();
-        rerenderPreservingScroll();
-    }
-});
+// Lyrics-input event listeners removed — lyrics now use side panel with
+// per-row inputs; their keydown handlers are set up in rebuildLyricsPanel().
 
 document.getElementById('marker-input').addEventListener('keydown', function(e) {
     if (e.code === 'Enter') {
@@ -443,7 +464,7 @@ document.getElementById('piano-roll-container').addEventListener('wheel', functi
         var container = this;
         var roll = document.getElementById('piano-roll');
         var totalHeight = parseFloat(roll.style.height) || container.clientHeight;
-        var bottomY = totalHeight - BOTTOM_PADDING;
+        var bottomY = totalHeight - effectiveBottomPadding;
         var mouseY = container.scrollTop + e.clientY - container.getBoundingClientRect().top;
         var timeAtMouse = (bottomY - mouseY) / pixelsPerSecond;
 
@@ -459,7 +480,7 @@ document.getElementById('piano-roll-container').addEventListener('wheel', functi
         rerenderPreservingScroll();
 
         var newTotalHeight = parseFloat(roll.style.height) || container.clientHeight;
-        var newBottomY = newTotalHeight - BOTTOM_PADDING;
+        var newBottomY = newTotalHeight - effectiveBottomPadding;
         var newMouseY = newBottomY - timeAtMouse * pixelsPerSecond;
         var mouseScreenOffset = e.clientY - container.getBoundingClientRect().top;
         container.scrollTop = newMouseY - mouseScreenOffset;
@@ -554,7 +575,6 @@ document.addEventListener('keydown', function(e) {
     }
 
     if (e.target.id === 'command-palette-input') return;
-    if (e.target.id === 'lyrics-input') return;
     if (e.target.id === 'marker-input') return;
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
 
@@ -567,6 +587,22 @@ document.addEventListener('keydown', function(e) {
     if ((e.metaKey || e.ctrlKey) && e.code === 'KeyS') {
         e.preventDefault();
         exportJSON();
+        return;
+    }
+
+    if ((e.metaKey || e.ctrlKey) && e.code === 'KeyZ') {
+        e.preventDefault();
+        if (e.shiftKey) {
+            redo();
+        } else {
+            undo();
+        }
+        return;
+    }
+
+    if ((e.metaKey || e.ctrlKey) && e.code === 'KeyY') {
+        e.preventDefault();
+        redo();
         return;
     }
 
@@ -645,7 +681,6 @@ document.addEventListener('keydown', function(e) {
                 hideMarkerInput();
             } else if (lyricsMode) {
                 toggleLyricsMode();
-                rerenderPreservingScroll();
             } else if (document.getElementById('github-modal').classList.contains('visible')) {
                 document.getElementById('github-modal').classList.remove('visible');
             } else if (document.getElementById('settings-modal').classList.contains('visible')) {
