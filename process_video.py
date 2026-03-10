@@ -919,8 +919,13 @@ def label_notes(result, verbose=False):
 
 
 def build_standalone_html(notes_data: dict, title: str = 'MakeMusic') -> str:
-    """Build a self-contained HTML viewer with the notes data embedded."""
-    # Read the viewer template
+    """Build a self-contained HTML viewer with the notes data embedded.
+
+    Reads the multi-file viewer/index.html, inlines all local CSS and JS
+    files, injects the notes data, and returns a single standalone HTML string.
+    """
+    import re as _re
+
     viewer_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'viewer')
     template_path = os.path.join(viewer_dir, 'index.html')
 
@@ -928,32 +933,51 @@ def build_standalone_html(notes_data: dict, title: str = 'MakeMusic') -> str:
         html = f.read()
 
     # Update the title
-    html = html.replace('<title>MakeMusic - Piano Roll Viewer</title>',
+    html = html.replace('<title>\U0001f3b9 MakeMusic - Piano Roll Viewer</title>',
                         f'<title>{title} - MakeMusic</title>')
 
-    # Inject EMBEDDED_NOTES_DATA before the main script block
-    # Find the last </script> before </body>
+    # Inline local CSS: <link rel="stylesheet" href="..."> → <style>...</style>
+    def _inline_css(m):
+        href = m.group(1)
+        css_path = os.path.join(viewer_dir, href)
+        with open(css_path, 'r') as cf:
+            return f'<style>\n{cf.read()}\n</style>'
+
+    html = _re.sub(
+        r'<link\s+rel="stylesheet"\s+href="([^"]+)"\s*/?>',
+        _inline_css,
+        html,
+    )
+
+    # Inline local JS: <script src="js/..."> → <script>...</script>
+    # Keep CDN scripts (those with http:// or https://) as-is.
+    def _inline_js(m):
+        src = m.group(1)
+        if src.startswith(('http://', 'https://')):
+            return m.group(0)  # keep CDN scripts unchanged
+        js_path = os.path.join(viewer_dir, src)
+        with open(js_path, 'r') as jf:
+            return f'<script>\n{jf.read()}\n</script>'
+
+    html = _re.sub(
+        r'<script\s+src="([^"]+)">\s*</script>',
+        _inline_js,
+        html,
+    )
+
+    # Inject EMBEDDED_NOTES_DATA before the first inline <script> that
+    # is NOT a CDN reference (i.e. before the constants.js content).
     embed_script = (
-        '\n<script>\n'
-        'const EMBEDDED_NOTES_DATA = '
+        '<script>\nvar EMBEDDED_NOTES_DATA = '
         + json.dumps(notes_data, separators=(',', ':'))
         + ';\n</script>\n'
     )
 
-    # Insert just before the main <script> block (which contains the
-    # EMBEDDED_NOTES_DATA check).  We find the pattern:
-    #   <script src="...tone..."></script>\n    <script>
-    # and insert our block between them.
-    #
-    # Alternative: just insert before the closing </body>
-    # Since the check is:  if (typeof EMBEDDED_NOTES_DATA !== 'undefined')
-    # our script tag must run BEFORE that check.
-    # The simplest approach: insert right after </style> and before the
-    # existing <script> tags.
-    insert_marker = '</style>\n'
-    if insert_marker in html:
-        idx = html.index(insert_marker) + len(insert_marker)
-        html = html[:idx] + embed_script + html[idx:]
+    # Insert right after the Tone.js CDN script tag, before our inlined code.
+    tone_marker = 'Tone.min.js"></script>'
+    if tone_marker in html:
+        idx = html.index(tone_marker) + len(tone_marker)
+        html = html[:idx] + '\n' + embed_script + html[idx:]
     else:
         # Fallback: insert before </body>
         html = html.replace('</body>', embed_script + '</body>')

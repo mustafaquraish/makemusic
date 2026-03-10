@@ -1,0 +1,103 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]: 🎹 MakeMusic
+    - button "📂 Open" [ref=e4] [cursor=pointer]:
+      - generic [ref=e5]: 📂
+      - generic [ref=e6]: Open
+    - button "💾 Save" [ref=e7] [cursor=pointer]:
+      - generic [ref=e8]: 💾
+      - generic [ref=e9]: Save
+    - button "☁️ Cloud" [ref=e10] [cursor=pointer]:
+      - generic [ref=e11]: ☁️
+      - generic [ref=e12]: Cloud
+    - button "✏️ Edit" [ref=e13] [cursor=pointer]:
+      - generic [ref=e14]: ✏️
+      - generic [ref=e15]: Edit
+    - generic: 20 notes · 0:16
+    - textbox "Song name (click to edit)" [ref=e16]:
+      - /placeholder: Untitled
+      - text: Untitled
+    - generic [ref=e17]: "RH: 14 | LH: 6"
+    - button "RH" [ref=e18] [cursor=pointer]:
+      - generic [ref=e20]: RH
+    - button "LH" [ref=e21] [cursor=pointer]:
+      - generic [ref=e23]: LH
+    - button "▶ Play" [ref=e25] [cursor=pointer]:
+      - generic [ref=e26]: ▶
+      - generic [ref=e27]: Play
+    - button "🔁" [ref=e28] [cursor=pointer]:
+      - generic [ref=e29]: 🔁
+    - generic "Volume" [ref=e31]:
+      - generic [ref=e32]: 🔊
+      - slider "🔊" [ref=e33] [cursor=pointer]: "80"
+    - combobox "Playback Speed" [ref=e34] [cursor=pointer]:
+      - option "0.25×"
+      - option "0.5×"
+      - option "0.75×"
+      - option "1×" [selected]
+      - option "1.5×"
+      - option "2×"
+    - generic "Zoom (Ctrl+Scroll)" [ref=e36]:
+      - text: Zoom
+      - slider "Zoom" [ref=e37] [cursor=pointer]: "80"
+    - button "⚙️" [ref=e38] [cursor=pointer]:
+      - generic [ref=e39]: ⚙️
+    - button "?" [ref=e40] [cursor=pointer]:
+      - generic [ref=e41]: "?"
+  - generic [ref=e46]:
+    - generic [ref=e47] [cursor=pointer]: C4
+    - generic [ref=e48] [cursor=pointer]: E4
+    - generic [ref=e49] [cursor=pointer]: G4
+    - generic [ref=e50] [cursor=pointer]: C3
+    - generic [ref=e51] [cursor=pointer]: D4
+    - generic [ref=e52] [cursor=pointer]: F4
+    - generic [ref=e53] [cursor=pointer]: A4
+    - generic [ref=e54] [cursor=pointer]: G3
+    - generic [ref=e55] [cursor=pointer]: F#4
+    - generic [ref=e56] [cursor=pointer]: B4
+    - generic [ref=e57] [cursor=pointer]: E3
+    - generic [ref=e58] [cursor=pointer]: C#4
+    - generic [ref=e59] [cursor=pointer]: D#4
+    - generic [ref=e60] [cursor=pointer]: G#3
+    - generic [ref=e61] [cursor=pointer]: A#4
+    - generic [ref=e62] [cursor=pointer]: C4
+    - generic [ref=e63] [cursor=pointer]: D3
+    - generic [ref=e64] [cursor=pointer]: E4
+    - generic [ref=e65] [cursor=pointer]: G4
+    - generic [ref=e66] [cursor=pointer]: C3
+  - generic [ref=e68]:
+    - generic [ref=e69]: A2
+    - generic [ref=e70]: B2
+    - generic [ref=e71]: C3
+    - generic [ref=e72]: D3
+    - generic [ref=e73]: E3
+    - generic [ref=e74]: F3
+    - generic [ref=e75]: G3
+    - generic [ref=e76]: A3
+    - generic [ref=e77]: B3
+    - generic [ref=e78]: C4
+    - generic [ref=e79]: D4
+    - generic [ref=e80]: E4
+    - generic [ref=e81]: F4
+    - generic [ref=e82]: G4
+    - generic [ref=e83]: A4
+    - generic [ref=e84]: B4
+    - generic [ref=e85]: C5
+    - generic [ref=e86]: D5
+    - generic [ref=e87]: A#2
+    - generic [ref=e88]: C#3
+    - generic [ref=e89]: D#3
+    - generic [ref=e90]: F#3
+    - generic [ref=e91]: G#3
+    - generic [ref=e92]: A#3
+    - generic [ref=e93]: C#4
+    - generic [ref=e94]: D#4
+    - generic [ref=e95]: F#4
+    - generic [ref=e96]: G#4
+    - generic [ref=e97]: A#4
+    - generic [ref=e98]: C#5
+  - generic: 0:01 / 0:16
+```
