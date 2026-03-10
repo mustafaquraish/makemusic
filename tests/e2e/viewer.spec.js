@@ -3583,3 +3583,638 @@ test.describe('Lyrics Mode - Edge Cases', () => {
     expect(rows).toBe(RH_NOTES); // Defaults to editHand (right_hand)
   });
 });
+
+// ================================================================
+//  Lyrics Mode - Filter Memory (right-click & note click)
+// ================================================================
+
+test.describe('Lyrics Mode - Filter Memory', () => {
+  test('right-click Edit Lyric on RH note opens with RH filter', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Right-click a RH note and select Edit Lyric
+    const rhNote = page.locator('.note-block.right-hand').first();
+    await rhNote.click({ button: 'right' });
+    await page.waitForTimeout(200);
+    await page.locator('.ctx-item[data-action="edit-lyric"]').click();
+    await page.waitForTimeout(300);
+    // Lyrics panel should open with RH filter (note's hand)
+    await expect(page.locator('#lyrics-panel')).toHaveClass(/visible/);
+    await expect(page.locator('.lyrics-filter-btn[data-filter="right_hand"]')).toHaveClass(/active/);
+    const rowsAfter = await page.locator('.lyrics-row').count();
+    expect(rowsAfter).toBe(RH_NOTES);
+  });
+
+  test('right-click Edit Lyric on LH note opens with LH filter', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Right-click a LH note
+    const lhNote = page.locator('.note-block.left-hand').first();
+    await lhNote.click({ button: 'right' });
+    await page.waitForTimeout(200);
+    await page.locator('.ctx-item[data-action="edit-lyric"]').click();
+    await page.waitForTimeout(300);
+    // Filter should be LH (note's hand)
+    await expect(page.locator('.lyrics-filter-btn[data-filter="left_hand"]')).toHaveClass(/active/);
+    const rows = await page.locator('.lyrics-row').count();
+    expect(rows).toBe(LH_NOTES);
+  });
+
+  test('already in lyrics mode with RH filter, right-click Edit Lyric on RH note keeps RH filter', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    await page.keyboard.press('w');
+    await page.waitForTimeout(300);
+    // Verify RH filter
+    await expect(page.locator('.lyrics-filter-btn[data-filter="right_hand"]')).toHaveClass(/active/);
+    // Right-click a RH note while already in lyrics mode
+    const rhNote = page.locator('.note-block.right-hand').first();
+    await rhNote.click({ button: 'right' });
+    await page.waitForTimeout(200);
+    await page.locator('.ctx-item[data-action="edit-lyric"]').click();
+    await page.waitForTimeout(300);
+    // Should stay on RH filter
+    await expect(page.locator('.lyrics-filter-btn[data-filter="right_hand"]')).toHaveClass(/active/);
+    const rows = await page.locator('.lyrics-row').count();
+    expect(rows).toBe(RH_NOTES);
+  });
+
+  test('already in lyrics mode with RH filter, right-click Edit Lyric on LH note switches to LH', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    await page.keyboard.press('w');
+    await page.waitForTimeout(300);
+    await expect(page.locator('.lyrics-filter-btn[data-filter="right_hand"]')).toHaveClass(/active/);
+    // Right-click a LH note while already in lyrics mode with RH filter
+    const lhNote = page.locator('.note-block.left-hand').first();
+    await lhNote.click({ button: 'right' });
+    await page.waitForTimeout(200);
+    await page.locator('.ctx-item[data-action="edit-lyric"]').click();
+    await page.waitForTimeout(300);
+    // Must switch to LH to show the note
+    await expect(page.locator('.lyrics-filter-btn[data-filter="left_hand"]')).toHaveClass(/active/);
+    const rows = await page.locator('.lyrics-row').count();
+    expect(rows).toBe(LH_NOTES);
+  });
+
+  test('clicking a note on timeline in lyrics mode focuses its lyrics row', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    await page.keyboard.press('w');
+    await page.waitForTimeout(300);
+    // Switch to All filter to see all notes
+    await page.locator('.lyrics-filter-btn[data-filter="all"]').click();
+    await page.waitForTimeout(200);
+    // Click a note on the timeline using evaluate to bypass keyboard intercepting clicks
+    const noteId = await page.locator('.note-block').nth(2).getAttribute('data-note-id');
+    await page.evaluate((id) => {
+      const el = document.querySelector('.note-block[data-note-id="' + id + '"]');
+      if (el) el.click();
+    }, noteId);
+    await page.waitForTimeout(300);
+    // The lyrics row for that note should be active and its input focused
+    const activeRow = page.locator('.lyrics-row.active');
+    await expect(activeRow).toBeVisible();
+    expect(await activeRow.getAttribute('data-note-id')).toBe(noteId);
+  });
+
+  test('clicking a LH note while RH filter active switches filter and focuses row', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    await page.keyboard.press('w');
+    await page.waitForTimeout(300);
+    // Currently RH filter
+    await expect(page.locator('.lyrics-filter-btn[data-filter="right_hand"]')).toHaveClass(/active/);
+    // Click a LH note on timeline via evaluate
+    const lhNoteId = await page.locator('.note-block.left-hand').first().getAttribute('data-note-id');
+    await page.evaluate((id) => {
+      const el = document.querySelector('.note-block[data-note-id="' + id + '"]');
+      if (el) el.click();
+    }, lhNoteId);
+    await page.waitForTimeout(300);
+    // Should have switched to LH filter
+    await expect(page.locator('.lyrics-filter-btn[data-filter="left_hand"]')).toHaveClass(/active/);
+    // Active row should be the clicked note
+    const activeRow = page.locator('.lyrics-row.active');
+    await expect(activeRow).toBeVisible();
+    expect(await activeRow.getAttribute('data-note-id')).toBe(lhNoteId);
+  });
+});
+
+// ================================================================
+//  Undo / Redo
+// ================================================================
+
+test.describe('Undo / Redo - Delete & Add Notes', () => {
+  test('Ctrl+Z undoes note deletion', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Select and delete a note
+    const noteEl = page.locator('.note-block').first();
+    const noteId = await noteEl.getAttribute('data-note-id');
+    const noteName = await noteEl.getAttribute('data-note-name');
+    await noteEl.click();
+    await page.waitForTimeout(200);
+    await page.keyboard.press('Delete');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES - 1);
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES);
+    // Verify the restored note has the same properties
+    const restored = page.locator(`.note-block[data-note-id="${noteId}"]`);
+    await expect(restored).toBeVisible();
+    expect(await restored.getAttribute('data-note-name')).toBe(noteName);
+  });
+
+  test('Ctrl+Z undoes drag-created note', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    await page.keyboard.press('Home');
+    await page.waitForTimeout(300);
+    // Drag to create note
+    const container = page.locator('#piano-roll-container');
+    const box = await container.boundingBox();
+    const startX = box.x + 10;
+    const startY = box.y + box.height / 2;
+    await page.mouse.move(startX, startY);
+    await page.mouse.down();
+    await page.mouse.move(startX, startY - 120, { steps: 10 });
+    await page.mouse.up();
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES + 1);
+    // Undo the creation
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES);
+  });
+
+  test('Ctrl+Z undoes context menu Add Note', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    await page.keyboard.press('Home');
+    await page.waitForTimeout(300);
+    // Right-click empty space
+    const container = page.locator('#piano-roll-container');
+    const box = await container.boundingBox();
+    await page.mouse.click(box.x + 20, box.y + box.height / 2, { button: 'right' });
+    await page.waitForTimeout(200);
+    // Click "Add Note Here"
+    await page.locator('.ctx-item[data-action="add-note-here"]').click();
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES + 1);
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES);
+  });
+
+  test('Ctrl+Z undoes duplicate note', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Right-click first note and duplicate
+    const note = page.locator('.note-block').first();
+    await note.click({ button: 'right' });
+    await page.waitForTimeout(200);
+    await page.locator('.ctx-item[data-action="duplicate"]').click();
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES + 1);
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES);
+  });
+});
+
+test.describe('Undo / Redo - Toggle Hand', () => {
+  test('Ctrl+Z undoes toggle hand', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Select a RH note and toggle its hand
+    const rhNote = page.locator('.note-block.right-hand').first();
+    const noteId = await rhNote.getAttribute('data-note-id');
+    await rhNote.click();
+    await page.waitForTimeout(200);
+    await page.keyboard.press('h');
+    await page.waitForTimeout(300);
+    // It should now be LH
+    const toggled = page.locator(`.note-block[data-note-id="${noteId}"]`);
+    expect(await toggled.getAttribute('data-hand')).toBe('left_hand');
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    const restored = page.locator(`.note-block[data-note-id="${noteId}"]`);
+    expect(await restored.getAttribute('data-hand')).toBe('right_hand');
+  });
+});
+
+test.describe('Undo / Redo - Move & Resize', () => {
+  test('Ctrl+Z undoes note move', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Find a note and record its original startTime
+    const note = page.locator('.note-block').first();
+    const noteId = await note.getAttribute('data-note-id');
+    const origStartTime = await note.getAttribute('data-start-time');
+    const origBox = await note.boundingBox();
+    // Drag the note upward (increases time)
+    await page.mouse.move(origBox.x + origBox.width / 2, origBox.y + origBox.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(origBox.x + origBox.width / 2, origBox.y - 60, { steps: 10 });
+    await page.mouse.up();
+    await page.waitForTimeout(300);
+    // StartTime should have changed
+    const movedNote = page.locator(`.note-block[data-note-id="${noteId}"]`);
+    const newStartTime = await movedNote.getAttribute('data-start-time');
+    expect(newStartTime).not.toBe(origStartTime);
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    const restoredNote = page.locator(`.note-block[data-note-id="${noteId}"]`);
+    const restoredStartTime = await restoredNote.getAttribute('data-start-time');
+    expect(restoredStartTime).toBe(origStartTime);
+  });
+
+  test('Ctrl+Z undoes note resize', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Find a note and record its original duration
+    const note = page.locator('.note-block').first();
+    const noteId = await note.getAttribute('data-note-id');
+    const origDuration = await note.getAttribute('data-duration');
+    const origBox = await note.boundingBox();
+    // Drag the top edge upward to resize (top edge is the first 8px)
+    await page.mouse.move(origBox.x + origBox.width / 2, origBox.y + 3);
+    await page.mouse.down();
+    await page.mouse.move(origBox.x + origBox.width / 2, origBox.y - 50, { steps: 10 });
+    await page.mouse.up();
+    await page.waitForTimeout(300);
+    // Duration should have changed
+    const resizedNote = page.locator(`.note-block[data-note-id="${noteId}"]`);
+    const newDuration = await resizedNote.getAttribute('data-duration');
+    expect(parseFloat(newDuration)).toBeGreaterThan(parseFloat(origDuration));
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    const restoredNote = page.locator(`.note-block[data-note-id="${noteId}"]`);
+    const restoredDuration = await restoredNote.getAttribute('data-duration');
+    expect(restoredDuration).toBe(origDuration);
+  });
+});
+
+test.describe('Undo / Redo - Lyrics', () => {
+  test('Ctrl+Z undoes lyric edit after blur', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    await page.keyboard.press('w');
+    await page.waitForTimeout(300);
+    // Type a lyric in the first row
+    const firstInput = page.locator('.lyrics-row-input').first();
+    const noteId = await page.locator('.lyrics-row').first().getAttribute('data-note-id');
+    await firstInput.click();
+    await firstInput.fill('hello');
+    await page.waitForTimeout(100);
+    // Blur the input to commit the undo action
+    await page.locator('.lyrics-filter-btn').first().click();
+    await page.waitForTimeout(300);
+    // Verify lyric was saved
+    const lyricBefore = await page.evaluate((id) => {
+      return notesData.notes.find(n => n.id === parseInt(id)).lyric;
+    }, noteId);
+    expect(lyricBefore).toBe('hello');
+    // Close lyrics mode to enable Ctrl+Z
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(300);
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    // Lyric should be reverted
+    const lyricAfter = await page.evaluate((id) => {
+      return notesData.notes.find(n => n.id === parseInt(id)).lyric;
+    }, noteId);
+    expect(lyricAfter).toBeUndefined();
+  });
+});
+
+test.describe('Undo / Redo - Markers', () => {
+  test('Ctrl+Z undoes marker addition', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Add a marker
+    await page.keyboard.press('m');
+    await page.waitForTimeout(300);
+    const markerInput = page.locator('#marker-input');
+    await markerInput.fill('Chorus');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(300);
+    // Marker should exist
+    const markersBefore = await page.locator('.marker-line').count();
+    expect(markersBefore).toBe(1);
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    const markersAfter = await page.locator('.marker-line').count();
+    expect(markersAfter).toBe(0);
+  });
+
+  test('Ctrl+Z undoes marker deletion', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Add a marker
+    await page.keyboard.press('m');
+    await page.waitForTimeout(300);
+    await page.locator('#marker-input').fill('Verse 1');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.marker-line').count()).toBe(1);
+    // Delete it by clicking the delete button
+    await page.locator('.marker-delete-btn').click();
+    await page.waitForTimeout(300);
+    expect(await page.locator('.marker-line').count()).toBe(0);
+    // Undo the deletion
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.marker-line').count()).toBe(1);
+    // Verify label
+    const label = await page.locator('.marker-label').first().textContent();
+    expect(label).toContain('Verse 1');
+  });
+
+  test('Ctrl+Z undoes marker label edit', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Add marker
+    await page.keyboard.press('m');
+    await page.waitForTimeout(300);
+    await page.locator('#marker-input').fill('Verse');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(300);
+    // Edit the marker label by clicking it
+    await page.locator('.marker-label').first().click();
+    await page.waitForTimeout(300);
+    await page.locator('#marker-input').fill('Chorus');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(300);
+    const labelAfterEdit = await page.locator('.marker-label').first().textContent();
+    expect(labelAfterEdit).toContain('Chorus');
+    // Undo the edit
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    const labelAfterUndo = await page.locator('.marker-label').first().textContent();
+    expect(labelAfterUndo).toContain('Verse');
+  });
+});
+
+test.describe('Undo / Redo - Redo', () => {
+  test('Ctrl+Shift+Z redoes undone deletion', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Delete a note
+    const note = page.locator('.note-block').first();
+    await note.click();
+    await page.waitForTimeout(200);
+    await page.keyboard.press('Delete');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES - 1);
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES);
+    // Redo
+    await page.keyboard.press('Meta+Shift+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES - 1);
+  });
+
+  test('new action after undo clears redo stack', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Delete a note
+    const note = page.locator('.note-block').first();
+    await note.click();
+    await page.waitForTimeout(200);
+    await page.keyboard.press('Delete');
+    await page.waitForTimeout(300);
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES);
+    // Do a NEW action (toggle hand) — should clear redo stack
+    const aNote = page.locator('.note-block').first();
+    await aNote.click();
+    await page.waitForTimeout(200);
+    await page.keyboard.press('h');
+    await page.waitForTimeout(300);
+    // Try to redo — should do nothing since redo was cleared
+    const countBefore = await page.locator('.note-block').count();
+    await page.keyboard.press('Meta+Shift+z');
+    await page.waitForTimeout(300);
+    const countAfter = await page.locator('.note-block').count();
+    expect(countAfter).toBe(countBefore);
+  });
+
+  test('redo restores toggled hand again', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    const rhNote = page.locator('.note-block.right-hand').first();
+    const noteId = await rhNote.getAttribute('data-note-id');
+    await rhNote.click();
+    await page.waitForTimeout(200);
+    // Toggle hand RH -> LH
+    await page.keyboard.press('h');
+    await page.waitForTimeout(300);
+    expect(await page.locator(`.note-block[data-note-id="${noteId}"]`).getAttribute('data-hand')).toBe('left_hand');
+    // Undo: back to RH
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator(`.note-block[data-note-id="${noteId}"]`).getAttribute('data-hand')).toBe('right_hand');
+    // Redo: back to LH
+    await page.keyboard.press('Meta+Shift+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator(`.note-block[data-note-id="${noteId}"]`).getAttribute('data-hand')).toBe('left_hand');
+  });
+});
+
+test.describe('Undo / Redo - Edge Cases', () => {
+  test('Ctrl+Z with empty undo stack does nothing', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // No edits made — undo should be a no-op
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES);
+  });
+
+  test('Ctrl+Shift+Z with empty redo stack does nothing', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // No undo has been done — redo should be a no-op
+    await page.keyboard.press('Meta+Shift+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES);
+  });
+
+  test('multiple sequential undos work correctly', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Delete two notes
+    const note1 = page.locator('.note-block').first();
+    await note1.click();
+    await page.waitForTimeout(200);
+    await page.keyboard.press('Delete');
+    await page.waitForTimeout(300);
+    const note2 = page.locator('.note-block').first();
+    await note2.click();
+    await page.waitForTimeout(200);
+    await page.keyboard.press('Delete');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES - 2);
+    // Undo first deletion
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES - 1);
+    // Undo second deletion
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES);
+  });
+
+  test('Ctrl+Z does not trigger when typing in lyrics input', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Delete a note first to have something on undo stack
+    const note = page.locator('.note-block').first();
+    await note.click();
+    await page.waitForTimeout(200);
+    await page.keyboard.press('Delete');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES - 1);
+    // Now open lyrics mode and focus an input
+    await page.keyboard.press('w');
+    await page.waitForTimeout(300);
+    const firstInput = page.locator('.lyrics-row-input').first();
+    await firstInput.click();
+    await page.waitForTimeout(100);
+    // Type something then Ctrl+Z — should undo text typing, NOT note deletion
+    await firstInput.fill('test');
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    // Note count should NOT change (undo is handled by input, not by our system)
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES - 1);
+  });
+
+  test('Ctrl+Y works as redo alternative', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Delete a note
+    const note = page.locator('.note-block').first();
+    await note.click();
+    await page.waitForTimeout(200);
+    await page.keyboard.press('Delete');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES - 1);
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES);
+    // Redo using Ctrl+Y
+    await page.keyboard.press('Meta+y');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES - 1);
+  });
+
+  test('undo/redo appears in command palette', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('Meta+p');
+    await page.waitForTimeout(200);
+    await page.locator('#command-palette-input').fill('Undo');
+    await page.waitForTimeout(200);
+    const undoItem = page.locator('.cmd-item', { hasText: 'Undo' });
+    await expect(undoItem).toBeVisible();
+    await page.locator('#command-palette-input').fill('Redo');
+    await page.waitForTimeout(200);
+    const redoItem = page.locator('.cmd-item', { hasText: 'Redo' });
+    await expect(redoItem).toBeVisible();
+  });
+
+  test('undo/redo in help modal', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('?');
+    await page.waitForTimeout(300);
+    const helpContent = await page.locator('#help-content').textContent();
+    expect(helpContent).toContain('Undo');
+    expect(helpContent).toContain('Redo');
+  });
+
+  test('undo delete restores note and selects it', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    const note = page.locator('.note-block').first();
+    const noteId = await note.getAttribute('data-note-id');
+    await note.click();
+    await page.waitForTimeout(200);
+    await page.keyboard.press('Delete');
+    await page.waitForTimeout(300);
+    // Note is gone
+    await expect(page.locator(`.note-block[data-note-id="${noteId}"]`)).toHaveCount(0);
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    // Note is back and selected
+    const restored = page.locator(`.note-block[data-note-id="${noteId}"]`);
+    await expect(restored).toBeVisible();
+    await expect(restored).toHaveClass(/selected/);
+  });
+
+  test('undo works alongside lyrics mode (panel rebuilds)', async ({ page }) => {
+    await loadViewer(page);
+    await page.keyboard.press('e');
+    await page.waitForTimeout(200);
+    // Delete a note
+    const note = page.locator('.note-block').first();
+    const noteId = await note.getAttribute('data-note-id');
+    await note.click();
+    await page.waitForTimeout(200);
+    await page.keyboard.press('Delete');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES - 1);
+    // Undo
+    await page.keyboard.press('Meta+z');
+    await page.waitForTimeout(300);
+    expect(await page.locator('.note-block').count()).toBe(TOTAL_NOTES);
+    // Open lyrics mode — panel should include the restored note
+    await page.keyboard.press('w');
+    await page.waitForTimeout(300);
+    await page.locator('.lyrics-filter-btn[data-filter="all"]').click();
+    await page.waitForTimeout(200);
+    const rows = await page.locator('.lyrics-row').count();
+    expect(rows).toBe(TOTAL_NOTES);
+  });
+});

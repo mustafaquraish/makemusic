@@ -847,6 +847,12 @@ body.edit-mode #edit-hand-selector { display: flex; }
     border-radius: 50%; animation: spin 0.8s linear infinite;
     vertical-align: middle; margin-right: 6px;
 }
+.hp-spinner {
+    display: inline-block; width: 13px; height: 13px;
+    border: 2px solid rgba(255,255,255,0.25); border-top-color: currentColor;
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+    vertical-align: middle; margin-right: 6px;
+}
 
 /* ==================== Help Modal ==================== */
 #help-modal {

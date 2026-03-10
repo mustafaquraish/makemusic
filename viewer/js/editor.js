@@ -62,6 +62,8 @@ function undo() {
     applyUndoAction(action);
     rerenderPreservingScroll();
     if (lyricsMode) rebuildLyricsPanel();
+    // Select restored note after rerender
+    if (action.type === 'deleteNote') selectNote(action.noteData.id);
     undoRedoInProgress = false;
 }
 
@@ -91,7 +93,6 @@ function applyUndoAction(action) {
         }
         case 'deleteNote': {
             notesData.notes.push(JSON.parse(JSON.stringify(action.noteData)));
-            selectNote(action.noteData.id);
             break;
         }
         case 'moveNote': {
