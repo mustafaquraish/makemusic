@@ -34,13 +34,9 @@ function toggleHand(hand) {
     if (hand === 'right') {
         showRightHand = !showRightHand;
         document.getElementById('rh-toggle').classList.toggle('inactive', !showRightHand);
-        var mobileRh = document.getElementById('mobile-rh-toggle');
-        if (mobileRh) mobileRh.classList.toggle('inactive', !showRightHand);
     } else {
         showLeftHand = !showLeftHand;
         document.getElementById('lh-toggle').classList.toggle('inactive', !showLeftHand);
-        var mobileLh = document.getElementById('mobile-lh-toggle');
-        if (mobileLh) mobileLh.classList.toggle('inactive', !showLeftHand);
     }
     for (var i = 0; i < noteElements.length; i++) {
         var entry = noteElements[i];
@@ -70,12 +66,6 @@ function updateHandColors() {
         'rgb(' + rhColor[0] + ',' + rhColor[1] + ',' + rhColor[2] + ')';
     document.getElementById('lh-swatch').style.background =
         'rgb(' + lhColor[0] + ',' + lhColor[1] + ',' + lhColor[2] + ')';
-
-    // Sync mobile hand dots
-    var mobileRhDot = document.getElementById('mobile-rh-dot');
-    var mobileLhDot = document.getElementById('mobile-lh-dot');
-    if (mobileRhDot) mobileRhDot.style.background = 'rgb(' + rhColor[0] + ',' + rhColor[1] + ',' + rhColor[2] + ')';
-    if (mobileLhDot) mobileLhDot.style.background = 'rgb(' + lhColor[0] + ',' + lhColor[1] + ',' + lhColor[2] + ')';
 }
 
 // -- Theme -----------------------------------------------------------
