@@ -11,7 +11,6 @@ module.exports = defineConfig({
     viewport: { width: 1280, height: 800 },
     screenshot: 'only-on-failure',
   },
-  fullyParallel: true,
   reporter: [['list']],
   webServer: {
     command: 'python3 -m http.server 8574 --bind 127.0.0.1',
