@@ -1,0 +1,203 @@
+/* ================================================================
+   MakeMusic – Design Tokens & CSS Variables
+   ================================================================ */
+
+:root {
+    /* Layout */
+    --header-height: 56px;
+    --progress-bar-height: 4px;
+    --keyboard-height: 100px;
+    --inspector-width: 280px;
+    --minimap-width: 40px;
+    --mobile-nav-height: 56px;
+
+    /* Spacing */
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 20px;
+    --sp-6: 24px;
+
+    /* Radii */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 10px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    --text-xs: 11px;
+    --text-sm: 12px;
+    --text-md: 14px;
+    --text-base: 14px;
+    --text-lg: 16px;
+    --text-xl: 20px;
+    --text-2xl: 24px;
+
+    /* Transitions */
+    --transition-fast: 100ms ease;
+    --transition-base: 150ms ease;
+    --transition-slow: 200ms ease-out;
+    --transition-panel: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+    --shadow-xl: 0 16px 48px rgba(0,0,0,0.3);
+
+    /* Z-index layers */
+    --z-keyboard: 10;
+    --z-minimap: 55;
+    --z-header: 50;
+    --z-progress: 49;
+    --z-inspector: 40;
+    --z-playhead: 30;
+    --z-indicator: 45;
+    --z-tooltip: 60;
+    --z-context-menu: 70;
+    --z-modal: 80;
+    --z-command-palette: 90;
+    --z-overlay: 100;
+    --z-mobile-nav: 55;
+    --z-action-sheet: 95;
+}
+
+/* ==================== Dark Theme (default) ==================== */
+:root, :root[data-theme="dark"] {
+    --bg-primary: #111118;
+    --bg-secondary: #18181f;
+    --bg-surface: #1e1e28;
+    --bg-surface-hover: #262632;
+    --bg-surface-active: #2e2e3c;
+    --bg-elevated: #222230;
+    --bg-inset: #0d0d12;
+
+    --text-primary: #e8e8ec;
+    --text-secondary: #a0a0b0;
+    --text-muted: #606070;
+    --text-inverse: #111118;
+
+    --border-subtle: rgba(255,255,255,0.06);
+    --border-default: rgba(255,255,255,0.10);
+    --border-strong: rgba(255,255,255,0.16);
+    --border-focus: #6c63ff;
+
+    --accent: #6c63ff;
+    --accent-hover: #7b73ff;
+    --accent-subtle: rgba(108,99,255,0.15);
+    --accent-text: #a49eff;
+
+    --danger: #ff4757;
+    --danger-hover: #ff5e6b;
+    --danger-subtle: rgba(255,71,87,0.12);
+
+    --success: #2ed573;
+    --warning: #ffa502;
+
+    --rh-color: 100, 149, 237;  /* cornflower blue as r,g,b */
+    --lh-color: 72, 191, 145;   /* emerald as r,g,b */
+
+    --playhead-color: #ff6b6b;
+    --playhead-glow: rgba(255,107,107,0.3);
+    --snap-color: #ffd700;
+
+    --track-line: rgba(255,255,255,0.03);
+
+    --key-white-bg: linear-gradient(180deg, #f0f0f0 0%, #d8d8d8 100%);
+    --key-white-text: #888;
+    --key-black-bg: linear-gradient(180deg, #333 0%, #111 100%);
+    --key-black-text: #666;
+    --key-border: #aaa;
+    --key-active-shadow: 0 0 12px rgba(0,0,0,0.5);
+
+    --minimap-bg: rgba(17,17,24,0.85);
+    --minimap-viewport: rgba(108,99,255,0.3);
+
+    --tooltip-bg: rgba(24,24,32,0.96);
+    --tooltip-border: rgba(255,255,255,0.1);
+
+    --scrollbar-track: #111118;
+    --scrollbar-thumb: #2a2a3a;
+    --scrollbar-hover: #3a3a4a;
+
+    --progress-bg: #1a1a28;
+    --progress-fill: var(--accent);
+
+    --note-text: rgba(255,255,255,0.92);
+    --note-text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    --note-border: rgba(0,0,0,0.25);
+    --note-playing-glow: 0 0 16px rgba(255,255,255,0.2);
+    --note-selected-ring: var(--accent);
+}
+
+/* ==================== Light Theme ==================== */
+:root[data-theme="light"] {
+    --bg-primary: #f5f5f8;
+    --bg-secondary: #eeeef2;
+    --bg-surface: #ffffff;
+    --bg-surface-hover: #f0f0f4;
+    --bg-surface-active: #e4e4ea;
+    --bg-elevated: #ffffff;
+    --bg-inset: #e8e8ee;
+
+    --text-primary: #1a1a24;
+    --text-secondary: #555568;
+    --text-muted: #8888a0;
+    --text-inverse: #ffffff;
+
+    --border-subtle: rgba(0,0,0,0.04);
+    --border-default: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.14);
+    --border-focus: #5a52d5;
+
+    --accent: #5a52d5;
+    --accent-hover: #4a42c5;
+    --accent-subtle: rgba(90,82,213,0.10);
+    --accent-text: #5a52d5;
+
+    --danger: #e74c3c;
+    --danger-hover: #d63031;
+    --danger-subtle: rgba(231,76,60,0.08);
+
+    --success: #27ae60;
+    --warning: #f39c12;
+
+    --rh-color: 74, 127, 212;
+    --lh-color: 58, 168, 122;
+
+    --playhead-color: #e74c3c;
+    --playhead-glow: rgba(231,76,60,0.25);
+    --snap-color: #e6a800;
+
+    --track-line: rgba(0,0,0,0.04);
+
+    --key-white-bg: linear-gradient(180deg, #fff 0%, #f2f2f2 100%);
+    --key-white-text: #666;
+    --key-black-bg: linear-gradient(180deg, #444 0%, #222 100%);
+    --key-black-text: #888;
+    --key-border: #ccc;
+    --key-active-shadow: 0 0 12px rgba(0,0,0,0.3);
+
+    --minimap-bg: rgba(245,245,248,0.9);
+    --minimap-viewport: rgba(90,82,213,0.25);
+
+    --tooltip-bg: rgba(255,255,255,0.97);
+    --tooltip-border: rgba(0,0,0,0.1);
+
+    --scrollbar-track: #f5f5f8;
+    --scrollbar-thumb: #c5c5d0;
+    --scrollbar-hover: #a0a0b0;
+
+    --progress-bg: #dddde5;
+    --progress-fill: var(--accent);
+
+    --note-text: rgba(255,255,255,0.95);
+    --note-text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    --note-border: rgba(0,0,0,0.18);
+    --note-playing-glow: 0 0 16px rgba(0,0,0,0.15);
+    --note-selected-ring: var(--accent);
+}

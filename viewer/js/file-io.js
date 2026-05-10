@@ -53,6 +53,7 @@ function loadNotesData(data) {
 
     buildKeyboard();
     renderPianoRoll();
+    renderTextNotesList();
     scrollToTime(firstNoteTime - 1);
 }
 

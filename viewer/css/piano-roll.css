@@ -1,0 +1,697 @@
+/* ================================================================
+   MakeMusic – Piano Roll, Note Blocks, Playhead, Keyboard, Minimap
+   ================================================================ */
+
+/* ==================== Main Container ==================== */
+#main-container {
+    position: fixed;
+    top: calc(var(--header-height) + var(--progress-bar-height));
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    transition: right var(--transition-panel);
+}
+
+#text-notes-view {
+    display: none;
+    height: 100%;
+    overflow-y: auto;
+    background: var(--bg-primary);
+}
+
+.text-notes-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-default);
+}
+
+.text-notes-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+}
+
+.text-notes-title {
+    font-size: var(--text-md);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+#text-notes-list {
+    padding: var(--sp-4);
+}
+
+.text-notes-empty {
+    color: var(--text-muted);
+    padding: var(--sp-4);
+    text-align: center;
+    font-size: var(--text-md);
+}
+
+.note-score-layout {
+    --notes-per-measure: 16;
+    --note-cell-width: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.score-system {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--bg-surface), var(--bg-primary));
+}
+
+.score-measure {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    overflow: hidden;
+}
+
+.score-measure-number {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--text-muted);
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--border-subtle);
+    letter-spacing: 0.4px;
+}
+
+.score-measure-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--notes-per-measure), var(--note-cell-width));
+}
+
+.score-note-cell {
+    position: relative;
+    min-height: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border-right: 1px solid var(--border-subtle);
+    padding: 5px 4px;
+}
+
+.score-note-main {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    line-height: 1;
+    letter-spacing: 0.2px;
+}
+
+.score-note-lyric {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    max-width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.score-note-cell:last-child {
+    border-right: none;
+}
+
+.score-note-cell.simul {
+    background:
+        repeating-linear-gradient(
+            135deg,
+            rgba(255, 188, 66, 0.34) 0,
+            rgba(255, 188, 66, 0.34) 6px,
+            rgba(255, 107, 53, 0.28) 6px,
+            rgba(255, 107, 53, 0.28) 12px
+        );
+    box-shadow: inset 0 0 0 3px rgba(255, 61, 113, 0.85);
+}
+
+.score-note-cell.simul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 7px;
+    background: #ff2d55;
+}
+
+.score-note-simul-badge {
+    position: absolute;
+    top: 9px;
+    left: 4px;
+    right: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+    color: #fff;
+    background: rgba(255, 45, 85, 0.95);
+    border-radius: 999px;
+    padding: 2px 4px;
+    letter-spacing: 0.3px;
+}
+
+.score-note-cell.simul .score-note-main {
+    margin-top: 16px;
+}
+
+.score-note-cell.empty {
+    color: transparent;
+    background: transparent;
+    box-shadow: none;
+}
+
+@media (max-width: 1200px) {
+    .note-score-layout {
+        --note-cell-width: 56px;
+    }
+
+    .score-note-cell {
+        min-height: 50px;
+    }
+
+    .score-note-main {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    .text-notes-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .text-notes-controls {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    #text-notes-list {
+        padding: var(--sp-2);
+    }
+
+    .note-score-layout {
+        --notes-per-measure: 8;
+        --note-cell-width: 52px;
+        gap: 8px;
+    }
+
+    .score-system {
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .score-note-cell {
+        min-height: 46px;
+    }
+
+    .score-note-main {
+        font-size: 20px;
+    }
+
+    .score-note-simul-badge {
+        font-size: 9px;
+    }
+}
+
+body.text-notes-only #progress-bar-container,
+body.text-notes-only #piano-roll-container,
+body.text-notes-only #keyboard,
+body.text-notes-only #minimap,
+body.text-notes-only #time-indicator,
+body.text-notes-only #edit-indicator,
+body.text-notes-only #lyrics-indicator,
+body.text-notes-only #edit-hand-selector,
+body.text-notes-only #lyrics-panel,
+body.text-notes-only #mobile-playback-panel,
+body.text-notes-only #mobile-edit-bar,
+body.text-notes-only #mobile-nav,
+body.text-notes-only #play-btn,
+body.text-notes-only #loop-btn,
+body.text-notes-only #settings-btn,
+body.text-notes-only #speed-select,
+body.text-notes-only #edit-mode-btn,
+body.text-notes-only #marker-btn,
+body.text-notes-only #lyrics-btn,
+body.text-notes-only .toolbar-sep,
+body.text-notes-only .toolbar-label {
+    display: none !important;
+}
+
+body.text-notes-only #main-container {
+    top: var(--header-height);
+}
+
+body.text-notes-only #text-notes-view {
+    display: block;
+}
+body.inspector-open #main-container {
+    right: calc(var(--inspector-width) + var(--minimap-width));
+}
+
+#piano-roll-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#piano-roll {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+}
+
+/* ==================== Track Lines ==================== */
+.track-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--track-line);
+    pointer-events: none;
+}
+
+/* ==================== Density Canvas ==================== */
+#density-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* ==================== Playhead ==================== */
+#playhead {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--playhead-color);
+    z-index: var(--z-playhead);
+    pointer-events: none;
+    box-shadow: 0 0 8px var(--playhead-glow), 0 0 20px var(--playhead-glow);
+}
+#playhead::before, #playhead::after {
+    content: ''; position: absolute; top: -5px;
+    width: 0; height: 0; border: 6px solid transparent;
+}
+#playhead::before {
+    left: -2px; border-left-color: var(--playhead-color);
+    border-top-color: var(--playhead-color); border-radius: 2px 0 0 0;
+}
+#playhead::after {
+    right: -2px; border-right-color: var(--playhead-color);
+    border-top-color: var(--playhead-color); border-radius: 0 2px 0 0;
+}
+
+/* ==================== Snap Indicator ==================== */
+#snap-indicator {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--snap-color);
+    z-index: var(--z-playhead);
+    pointer-events: none;
+    display: none;
+    opacity: 0.6;
+    box-shadow: 0 0 6px rgba(255,215,0,0.4);
+}
+
+/* ==================== Note Creation Preview ==================== */
+#note-creation-preview {
+    position: absolute;
+    display: none;
+    border: 2px dashed;
+    border-radius: var(--radius-sm);
+    pointer-events: none;
+    z-index: var(--z-playhead);
+    opacity: 0.7;
+}
+
+/* ==================== Note Blocks ==================== */
+.note-block {
+    position: absolute;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--note-border);
+    font-size: var(--text-xs);
+    color: var(--note-text);
+    text-shadow: var(--note-text-shadow);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow var(--transition-fast), filter var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    user-select: none;
+    -webkit-user-select: none;
+    z-index: 2;
+}
+
+.note-block:hover {
+    filter: brightness(1.15);
+    z-index: 3;
+}
+
+.note-block.selected {
+    outline: 2px solid #fff;
+    outline-offset: 1px;
+    z-index: 25;
+    filter: brightness(1.3);
+}
+
+.note-block.playing {
+    box-shadow: var(--note-playing-glow);
+    filter: brightness(1.2);
+    animation: noteGlow 0.6s ease-in-out infinite alternate;
+}
+@keyframes noteGlow {
+    from { box-shadow: 0 0 10px 2px rgba(255,255,255,0.3), 0 0 20px 4px rgba(255,255,255,0.1); }
+    to   { box-shadow: 0 0 16px 4px rgba(255,255,255,0.5), 0 0 30px 8px rgba(255,255,255,0.2); }
+}
+
+.note-block.sharp-note {
+    border-style: dashed;
+    border-width: 1px;
+}
+
+/* Lyric text on notes */
+.note-lyric {
+    position: absolute;
+    top: 50%;
+    right: -4px;
+    transform: translate(100%, -50%);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 6;
+    text-shadow: 0 1px 3px var(--bg-base), 0 0 6px var(--bg-base);
+    background: var(--bg-base);
+    padding: 1px 4px;
+    border-radius: 3px;
+    opacity: 0.9;
+}
+
+/* Resize handles (edit mode only) */
+.resize-handle-top,
+.resize-handle-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 6px;
+    cursor: ns-resize;
+    display: none;
+}
+.resize-handle-top { top: -3px; }
+.resize-handle-bottom { bottom: -3px; }
+
+body.edit-mode .note-block .resize-handle-top,
+body.edit-mode .note-block .resize-handle-bottom {
+    display: block;
+}
+body.edit-mode .note-block {
+    cursor: grab;
+}
+.note-block.edit-mode-note { cursor: move; }
+body.edit-mode .note-block:active {
+    cursor: grabbing;
+}
+body.edit-mode #piano-roll { cursor: crosshair; }
+
+/* ==================== Drop Lines ==================== */
+.note-drop-line {
+    position: absolute;
+    width: 1px;
+    border-left: 1px dashed currentColor;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* ==================== Progress Bar ==================== */
+#progress-bar-container {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    height: var(--progress-bar-height);
+    background: var(--progress-bg);
+    z-index: var(--z-progress);
+    cursor: pointer;
+    transition: height var(--transition-fast);
+}
+#progress-bar-container:hover {
+    height: 8px;
+}
+
+#progress-bar-fill {
+    height: 100%;
+    background: var(--progress-fill);
+    width: 0%;
+    transition: width 0.1s linear;
+    border-radius: 0 2px 2px 0;
+    position: relative;
+}
+#progress-bar-fill::after {
+    content: ''; position: absolute; right: -1px; top: -2px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--progress-fill);
+    box-shadow: 0 0 6px var(--progress-fill);
+    opacity: 0; transition: opacity 0.15s;
+}
+#progress-bar-container:hover #progress-bar-fill::after { opacity: 1; }
+
+/* Marker ticks on progress bar */
+.progress-marker-tick {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: var(--text-muted);
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ==================== Piano Keyboard ==================== */
+#keyboard {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--keyboard-height);
+    background: var(--bg-inset);
+    border-top: 1px solid var(--border-default);
+    z-index: var(--z-keyboard);
+    overflow: hidden;
+}
+
+#keyboard-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.key {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 6px;
+    font-size: 9px;
+    font-weight: 500;
+    border-right: 1px solid var(--key-border);
+    user-select: none;
+    transition: background var(--transition-fast);
+}
+
+.key.white {
+    background: var(--key-white-bg);
+    color: var(--key-white-text);
+    z-index: 1;
+}
+
+.key.black {
+    height: 60%;
+    background: var(--key-black-bg);
+    color: var(--key-black-text);
+    z-index: 2;
+    border: none;
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    padding-bottom: 4px;
+    font-size: 8px;
+}
+
+.key.active-rh,
+.key.active-lh {
+    box-shadow: var(--key-active-shadow), inset 0 0 8px rgba(255,255,255,0.15);
+    z-index: 3;
+}
+
+/* ==================== Minimap ==================== */
+#minimap {
+    position: fixed;
+    top: calc(var(--header-height) + var(--progress-bar-height));
+    right: 0;
+    width: var(--minimap-width);
+    bottom: var(--keyboard-height);
+    background: var(--minimap-bg);
+    border-left: 1px solid var(--border-subtle);
+    z-index: var(--z-minimap);
+    cursor: pointer;
+    overflow: hidden;
+}
+body.lyrics-mode #minimap { right: 280px; }
+
+.minimap-note {
+    position: absolute;
+    border-radius: 1px;
+    pointer-events: none;
+}
+
+#minimap-viewport {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: var(--minimap-viewport);
+    border: 1px solid rgba(108,99,255,0.4);
+    border-radius: 2px;
+    pointer-events: none;
+    min-height: 10px;
+}
+
+/* ==================== Timeline Markers ==================== */
+.marker-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 0;
+    border-top: 1.5px dashed var(--accent);
+    z-index: 5;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.marker-label {
+    position: absolute;
+    left: 8px;
+    top: -10px;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--accent-text);
+    background: var(--bg-surface);
+    padding: 1px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--accent-subtle);
+    cursor: pointer;
+    pointer-events: auto;
+    white-space: nowrap;
+    user-select: none;
+}
+.marker-label:hover { background: var(--accent-subtle); }
+
+.marker-delete-btn {
+    margin-left: 6px;
+    cursor: pointer;
+    color: var(--danger);
+    font-weight: 700;
+    opacity: 0.6;
+}
+.marker-delete-btn:hover { opacity: 1; }
+
+/* ==================== Tooltip ==================== */
+#note-tooltip {
+    position: fixed;
+    background: var(--tooltip-bg);
+    border: 1px solid var(--tooltip-border);
+    color: var(--text-primary);
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    pointer-events: none;
+    z-index: var(--z-tooltip);
+    box-shadow: var(--shadow-lg);
+    max-width: 220px;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    backdrop-filter: blur(8px);
+}
+#note-tooltip.visible { opacity: 1; }
+
+.tt-note {
+    font-weight: 700;
+    font-size: var(--text-base);
+    margin-bottom: 4px;
+}
+.tt-detail {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+}
+
+/* ==================== Context Menu ==================== */
+#context-menu,
+#context-menu-empty {
+    position: fixed;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    z-index: var(--z-context-menu);
+    min-width: 180px;
+    padding: 4px;
+    display: none;
+    backdrop-filter: blur(12px);
+}
+#context-menu.visible,
+#context-menu-empty.visible { display: block; }
+
+.ctx-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--text-md);
+    color: var(--text-primary);
+    transition: background var(--transition-fast);
+    user-select: none;
+}
+.ctx-item:hover { background: var(--bg-surface-hover); }
+.ctx-item.danger { color: var(--danger); }
+.ctx-item.danger:hover { background: var(--danger-subtle); }
+
+.ctx-icon { font-size: var(--text-lg); width: 20px; text-align: center; }
+.ctx-label { flex: 1; }
+.ctx-shortcut { font-size: var(--text-xs); color: var(--text-muted); font-family: var(--font-mono); }
+.ctx-separator { height: 1px; background: var(--border-default); margin: 4px 8px; }

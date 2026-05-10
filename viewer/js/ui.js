@@ -68,6 +68,167 @@ function updateHandColors() {
         'rgb(' + lhColor[0] + ',' + lhColor[1] + ',' + lhColor[2] + ')';
 }
 
+    // -- Text notes only view -------------------------------------------
+
+    function renderTextNotesList() {
+        var list = document.getElementById('text-notes-list');
+        if (!list) return;
+
+        function escapeHtml(text) {
+            return String(text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        if (!notesData || !Array.isArray(notesData.notes) || notesData.notes.length === 0) {
+            list.innerHTML = '<div class="text-notes-empty">No notes loaded.</div>';
+            return;
+        }
+
+        var filteredNotes = notesData.notes.filter(function(n) {
+            return n.hand !== 'left_hand';
+        });
+
+        if (filteredNotes.length === 0) {
+            list.innerHTML = '<div class="text-notes-empty">No right-hand notes to display.</div>';
+            return;
+        }
+
+        var sortedNotes = filteredNotes.slice().sort(function(a, b) {
+            if (a.start_time !== b.start_time) return a.start_time - b.start_time;
+            return a.key_index - b.key_index;
+        });
+
+        // Group by rounded start time so notes played together occupy one time slot.
+        var groupedSlots = [];
+        sortedNotes.forEach(function(note) {
+            var timeKey = String(Math.round(note.start_time * 1000));
+            var last = groupedSlots.length > 0 ? groupedSlots[groupedSlots.length - 1] : null;
+            if (!last || last.timeKey !== timeKey) {
+                groupedSlots.push({ timeKey: timeKey, notes: [note] });
+            } else {
+                last.notes.push(note);
+            }
+        });
+
+        var notesPerMeasure = 16;
+        var measuresPerSystem = 4;
+        var systems = [];
+
+        for (var systemStart = 0; systemStart < groupedSlots.length; systemStart += notesPerMeasure * measuresPerSystem) {
+            var systemEnd = Math.min(groupedSlots.length, systemStart + notesPerMeasure * measuresPerSystem);
+            var systemNotes = groupedSlots.slice(systemStart, systemEnd);
+            var measures = [];
+
+            for (var measureStart = 0; measureStart < systemNotes.length; measureStart += notesPerMeasure) {
+                var measureEnd = Math.min(systemNotes.length, measureStart + notesPerMeasure);
+                var measureNotes = systemNotes.slice(measureStart, measureEnd);
+                var measureNumber = Math.floor((systemStart + measureStart) / notesPerMeasure) + 1;
+                var cells = [];
+
+                for (var i = 0; i < notesPerMeasure; i++) {
+                    if (i < measureNotes.length) {
+                        var slot = measureNotes[i];
+                        var stackRows = slot.notes.map(function(n) {
+                            var rawName = String(n.note_name || '');
+                            if (textViewStripOctaveNumbers) {
+                                rawName = rawName.replace(/[0-9]+/g, '');
+                            }
+                            var noteName = escapeHtml(rawName);
+                            var lyric = textViewShowLyrics ? escapeHtml(String(n.lyric || '').trim()) : '';
+                            var lyricHtml = lyric ? '<span class="score-note-lyric">' + lyric + '</span>' : '';
+                            return '<div class="score-stacked-note">' +
+                                '<span class="score-note-main">' + noteName + '</span>' +
+                                lyricHtml +
+                            '</div>';
+                        });
+
+                        var hasStackClass = slot.notes.length > 1 ? ' has-stack' : '';
+                        var stackCount = slot.notes.length > 1
+                            ? '<span class="score-stack-count">x' + slot.notes.length + '</span>'
+                            : '';
+                        var dynamicHeight = 52 + Math.max(0, (slot.notes.length - 1) * 28);
+
+                        cells.push(
+                            '<div class="score-note-cell' + hasStackClass + '" style="min-height:' + dynamicHeight + 'px;">' +
+                                stackCount +
+                                '<div class="score-note-stack">' + stackRows.join('') + '</div>' +
+                            '</div>'
+                        );
+                    } else {
+                        cells.push('<div class="score-note-cell empty"></div>');
+                    }
+                }
+
+                measures.push(
+                    '<section class="score-measure">' +
+                        '<div class="score-measure-number">M' + measureNumber + '</div>' +
+                        '<div class="score-measure-grid">' + cells.join('') + '</div>' +
+                    '</section>'
+                );
+            }
+
+            systems.push('<div class="score-system">' + measures.join('') + '</div>');
+        }
+
+        list.innerHTML = '<div class="note-score-layout">' + systems.join('') + '</div>';
+    }
+
+    function toggleTextViewOctaveNumbers() {
+        textViewStripOctaveNumbers = !textViewStripOctaveNumbers;
+        updateTextViewControls();
+        if (textNotesOnlyMode) renderTextNotesList();
+    }
+
+    function toggleTextViewLyrics() {
+        textViewShowLyrics = !textViewShowLyrics;
+        updateTextViewControls();
+        if (textNotesOnlyMode) renderTextNotesList();
+    }
+
+    function updateTextViewControls() {
+        var btn = document.getElementById('text-octave-toggle-btn');
+        if (btn) {
+            btn.classList.toggle('active', !textViewStripOctaveNumbers);
+            btn.textContent = textViewStripOctaveNumbers ? 'Show A' : 'Show A4';
+        }
+
+        var lyricBtn = document.getElementById('text-lyrics-toggle-btn');
+        if (lyricBtn) {
+            lyricBtn.classList.toggle('active', textViewShowLyrics);
+            lyricBtn.textContent = textViewShowLyrics ? 'Lyrics On' : 'Lyrics Off';
+        }
+    }
+
+    function toggleTextNotesMode(forceValue) {
+        var nextMode = (typeof forceValue === 'boolean') ? forceValue : !textNotesOnlyMode;
+        if (textNotesOnlyMode === nextMode) return;
+
+        textNotesOnlyMode = nextMode;
+
+        if (textNotesOnlyMode) {
+            if (isPlaying) stopPlayback();
+            if (editMode) toggleEditMode();
+            if (lyricsMode) toggleLyricsMode();
+            updateTextViewControls();
+            renderTextNotesList();
+        }
+
+        var btn = document.getElementById('text-notes-mode-btn');
+        if (btn) {
+            btn.classList.toggle('active', textNotesOnlyMode);
+            btn.title = textNotesOnlyMode ? 'Return to Piano Roll View' : 'Toggle Text Notes View';
+            btn.innerHTML = textNotesOnlyMode
+                ? '<span class="icon">🎹</span> <span class="btn-label">Piano View</span>'
+                : '<span class="icon">📝</span> <span class="btn-label">Text View</span>';
+        }
+
+        document.body.classList.toggle('text-notes-only', textNotesOnlyMode);
+    }
+
 // -- Theme -----------------------------------------------------------
 
 function toggleTheme() {
@@ -251,6 +412,7 @@ var allCommands = [
     { icon: '\uD83C\uDFB5', label: 'Toggle Lyrics Mode', shortcut: 'W', action: toggleLyricsMode },
     { icon: '\u21A9\uFE0F', label: 'Undo', shortcut: '\u2318Z', action: undo },
     { icon: '\u21AA\uFE0F', label: 'Redo', shortcut: '\u2318\u21E7Z', action: redo },
+        { icon: '\uD83D\uDCDD', label: 'Toggle Text Notes View', shortcut: '', action: toggleTextNotesMode },
 ];
 
 function renderCommandList(query) {

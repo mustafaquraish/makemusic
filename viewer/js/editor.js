@@ -7,6 +7,7 @@ function rerenderPreservingScroll() {
     var container = document.getElementById('piano-roll-container');
     var saved = container.scrollTop;
     renderPianoRoll();
+    renderTextNotesList();
     container.scrollTop = saved;
 }
 
