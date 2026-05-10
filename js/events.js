@@ -606,6 +606,14 @@ document.addEventListener('keydown', function(e) {
         return;
     }
 
+    if (textNotesOnlyMode) {
+        if (e.code === 'Escape') {
+            e.preventDefault();
+            toggleTextNotesMode(false);
+        }
+        return;
+    }
+
     switch (e.code) {
         case 'Space':
             e.preventDefault();

@@ -62,6 +62,11 @@ var commandPaletteOpen = false;
 var commandPaletteSelectedIndex = 0;
 var filteredCommands = [];
 
+// View mode
+var textNotesOnlyMode = false;
+var textViewStripOctaveNumbers = false;
+var textViewShowLyrics = false;
+
 // Settings with defaults
 var appSettings = {
     dropLines: true,
