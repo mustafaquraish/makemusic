@@ -102,34 +102,25 @@ function updateHandColors() {
             return a.key_index - b.key_index;
         });
 
-        // Group by rounded start time so near-identical timestamps still count as a chord.
-        var timeCounts = {};
+        // Group by rounded start time so notes played together occupy one time slot.
+        var groupedSlots = [];
         sortedNotes.forEach(function(note) {
-            var k = String(Math.round(note.start_time * 1000));
-            timeCounts[k] = (timeCounts[k] || 0) + 1;
-        });
-
-        var timeSeen = {};
-        var renderEntries = sortedNotes.map(function(note) {
-            var key = String(Math.round(note.start_time * 1000));
-            var count = timeCounts[key] || 1;
-            var rank = (timeSeen[key] || 0) + 1;
-            timeSeen[key] = rank;
-
-            return {
-                note: note,
-                simultCount: count,
-                simultRank: rank
-            };
+            var timeKey = String(Math.round(note.start_time * 1000));
+            var last = groupedSlots.length > 0 ? groupedSlots[groupedSlots.length - 1] : null;
+            if (!last || last.timeKey !== timeKey) {
+                groupedSlots.push({ timeKey: timeKey, notes: [note] });
+            } else {
+                last.notes.push(note);
+            }
         });
 
         var notesPerMeasure = 16;
         var measuresPerSystem = 4;
         var systems = [];
 
-        for (var systemStart = 0; systemStart < renderEntries.length; systemStart += notesPerMeasure * measuresPerSystem) {
-            var systemEnd = Math.min(renderEntries.length, systemStart + notesPerMeasure * measuresPerSystem);
-            var systemNotes = renderEntries.slice(systemStart, systemEnd);
+        for (var systemStart = 0; systemStart < groupedSlots.length; systemStart += notesPerMeasure * measuresPerSystem) {
+            var systemEnd = Math.min(groupedSlots.length, systemStart + notesPerMeasure * measuresPerSystem);
+            var systemNotes = groupedSlots.slice(systemStart, systemEnd);
             var measures = [];
 
             for (var measureStart = 0; measureStart < systemNotes.length; measureStart += notesPerMeasure) {
@@ -140,25 +131,31 @@ function updateHandColors() {
 
                 for (var i = 0; i < notesPerMeasure; i++) {
                     if (i < measureNotes.length) {
-                        var entry = measureNotes[i];
-                        var rawName = String(entry.note.note_name || '');
-                        if (textViewStripOctaveNumbers) {
-                            rawName = rawName.replace(/[0-9]+/g, '');
-                        }
-                        var noteName = escapeHtml(rawName);
-                        var lyric = textViewShowLyrics ? escapeHtml(String(entry.note.lyric || '').trim()) : '';
-                        var lyricHtml = lyric ? '<span class="score-note-lyric">' + lyric + '</span>' : '';
-
-                        var simClass = entry.simultCount > 1 ? ' simul' : '';
-                        var simBadge = (entry.simultCount > 1 && entry.simultRank === 1)
-                            ? '<span class="score-note-simul-badge">TOGETHER x' + entry.simultCount + '</span>'
-                            : '';
-
-                        cells.push(
-                            '<div class="score-note-cell' + simClass + '">' +
-                                simBadge +
+                        var slot = measureNotes[i];
+                        var stackRows = slot.notes.map(function(n) {
+                            var rawName = String(n.note_name || '');
+                            if (textViewStripOctaveNumbers) {
+                                rawName = rawName.replace(/[0-9]+/g, '');
+                            }
+                            var noteName = escapeHtml(rawName);
+                            var lyric = textViewShowLyrics ? escapeHtml(String(n.lyric || '').trim()) : '';
+                            var lyricHtml = lyric ? '<span class="score-note-lyric">' + lyric + '</span>' : '';
+                            return '<div class="score-stacked-note">' +
                                 '<span class="score-note-main">' + noteName + '</span>' +
                                 lyricHtml +
+                            '</div>';
+                        });
+
+                        var hasStackClass = slot.notes.length > 1 ? ' has-stack' : '';
+                        var stackCount = slot.notes.length > 1
+                            ? '<span class="score-stack-count">x' + slot.notes.length + '</span>'
+                            : '';
+                        var dynamicHeight = 52 + Math.max(0, (slot.notes.length - 1) * 28);
+
+                        cells.push(
+                            '<div class="score-note-cell' + hasStackClass + '" style="min-height:' + dynamicHeight + 'px;">' +
+                                stackCount +
+                                '<div class="score-note-stack">' + stackRows.join('') + '</div>' +
                             '</div>'
                         );
                     } else {
